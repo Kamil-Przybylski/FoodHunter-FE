@@ -1,0 +1,21 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Logowanie</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <app-login-form #form (singIn)="login($event)"></app-login-form>
+
+    <div class="d-flex ion-justify-content-end">
+      <ion-button
+        color="primary"
+        [disabled]="isLogging$ | async"
+        (click)="form.submitForm()"
+      >
+        <app-loading-button [isLoading]="isLogging$ | async"
+          >Zaloguj</app-loading-button
+        >
+      </ion-button>
+    </div>
+  </ion-card-content>
+</ion-card>

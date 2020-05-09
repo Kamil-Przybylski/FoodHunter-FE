@@ -1,0 +1,6 @@
+<div style="position: relative;">
+  <div [class.invisible]="isLoading">
+    <ng-content></ng-content>
+  </div>
+  <ion-spinner [class.d-none]="!isLoading" name="circles"></ion-spinner>
+</div>

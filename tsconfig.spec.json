@@ -1,6 +1,12 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
+    "paths": {
+      "@core/*": ["src/app/core/*"],
+      "@store/*": ["src/app/core/store/*"],
+      "@storeIndex/*": ["src/app/core/store/index"],
+      "@shared/*": ["src/app/shared/*"],
+    },
     "outDir": "./out-tsc/spec",
     "types": [
       "jasmine",

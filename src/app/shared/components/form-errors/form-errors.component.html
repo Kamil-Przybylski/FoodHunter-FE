@@ -1,0 +1,13 @@
+<ion-grid class="ion-margin-bottom">
+  <ion-row>
+
+      <mat-error class="w-100" *ngIf="error">
+        {{ error?.message }}!
+      </mat-error>
+
+      <mat-error class="w-100" *ngIf="!isFormValid && isFormSubmitted">
+        Formularz zawiera błędy!
+      </mat-error>
+
+  </ion-row>
+</ion-grid>

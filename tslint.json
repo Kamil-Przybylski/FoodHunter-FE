@@ -4,7 +4,10 @@
     "codelyzer"
   ],
   "rules": {
+    "no-trailing-whitespace": false,
     "array-type": false,
+    "object-literal-shorthand": false,
+    "curly": false,
     "arrow-parens": false,
     "deprecation": {
       "severity": "warn"

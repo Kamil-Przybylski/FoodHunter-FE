@@ -4,6 +4,12 @@
     "outDir": "./out-tsc/app",
     "types": []
   },
+  "paths": {
+    "@core/*": ["src/app/core/*"],
+    "@store/*": ["src/app/core/store/*"],
+    "@storeIndex/*": ["src/app/core/store/index"],
+    "@shared/*": ["src/app/shared/*"],
+  },
   "include": [
     "src/**/*.ts"
   ],
