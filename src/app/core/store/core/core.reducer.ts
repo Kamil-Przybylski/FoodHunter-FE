@@ -10,15 +10,15 @@ import { getEntitesReducer } from './entities/entities.reducer';
 import { LayoutState, layoutReducer } from './layout/layout.reducer';
 
 export interface CoreState {
-  // entities: EntitiesState;
-  // dataCondition: DataConditionState;
+  entities: EntitiesState;
+  dataCondition: DataConditionState;
   auth: AuthState;
   layout: LayoutState;
 }
 
 export const coreReducer = combineReducers<CoreState, PayloadAction>({
-  // entities: getEntitesReducer(),
-  // dataCondition: getDataConditionReducer(),
+  entities: getEntitesReducer(),
+  dataCondition: getDataConditionReducer(),
   auth: authReducer,
   layout: layoutReducer
 });

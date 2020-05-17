@@ -1,0 +1,74 @@
+<app-form-errors
+  [error]="retisterErrors$ | async"
+  [isFormSubmitted]="formRef.submitted"
+  [isFormValid]="!formRef.invalid"
+></app-form-errors>
+
+<form
+  [formGroup]="form"
+  (ngSubmit)="onSingUp()"
+  #formRef="ngForm"
+  class="h-100 w-100"
+  autocomplete="off"
+>
+  <mat-form-field class="my-3 w-100">
+    <mat-label>Nazwa użytkownika</mat-label>
+    <input
+      matInput
+      [formControlName]="formFields.USERNAME"
+      [appDisableControl]="isRegistration$ | async"
+      type="text"
+      placeholder="Podaj swoją nazwę..."
+      required
+    />
+    <mat-error *ngIf="form?.get(formFields.USERNAME)?.hasError('required')">
+      Wymagana nazwa użytkownika
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="my-3 w-100">
+    <mat-label>E-mail</mat-label>
+    <input
+      matInput
+      [formControlName]="formFields.EMAIL"
+      [appDisableControl]="isRegistration$ | async"
+      type="text"
+      placeholder="Podaj swój e-mail..."
+      required
+    />
+    <mat-error *ngIf="form?.get(formFields.EMAIL)?.hasError('required')">
+      Wymagany e-mail
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="my-3 w-100">
+    <mat-label>Hasło</mat-label>
+    <input
+      matInput
+      [formControlName]="formFields.PASSWORD"
+      [appDisableControl]="isRegistration$ | async"
+      type="password"
+      laceholder="Podaj swoje hasło..."
+      required
+    />
+    <mat-error *ngIf="form?.get(formFields.PASSWORD)?.hasError('required')">
+      Wymagane hasło
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="my-3 w-100">
+    <mat-label>Powtóż hasło</mat-label>
+    <input
+      matInput
+      [formControlName]="formFields.REPEAT_PASS"
+      [appDisableControl]="isRegistration$ | async"
+      type="password"
+      laceholder="Powtórz swoje hasło..."
+      required
+    />
+    <mat-error *ngIf="form?.get(formFields.REPEAT_PASS)?.hasError('required')">
+      Wymagane powtórzenie hasła
+    </mat-error>
+    <mat-error *ngIf="form?.get(formFields.REPEAT_PASS)?.hasError('repeat')">
+      Hasło różni się od oryginalnego!
+    </mat-error>
+  </mat-form-field>
+  <button class="d-none"></button>
+</form>

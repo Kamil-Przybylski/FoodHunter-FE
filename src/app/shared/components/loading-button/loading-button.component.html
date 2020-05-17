@@ -2,5 +2,7 @@
   <div [class.invisible]="isLoading">
     <ng-content></ng-content>
   </div>
-  <ion-spinner [class.d-none]="!isLoading" name="circles"></ion-spinner>
+  <div [class.d-none]="!isLoading" class="app-spin-button">
+    <ion-spinner name="circles"></ion-spinner>
+  </div>
 </div>

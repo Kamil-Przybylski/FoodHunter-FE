@@ -16,7 +16,17 @@ export const getAuthIsLogging = createSelector(
   authState => authState.isLogging
 );
 
+export const getAuthIsRegistration = createSelector(
+  getAuthState,
+  authState => authState.isRegistration
+);
+
 export const getAuthErrors = createSelector(
   getAuthState,
   authState => authState.loginErrors
+);
+
+export const getRegisterErrors = createSelector(
+  getAuthState,
+  authState => authState.registerErrors
 );

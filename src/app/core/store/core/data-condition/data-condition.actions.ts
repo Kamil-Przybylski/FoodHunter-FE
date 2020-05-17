@@ -2,6 +2,7 @@ import { EntitiesStateComponents } from './../entities/entities.models';
 import { createAction, Action, props } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResDto } from '@core/models/custom-http.models';
 
 export const downloadAction = <T extends keyof EntitiesStateComponents, P>() =>
   createAction(
@@ -42,7 +43,7 @@ export const downloadSuccessAction = <
     props<{
       key: T;
       dataId: number;
-      entities: EntitiesStateComponents[T][];
+      entityIds: number[];
       loadData: P;
     }>()
   );
@@ -52,29 +53,13 @@ export const downloadFailAction = <T extends keyof EntitiesStateComponents>() =>
     props<{
       key: T;
       dataId: number;
-      error: HttpErrorResponse;
+      error: HttpErrorResDto;
     }>()
   );
 
 export const saveAction = <T extends keyof EntitiesStateComponents, P>() =>
   createAction(
     '[Data Condition] Save',
-    props<{
-      key: T;
-      dataId: number;
-      requestObservable: Observable<
-        | EntitiesStateComponents[T][]
-        | { entities: EntitiesStateComponents[T][]; sendData: P }
-      >;
-      nextActions?: Action[];
-    }>()
-  );
-export const saveUpdateAction = <
-  T extends keyof EntitiesStateComponents,
-  P
->() =>
-  createAction(
-    '[Data Condition] Save Update',
     props<{
       key: T;
       dataId: number;
@@ -94,7 +79,7 @@ export const saveSuccessAction = <
     props<{
       key: T;
       dataId: number;
-      entities: EntitiesStateComponents[T][];
+      entityIds: number[];
       sendData: P;
     }>()
   );
@@ -104,7 +89,7 @@ export const saveFailAction = <T extends keyof EntitiesStateComponents>() =>
     props<{
       key: T;
       dataId: number;
-      error: HttpErrorResponse;
+      error: HttpErrorResDto;
     }>()
   );
 
@@ -130,6 +115,7 @@ export const deleteSuccessAction = <
     props<{
       key: T;
       dataId: number;
+      deleteId_TODO: number;
       entities: EntitiesStateComponents[T][];
       sendData: P;
     }>()
@@ -140,7 +126,7 @@ export const deleteFailAction = <T extends keyof EntitiesStateComponents>() =>
     props<{
       key: T;
       dataId: number;
-      error: HttpErrorResponse;
+      error: HttpErrorResDto;
     }>()
   );
 

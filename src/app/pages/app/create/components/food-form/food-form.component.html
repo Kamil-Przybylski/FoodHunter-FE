@@ -1,0 +1,66 @@
+<app-form-errors
+  [error]="hasErrors$ | async"
+  [isFormSubmitted]="formRef.submitted"
+  [isFormValid]="!formRef.invalid"
+></app-form-errors>
+
+<form
+  [formGroup]="form"
+  #formRef="ngForm"
+  (ngSubmit)="onSave()"
+  class="h-100 w-100"
+  autocomplete="on"
+>
+
+  <mat-form-field class="w-100">
+    <mat-label>Nazwa dania</mat-label>
+    <input
+      matInput
+      [formControlName]="formFields.NAME"
+      [appDisableControl]="isSending$ | async"
+      type="text"
+      placeholder="Podaj nazwę dania..."
+      required
+    />
+    <mat-error *ngIf="form?.get(formFields.NAME)?.hasError('required')">
+      Wymagana nazwa.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="w-100">
+    <mat-label>Opis</mat-label>
+    <textarea 
+      matInput
+      [formControlName]="formFields.DESCRIPTION"
+      [appDisableControl]="isSending$ | async"
+      type="textarea"
+      maxlength="255"
+      placeholder="Opisz danie..."
+    ></textarea>
+    <mat-error *ngIf="form?.get(formFields.DESCRIPTION)?.hasError('maxLength')">
+      Maksymalna ilość znaków to 255.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="w-100">
+    <mat-label>Ocena</mat-label>
+    <input
+      matInput
+      [formControlName]="formFields.RATE"
+      [appDisableControl]="isSending$ | async"
+      type="number"
+      min="0" 
+      max="6"
+      required
+    />
+    <mat-error *ngIf="form?.get(formFields.RATE)?.hasError('required')">
+      Wymagana Ocena.
+    </mat-error>
+  </mat-form-field>
+
+  <input
+    (change)="getFile($event)"
+    type="file"
+  />
+
+</form>

@@ -1,0 +1,62 @@
+<div class="h-100" style="position: relative;">
+  <div class="agm-float-inputs">
+    <input
+      type="text"
+      class="agm-float-input"
+      (keydown.enter)="$event.preventDefault()"
+      placeholder="Znajdź..."
+      autocorrect="off"
+      autocapitalize="off"
+      spellcheck="off"
+      type="text"
+      #search
+    />
+    <select
+      placeholder="W pobliżu"
+      class="agm-float-input"
+      [formControl]="selectControl"
+    >
+      <option disabled selected [value]="''">Miejsca w okolicy...</option>
+      <option *ngFor="let option of options" [ngValue]="option">
+        {{option.name}}
+      </option>
+    </select>
+  </div>
+
+  <agm-map
+    [latitude]="latitude"
+    [longitude]="longitude"
+    [zoom]="zoom"
+    [streetViewControl]="false"
+    [showDefaultInfoWindow]="false"
+    (mapClick)="findPlace($event)"
+  >
+    <agm-marker
+      [visible]="openMarker"
+      [latitude]="latitude"
+      [longitude]="longitude"
+      [markerDraggable]="true"
+    >
+      <agm-info-window [disableAutoPan]="false" #infoWindow>
+        <ng-container *ngIf="!isPlaceLoading">
+          <h6 style="margin-top: 0; margin-bottom: 0.2rem">
+            {{ selectedPlace?.name }}
+          </h6>
+          <p>{{ selectedPlace?.formatted_address }}</p>
+          <!-- <div class="agm-info-link">
+            <a>{{ selectedPlace?.website }}</a>
+          </div> -->
+          <div class="w-100">
+            <button class="w-100 agm-info-button" ion-button color="primary">
+              <ion-icon name="arrow-redo-circle-outline"></ion-icon>
+              Wybierz
+            </button>
+          </div>
+        </ng-container>
+        <div *ngIf="isPlaceLoading" class="agm-info-spinner">
+          <ion-spinner name="circles"></ion-spinner>
+        </div>
+      </agm-info-window>
+    </agm-marker>
+  </agm-map>
+</div>

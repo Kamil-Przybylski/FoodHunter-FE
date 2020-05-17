@@ -4,14 +4,15 @@ import { AppState } from '@core/store';
 import { authLoginAction } from '@core/store/core/auth/auth.actions';
 import { layoutRouterLoginAction } from '@core/store/core/layout/layout.actions';
 import { TokenEnum } from 'src/config';
+import { AuthService } from '@core/services/auth.service';
 
 @Injectable()
 export class AppInitialProvider {
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>, private authService: AuthService) {}
 
   load() {
     const url = window.location.pathname;
-    const token = localStorage.getItem(TokenEnum.AUTH);
+    const token = this.authService.getToken();
 
     this.store.dispatch(layoutRouterLoginAction({ payload: url }));
     if (token) this.store.dispatch(authLoginAction({ payload: url }));

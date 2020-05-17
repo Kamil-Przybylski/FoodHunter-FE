@@ -1,19 +1,22 @@
-import { environment } from './../../../environments/environment.prod';
+import { environment } from './../../../environments/environment';
 import {
   ReqSingInDto,
   ResSingInDto,
   ResUserDto,
-} from 'src/app/core/models/auth.models';
+  ReqSingUpDto,
+  AuthFormSingInModel,
+} from '@core/models/auth.models';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { State, select } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { AppState } from '@core/store';
 import {
-  getAuthIsLoginSuccess,
   getAuthState,
 } from '@core/store/core/auth/auth.selectors';
 import { take, map, filter } from 'rxjs/operators';
+import { FormSingUpModel } from 'src/app/pages/register/register-form/register-form.component';
+import { TokenEnum } from 'src/config';
 
 @Injectable({
   providedIn: 'root',
@@ -24,15 +27,25 @@ export class AuthService {
   private postfixes = {
     AUTH: 'auth',
     SING_IN: 'singin',
+    SING_UP: 'singup',
     LOGIN: 'login',
   };
 
-  constructor(private httpClient: HttpClient, private store: State<AppState>) {}
+  constructor(private httpClient: HttpClient, private store: Store<AppState>) {}
 
-  singIn(credentials: ReqSingInDto): Observable<ResSingInDto> {
+  singIn(credetials: AuthFormSingInModel): Observable<ResSingInDto> {
+    const req = new ReqSingInDto(credetials.email, credetials.password);
     return this.httpClient.post<ResSingInDto>(
       `${this.baseUrl}/${this.postfixes.AUTH}/${this.postfixes.SING_IN}`,
-      credentials
+      req
+    );
+  }
+
+  singUp(credetials: FormSingUpModel): Observable<null> {
+    const req = new ReqSingUpDto(credetials.username, credetials.email, credetials.password);
+    return this.httpClient.post<null>(
+      `${this.baseUrl}/${this.postfixes.AUTH}/${this.postfixes.SING_UP}`,
+      req
     );
   }
 
@@ -49,5 +62,17 @@ export class AuthService {
       take(1),
       map((state) => state.isLoginSuccess)
     );
+  }
+
+  setToken(accessToken: string) {
+    localStorage.setItem(TokenEnum.AUTH, accessToken);
+  }
+
+  getToken() {
+    return localStorage.getItem(TokenEnum.AUTH);
+  }
+
+  removeToken() {
+    return localStorage.getItem(TokenEnum.AUTH);
   }
 }

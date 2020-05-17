@@ -1,4 +1,3 @@
-import { authLoginAction } from '@core/store/core/auth/auth.actions';
 import { createReducer, on } from '@ngrx/store';
 import { ResUserDto } from 'src/app/core/models/auth.models';
 import * as authActions from './auth.actions';
@@ -8,16 +7,22 @@ import { HttpErrorRes } from '@core/models/custom-http.models';
 export interface AuthState {
   isLogging: boolean;
   isLoginSuccess: boolean;
-
   loginErrors: HttpErrorRes;
+
+  isRegistration: boolean;
+  registerErrors: HttpErrorRes;
+
   userData: ResUserDto;
 }
 
 const initialState: AuthState = {
   isLogging: false,
   isLoginSuccess: false,
-
   loginErrors: null,
+
+  isRegistration: false,
+  registerErrors: null,
+
   userData: null,
 };
 
@@ -71,5 +76,28 @@ export const authReducer = createReducer(
       loginErrors: null,
       userData: null,
     });
-  })
+  }),
+
+  on(authActions.authSingUpAction, (state) => {
+    return _.assign({}, state, {
+      isRegistration: true,
+    });
+  }),
+  on(
+    authActions.authSingUpSuccessAction,
+    (state) => {
+      return _.assign({}, state, {
+        isRegistration: false,
+      });
+    }
+  ),
+  on(
+    authActions.authSingUpFailAction,
+    (state, { payload }) => {
+      return _.assign({}, state, {
+        isRegistration: false,
+        registerErrors: payload
+      });
+    }
+  ),
 );

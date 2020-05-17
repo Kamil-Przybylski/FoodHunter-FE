@@ -1,0 +1,26 @@
+import { AppState } from '@core/store';
+import { createSelector } from '@ngrx/store';
+import { getFoodModuleState } from './food.reducer';
+import { getDataCondition } from '../core/data-condition/data-condition.selectors';
+import { getEntitiesSelectAll } from '../core/entities/entities.selectors';
+import { EntitiesEnum } from '../core/entities/entities.models';
+
+export const getFoodState = createSelector(
+  getFoodModuleState,
+  foodState => foodState
+);
+
+export const getAllFoods = createSelector(
+  getEntitiesSelectAll(EntitiesEnum.FOOD),
+  all => all
+);
+
+export const getFoodConditionIsSending = createSelector(
+  getDataCondition(EntitiesEnum.FOOD, 0),
+  state => state ? state.isSending : false
+);
+
+export const getFoodConditionSendErrors = createSelector(
+  getDataCondition(EntitiesEnum.FOOD, 0),
+  state => state ? state.sendErrors : null
+);

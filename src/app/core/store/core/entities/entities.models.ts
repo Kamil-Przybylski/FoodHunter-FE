@@ -1,14 +1,18 @@
-import { EntitiesTemp, Food } from 'src/app/core/models/food.models';
-import { EntityState, EntityAdapter } from '@ngrx/entity';
+import { EntityState } from '@ngrx/entity';
 import { ActionReducer } from '@ngrx/store';
+import { ResFoodDto } from '@core/models/food.models';
+
+export enum EntitiesEnum {
+  FOOD = 'foodEntities',
+  // TAG = 'tagEntities',
+  // FOOD_TYPE = 'foodTypeEntities',
+  // RESTAURANT = 'restaurantEntities',
+  // CATALOG = 'catalogEntities',
+  // USER = 'userEntities',
+}
 
 export interface EntitiesStateComponents {
-  foodEntities: Food;
-  tagEntities: EntitiesTemp;
-  foodTypeEntities: EntitiesTemp;
-  restaurantEntities: EntitiesTemp;
-  catalogEntities: EntitiesTemp;
-  userEntities: EntitiesTemp;
+  [EntitiesEnum.FOOD]: ResFoodDto;
 }
 
 export type EntitiesTypes = EntitiesStateComponents[keyof EntitiesStateComponents];
@@ -24,4 +28,3 @@ export type State = {
 export type Reducer = ActionReducer<{
   [P in keyof EntitiesState]: EntityState<EntitiesState[P]>
 }>;
-

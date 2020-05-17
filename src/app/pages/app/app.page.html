@@ -1,4 +1,4 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-title>app</ion-title>
   </ion-toolbar>
@@ -6,4 +6,17 @@
 
 <ion-content>
 
-</ion-content>
+</ion-content> -->
+
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button [tab]="AppRoutesEnum.DISCOVER">
+      <ion-label>Odkryj</ion-label>
+      <ion-icon name="search"></ion-icon>
+    </ion-tab-button>
+    <ion-tab-button [tab]="AppRoutesEnum.CREATE">
+      <ion-label>Stwórz</ion-label>
+      <ion-icon name="pizza-outline"></ion-icon>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

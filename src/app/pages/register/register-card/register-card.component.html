@@ -1,0 +1,27 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Rejestracja</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <app-register-form #form (singUp)="singUp($event)"></app-register-form>
+
+    <div class="d-flex ion-justify-content-end">
+      <a [routerLink]="['../', AppRoutesEnum.LOGIN]">
+        <button mat-button>
+          Zaloguj się
+        </button>
+      </a>
+      <button
+        mat-flat-button 
+        color="primary"
+        [disabled]="isLogging$ | async"
+        (click)="form.submitForm()"
+        >
+        <app-loading-button [isLoading]="isLogging$ | async"
+          >Zarejestruj</app-loading-button
+        >
+      </button>
+    </div>
+  </ion-card-content>
+</ion-card>

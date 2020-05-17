@@ -1,5 +1,3 @@
-import * as moment from 'moment';
-
 export class ReqSingInDto {
   constructor(public email: string, public password: string) {}
 }
@@ -15,4 +13,20 @@ export interface ResUserDto {
   birthDate: string;
   photoPath: string;
   about: string;
+}
+
+export class ReqSingUpDto {
+  constructor(public username: string, public email: string, public password: string) {}
+}
+
+
+// FORM
+
+export enum AuthFormSingInFields {
+  EMAIL = 'email',
+  PASSWORD = 'password'
+}
+export interface AuthFormSingInModel {
+  [AuthFormSingInFields.EMAIL]: string;
+  [AuthFormSingInFields.PASSWORD]: string;
 }

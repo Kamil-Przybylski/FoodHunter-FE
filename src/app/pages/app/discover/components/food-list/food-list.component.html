@@ -1,0 +1,6 @@
+<ion-card>
+  <div *ngFor="let food of foods$ | async">
+    Name: {{ food.name }}
+    <img [src]="food.photoPath" alt="Food">
+  </div>
+</ion-card>

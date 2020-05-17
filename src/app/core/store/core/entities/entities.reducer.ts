@@ -1,19 +1,10 @@
 import * as entitiesActions from './entities.actions';
 import * as _ from 'lodash';
 import { combineReducers, createReducer, on, ActionReducer } from '@ngrx/store';
-import { EntitiesEnum } from './entities.enum';
-import { EntityAdapter, createEntityAdapter, EntityState } from '@ngrx/entity';
-import { Food } from 'src/app/core/models/food.models';
+import { EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { PayloadAction } from '../..';
+import { EntitiesStateComponents, EntitiesEnum } from './entities.models';
 
-export interface EntitiesStateComponents {
-  foodEntities: Food;
-  tagEntities: any;
-  foodTypeEntities: any;
-  restaurantEntities: any;
-  catalogEntities: any;
-  userEntities: any;
-}
 export type EntitiesState = {
   [P in keyof EntitiesStateComponents]: EntitiesStateComponents[P];
 };
@@ -28,7 +19,7 @@ const getAdapters = (): AdaptersType => {
   });
   return adapterFactory;
 };
-const adapters = getAdapters();
+export const adapters = getAdapters();
 
 const creaateEntitiesReducer = (type: EntitiesEnum) => {
   const adapter = adapters[type];

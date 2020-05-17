@@ -7,15 +7,7 @@ import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { getAuthIsLogging, getAuthErrors } from '@core/store/core/auth/auth.selectors';
 import { AppState } from '@core/store';
-
-enum formFields {
-  EMAIL = 'email',
-  PASSWORD = 'password'
-}
-export interface FormLoginModel {
-  [formFields.EMAIL]: string;
-  [formFields.PASSWORD]: string;
-}
+import { AuthFormSingInFields, AuthFormSingInModel } from '@core/models/auth.models';
 
 @Component({
   selector: 'app-login-form',
@@ -24,10 +16,10 @@ export interface FormLoginModel {
 })
 export class LoginFormComponent implements OnInit {
   @ViewChild('formRef', {static: true}) formRef: NgForm;
-  @Output() singIn = new EventEmitter<FormLoginModel>();
+  @Output() singIn = new EventEmitter<AuthFormSingInModel>();
 
-  form: FormGroupTypeSafe<FormLoginModel>;
-  formFields = formFields;
+  form: FormGroupTypeSafe<AuthFormSingInModel>;
+  formFields = AuthFormSingInFields;
 
   isLogging$: Observable<boolean>;
   loginErrors$: Observable<HttpErrorResDto>;
@@ -45,9 +37,9 @@ export class LoginFormComponent implements OnInit {
   }
 
   private createForm() {
-    this.form = this.fb.group<FormLoginModel>({
-      [formFields.EMAIL]: new FormControl(null, Validators.required),
-      [formFields.PASSWORD]: new FormControl(null, Validators.required),
+    this.form = this.fb.group<AuthFormSingInModel>({
+      [this.formFields.EMAIL]: new FormControl(null, Validators.required),
+      [this.formFields.PASSWORD]: new FormControl(null, Validators.required),
     });
   }
 
@@ -55,7 +47,7 @@ export class LoginFormComponent implements OnInit {
     this.formRef.onSubmit(new Event('submit'));
   }
 
-  onLogin() {
+  onSingIn() {
     if (this.form.valid) {
       this.singIn.emit(this.form.value);
     } else {

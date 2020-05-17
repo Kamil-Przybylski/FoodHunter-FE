@@ -7,7 +7,6 @@ import { Subject } from 'rxjs';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  destroyed$: Subject<boolean> = new Subject<boolean>();
 
   constructor() {}
 

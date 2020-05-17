@@ -1,5 +1,4 @@
-import { AppState } from './../../index';
-import { Store, select } from '@ngrx/store';
+import { AppRoutesEnum } from './../../../../app.routes';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import {
@@ -10,6 +9,9 @@ import {
   authLoginAction,
   authLoginSuccessAction,
   authLoginFailAction,
+  authSingUpAction,
+  authSingUpSuccessAction,
+  authSingUpFailAction,
 } from './auth.actions';
 import {
   map,
@@ -17,6 +19,7 @@ import {
   catchError,
   tap,
   withLatestFrom,
+  debounceTime,
 } from 'rxjs/operators';
 import { AuthService } from '@core/services/auth.service';
 import { of } from 'rxjs';
@@ -24,7 +27,9 @@ import { HttpErrorResDto } from '@core/models/custom-http.models';
 import { TokenEnum } from 'src/config';
 import { getLayoutLoginUrl } from '../layout/layout.selectors';
 import { Router } from '@angular/router';
-import { AppRoutesEnum } from 'src/app/app.routes';
+import { NotifierService } from '@shared/services/notifier.service';
+import { Store, select } from '@ngrx/store';
+import { AppState } from '@core/store';
 
 @Injectable()
 export class AuthEffects {
@@ -55,7 +60,7 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(authSingInSuccessAction),
       map(({ payload }) => {
-        localStorage.setItem(TokenEnum.AUTH, payload.accessToken);
+        this.authService.setToken(payload.accessToken);
         return authSingInRedirectAction();
       })
     )
@@ -66,9 +71,7 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(authSingInRedirectAction),
         withLatestFrom(this.store.pipe(select(getLayoutLoginUrl))),
-        tap((action) => {
-          const loginUrl = '';
-          this.router.navigateByUrl(loginUrl);
+        tap(([action, loginUrl]) => {
           if (
             loginUrl === `/${AppRoutesEnum.LOGIN}` ||
             loginUrl === `/${AppRoutesEnum.REGISTER}`
@@ -110,7 +113,45 @@ export class AuthEffects {
     () =>
       this.actions$.pipe(
         ofType(authLoginFailAction),
-        tap(() => localStorage.removeItem(TokenEnum.AUTH))
+        tap(() => this.authService.removeToken())
+      ),
+    { dispatch: false }
+  );
+
+  singUp$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(authSingUpAction),
+      map((action) => action.payload),
+      switchMap((credentials) => {
+        return this.authService.singUp(credentials).pipe(
+          map(() => authSingUpSuccessAction()),
+          catchError((err: HttpErrorResDto) =>
+            of(
+              authSingUpFailAction({
+                payload: {
+                  error: err.error,
+                  message: err.message,
+                  statusCode: err.statusCode,
+                },
+              })
+            )
+          )
+        );
+      })
+    )
+  );
+
+  singUpSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(authSingUpSuccessAction),
+        tap(() =>
+          this.notifierService.snackBarSuccess(
+            'Konto zostało założone! \nZa 2s zostaniesz przeniesiony do logowania...'
+          )
+        ),
+        debounceTime(2000),
+        tap(() => this.router.navigateByUrl(AppRoutesEnum.LOGIN))
       ),
     { dispatch: false }
   );
@@ -119,6 +160,7 @@ export class AuthEffects {
     private actions$: Actions,
     private store: Store<AppState>,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private notifierService: NotifierService
   ) {}
 }

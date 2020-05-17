@@ -6,38 +6,38 @@ import {
   createReducer,
   on,
 } from '@ngrx/store';
-import { EntitiesEnum } from './../entities/entities.enum';
 import * as dataConditionActions from './data-condition.actions';
 import * as _ from 'lodash';
-import { EntitiesStateComponents } from '../entities/entities.models';
-import { HttpErrorResponse } from '@angular/common/http';
+import { EntitiesStateComponents, EntitiesEnum } from '../entities/entities.models';
 import { PayloadAction } from '../..';
+import { HttpErrorResDto } from '@core/models/custom-http.models';
 
 export interface HttpState<T, P> {
   isLoading: boolean;
   isLoadSuccess: boolean;
   isRefreshing: boolean;
   isRefreshSuccess: boolean;
+  entityIds: number[];
   loadData: T;
-  loadErrors: HttpErrorResponse;
-  refreshErrors: HttpErrorResponse;
+  loadErrors: HttpErrorResDto;
+  refreshErrors: HttpErrorResDto;
 
   isSending: boolean;
   isSendSuccess: boolean;
   sendData: P;
-  sendErrors: HttpErrorResponse;
+  sendErrors: HttpErrorResDto;
 }
 
 export type DataConditionState = {
   [P in keyof EntitiesStateComponents]: { [id: number]: HttpState<any, any> };
 };
 
-
 export const initialState: HttpState<any, any> = {
   isLoading: false,
   isLoadSuccess: false,
   isRefreshing: false,
   isRefreshSuccess: false,
+  entityIds: [],
   loadData: null,
   loadErrors: null,
   refreshErrors: null,
@@ -49,60 +49,75 @@ export const initialState: HttpState<any, any> = {
 };
 
 const ReducerTypes = {
-  DOWNLOAD: <T>(state: T): T =>
+  DOWNLOAD: (state: HttpState<any, any>): HttpState<any, any> =>
     _.assign({}, state, {
       isLoading: true,
       isLoadSuccess: false,
       loadErrors: null,
     } as HttpState<any, any>),
-  DOWNLOAD_SUCCESS: <T>(state: T, loadData): T =>
+  DOWNLOAD_SUCCESS: (
+    state: HttpState<any, any>,
+    entityIds: number[],
+    loadData
+  ): HttpState<any, any> =>
     _.assign({}, state, {
       isLoading: false,
       isLoadSuccess: true,
       loadErrors: null,
+      entityIds: entityIds,
       loadData: loadData,
     } as HttpState<any, any>),
-  DOWNLOAD_FAIL: <T>(state: T, error): T =>
+  DOWNLOAD_FAIL: (state: HttpState<any, any>, error): HttpState<any, any> =>
     _.assign({}, state, {
       isLoading: false,
       isLoadSuccess: false,
       loadErrors: error,
     } as HttpState<any, any>),
 
-  REFRESH: <T>(state: T): T =>
+  REFRESH: (state: HttpState<any, any>): HttpState<any, any> =>
     _.assign({}, state, {
       isRefreshing: true,
       isRefreshSuccess: false,
       refreshErrors: null,
     } as HttpState<any, any>),
-  REFRESH_SUCCESS: <T>(state: T, loadData): T =>
+  REFRESH_SUCCESS: (
+    state: HttpState<any, any>,
+    loadData
+  ): HttpState<any, any> =>
     _.assign({}, state, {
       isRefreshing: false,
       isRefreshSuccess: true,
       refreshErrors: null,
       loadData: loadData,
     } as HttpState<any, any>),
-  REFRESH_FAIL: <T>(state: T, error): T =>
+  REFRESH_FAIL: (state: HttpState<any, any>, error): HttpState<any, any> =>
     _.assign({}, state, {
       isRefreshing: false,
       isRefreshSuccess: false,
       refreshErrors: error,
     } as HttpState<any, any>),
 
-  SEND: <T>(state: T): T =>
+  SEND: (state: HttpState<any, any>): HttpState<any, any> =>
     _.assign({}, state, {
       isSending: true,
       isSendSuccess: false,
       sendErrors: null,
     } as HttpState<any, any>),
-  SEND_SUCCESS: <T>(state: T, sendData): T =>
+  SEND_SUCCESS: (
+    state: HttpState<any, any>,
+    entityIds: number[],
+    sendData
+  ): HttpState<any, any> =>
     _.assign({}, state, {
       isSending: false,
       isSendSuccess: true,
       sendErrors: null,
+      entityIds: entityIds
+        ? _.union(state.entityIds, entityIds)
+        : state.entityIds,
       sendData: sendData,
     } as HttpState<any, any>),
-  SEND_FAIL: <T>(state: T, error): T =>
+  SEND_FAIL: (state: HttpState<any, any>, error): HttpState<any, any> =>
     _.assign({}, state, {
       isSending: false,
       isSendSuccess: false,
@@ -144,10 +159,10 @@ const createDataReducer = (
     ),
     on(
       dataConditionActions.downloadSuccessAction(),
-      (state, { key, dataId, loadData }) => {
+      (state, { key, dataId, entityIds, loadData }) => {
         if (key === type)
           return getDataConditionState(state, dataId, (st) => {
-            return ReducerTypes.DOWNLOAD_SUCCESS(st, loadData);
+            return ReducerTypes.DOWNLOAD_SUCCESS(st, entityIds, loadData);
           });
         else return state;
       }
@@ -162,23 +177,19 @@ const createDataReducer = (
         else return state;
       }
     ),
-    on(
-      dataConditionActions.saveAction(),
-      dataConditionActions.saveUpdateAction(),
-      (state, { key, dataId }) => {
-        if (key === type)
-          return getDataConditionState(state, dataId, (st) => {
-            return ReducerTypes.SEND(st);
-          });
-        else return state;
-      }
-    ),
+    on(dataConditionActions.saveAction(), (state, { key, dataId }) => {
+      if (key === type)
+        return getDataConditionState(state, dataId, (st) => {
+          return ReducerTypes.SEND(st);
+        });
+      else return state;
+    }),
     on(
       dataConditionActions.saveSuccessAction(),
-      (state, { key, dataId, sendData }) => {
+      (state, { key, dataId, entityIds, sendData }) => {
         if (key === type)
           return getDataConditionState(state, dataId, (st) => {
-            return ReducerTypes.SEND_SUCCESS(st, sendData);
+            return ReducerTypes.SEND_SUCCESS(st, entityIds, sendData);
           });
         else return state;
       }
