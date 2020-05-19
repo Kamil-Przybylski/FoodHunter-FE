@@ -1,0 +1,17 @@
+.mat-tab-labels {
+  display: flex;
+  justify-content: space-around;
+}
+
+.mat-tab-body-wrapper {
+  height: 100% !important;
+
+}.app_mat-stepper-icon {
+  font-size: 22px;
+}
+
+mat-tab-group.app-mat-tab-col-3 {
+  .mat-tab-label {
+    width: 33.33% !important;
+  }
+}

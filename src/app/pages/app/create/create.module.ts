@@ -1,3 +1,4 @@
+import { FoodPhotoComponent } from './components/food-photo/food-photo.component';
 import { SharedModule } from './../../../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -31,6 +32,7 @@ import { environment } from 'src/environments/environment';
     FoodFormComponent,
     FoodContainerComponent,
     FoodMapComponent,
+    FoodPhotoComponent
   ],
 })
 export class CreatePageModule {}

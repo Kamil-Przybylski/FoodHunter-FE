@@ -7,9 +7,11 @@ import {
   ReqFoodDto,
   ResFoodDto,
 } from '@core/models/food.models';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { HttpUtil } from '@core/utils/http.util';
 import * as _ from 'lodash';
+import { FoodState } from '@core/store/food/food.reducer';
+import { PhotoHelper } from '@core/utils/photo.helper';
 
 @Injectable({
   providedIn: 'root',
@@ -29,8 +31,13 @@ export class FoodService {
       .pipe(map((foods) => HttpUtil.getImgUrl(foods, this.postfixes.FOOD)));
   }
 
-  createFood(payload: FoodFormCreateModel): Observable<ResFoodDto[]> {
-    const req = new ReqFoodDto(payload);
+  createFood(payload: FoodState): Observable<ResFoodDto[]> {
+    const file = PhotoHelper.dataURItoBlob(
+      payload.cameraDraft.form,
+      payload.foodDraft.form.name
+    );
+
+    const req = new ReqFoodDto(payload, file);
     const data = HttpUtil.toFormData(req);
 
     return this.httpClient

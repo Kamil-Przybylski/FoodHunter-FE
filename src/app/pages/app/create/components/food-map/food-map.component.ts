@@ -6,11 +6,14 @@ import {
   NgZone,
   Output,
   EventEmitter,
+  Input,
 } from '@angular/core';
 import { MapsAPILoader, MouseEvent, AgmMap, AgmInfoWindow } from '@agm/core';
 import * as _ from 'lodash';
 import { FormControl } from '@angular/forms';
 import { tap } from 'rxjs/operators';
+import { ActionSheetController, AlertController } from '@ionic/angular';
+import { RestaurantFormModel, RestaurantFormFields } from '@core/models/restaurant.models';
 
 @Component({
   selector: 'app-food-map',
@@ -18,24 +21,31 @@ import { tap } from 'rxjs/operators';
   styleUrls: ['./food-map.component.scss'],
 })
 export class FoodMapComponent implements OnInit {
+  
+  @Input() latitude: number;
+  @Input() longitude: number;
+
+  @Output() selectPlace = new EventEmitter<RestaurantFormModel>();
+
   @ViewChild('search', { static: false }) public searchElementRef: ElementRef;
   @ViewChild(AgmMap, { static: false }) public map: AgmMap;
   @ViewChild(AgmInfoWindow, { static: false }) public infoWindow: AgmInfoWindow;
-  @Output() selectPlace = new EventEmitter<google.maps.places.PlaceResult>();
 
-  latitude: number;
-  longitude: number;
-  zoom: number;
+  zoom: number = 17;
   openMarker = false;
 
   selectControl = new FormControl('');
   options: google.maps.places.PlaceResult[];
   selectedPlace: google.maps.places.PlaceResult;
+  isChoice = false;
   isPlaceLoading = true;
 
   private placesService: google.maps.places.PlacesService;
 
-  constructor(private mapsAPILoader: MapsAPILoader, private ngZone: NgZone) {}
+  constructor(
+    private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone,
+  ) {}
 
   ngOnInit() {
     this.prepareMap();
@@ -44,7 +54,6 @@ export class FoodMapComponent implements OnInit {
 
   private prepareMap() {
     this.mapsAPILoader.load().then(() => {
-      this.setCurrentLocation();
 
       this.placesService = new google.maps.places.PlacesService(
         document.createElement('div')
@@ -68,34 +77,22 @@ export class FoodMapComponent implements OnInit {
 
           this.getPlaceById(place.place_id);
           this.setMarker(lat, lng);
-          this.setNewLocation(lat, lng);
         });
       });
+
+      this.getNearbyPlaces(this.latitude, this.longitude);
     });
   }
 
-  private setCurrentLocation() {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.latitude = position.coords.latitude;
-        this.longitude = position.coords.longitude;
-        this.zoom = 17;
-        this.getNearbyPlaces(this.latitude, this.longitude);
-      });
-    }
-  }
-
-  private setNewLocation(lat: number, lng: number) {
-    this.latitude = lat;
-    this.longitude = lng;
-    this.zoom = 17;
-  }
-
   private setMarker(lat: number, lng: number) {
-    this.openMarker = true;
-    this.latitude = lat;
-    this.longitude = lng;
-    this.infoWindow.open();
+    this.ngZone.run(() => {
+      this.openMarker = true;
+      this.isChoice = false;
+  
+      this.latitude = lat;
+      this.longitude = lng;
+      this.infoWindow.open();
+    });
   }
 
   private getNearbyPlaces(latitude: number, longitude: number) {
@@ -104,7 +101,7 @@ export class FoodMapComponent implements OnInit {
         location: { lat: latitude, lng: longitude },
         type: 'food',
         types: ['food'],
-        radius: 500,
+        radius: 1000,
       },
       (results, status) => {
         if (status === 'OK' && results[0]) {
@@ -118,13 +115,15 @@ export class FoodMapComponent implements OnInit {
   }
 
   private getPlaceById(placeId: string) {
-    this.isPlaceLoading = true;
-    this.placesService.getDetails({ placeId: placeId }, (result, status) => {
-      if (status === 'OK') {
-        this.selectedPlace = result;
-        console.log(666, result);
-        this.isPlaceLoading = false;
-      }
+    this.ngZone.run(() => {
+      this.isPlaceLoading = true;
+  
+      this.placesService.getDetails({ placeId: placeId }, (result, status) => {
+        if (status === 'OK') {
+          this.selectedPlace = result;
+          this.isPlaceLoading = false; 
+        }
+      });
     });
   }
 
@@ -135,9 +134,9 @@ export class FoodMapComponent implements OnInit {
           if (!val.place_id) return;
           const lat = val.geometry.location.lat();
           const lng = val.geometry.location.lng();
+
           this.getPlaceById(val.place_id);
           this.setMarker(lat, lng);
-          this.setNewLocation(lat, lng);
         })
       )
       .subscribe();
@@ -151,5 +150,21 @@ export class FoodMapComponent implements OnInit {
 
   isInfoWindowOpen() {
     return true;
+  }
+
+  submitPlace() {
+    const place = this.selectedPlace;
+    this.isChoice = true;
+    if (!place.place_id) return;
+
+    this.selectPlace.emit({
+      [RestaurantFormFields.ID]: place.place_id,
+      [RestaurantFormFields.NAME]: place.name,
+      [RestaurantFormFields.FORMATTED_ADDRESS]: place.formatted_address,
+      [RestaurantFormFields.RATING]: place.rating,
+      [RestaurantFormFields.URL]: place.url,
+      [RestaurantFormFields.WEBSITE]: place.website,
+      [RestaurantFormFields.TYPES]: place.types,
+    });
   }
 }

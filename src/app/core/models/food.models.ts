@@ -1,3 +1,6 @@
+import { FoodState } from '@core/store/food/food.reducer';
+import { ResRestaurantDto } from './restaurant.models';
+
 export class ReqFoodDto {
   name: string;
   description: string;
@@ -5,23 +8,43 @@ export class ReqFoodDto {
   isFavorite: boolean;
   isPrivate: boolean;
   isPlanned: boolean;
-  photoPath = '';
-  photo: File;
-
-  restaurantId: number;
   foodTypeId: number;
 
-  constructor(form: FoodFormCreateModel) {
-    this.name = form.name;
-    this.description = form.description;
-    this.rate = form.rate;
-    this.isFavorite = form.isFavorite;
-    this.isPrivate = form.isPrivate;
-    this.isPlanned = form.isPlanned;
-    this.photo = form.photo;
+  photo: File;
 
-    this.restaurantId = form.restaurantId;
-    this.foodTypeId = form.foodTypeId;
+  restaurantId: string;
+  restaurantName: string;
+  restaurantFormattedAddress: string;
+  restaurantRating: number;
+  restaurantUrl: string;
+  restaurantWebsite: string;
+  restaurantTypes: string;
+
+  constructor(state: FoodState, file: File) {
+    const food = state.foodDraft.form;
+    const restaurant = state.mapDraft.form;
+
+    this.name = food.name;
+    this.description = food.description;
+    this.rate = food.rate;
+    this.isFavorite = food.isFavorite;
+    this.isPrivate = food.isPrivate;
+    this.isPlanned = food.isPlanned;
+    this.foodTypeId = food.foodTypeId;
+
+    this.photo = file;
+
+    this.restaurantId = restaurant.id;
+    this.restaurantName = restaurant.name;
+    this.restaurantFormattedAddress = restaurant.formattedAddress;
+    this.restaurantRating = restaurant.rating;
+    this.restaurantUrl = restaurant.url;
+    this.restaurantWebsite = restaurant.website;
+    this.restaurantTypes = this.createTypesString(restaurant.types);
+  }
+
+  createTypesString(types: string[]): string {
+    return types.join('$$$');
   }
 }
 
@@ -38,6 +61,7 @@ export interface ResFoodDto {
   createDate: string;
 
   restaurantId: number;
+  restaurant: ResRestaurantDto;
   foodTypeId: number;
 }
 
@@ -59,11 +83,9 @@ export enum FoodFormCreateFields {
 export interface FoodFormCreateModel {
   [FoodFormCreateFields.NAME]: string;
   [FoodFormCreateFields.DESCRIPTION]: string;
-  [FoodFormCreateFields.PHOTO]: File;
   [FoodFormCreateFields.RATE]: number;
   [FoodFormCreateFields.IS_FAVORITE]: boolean;
   [FoodFormCreateFields.IS_PRIVATE]: boolean;
   [FoodFormCreateFields.IS_PLANNED]: boolean;
-  [FoodFormCreateFields.RESTAURANT_ID]: number;
   [FoodFormCreateFields.FOOD_TYPE_ID]: number;
 }

@@ -8,15 +8,24 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormErrorsComponent } from './components/form-errors/form-errors.component';
 import { IonicModule } from '@ionic/angular';
 import { DisableControlDirective } from './directives/disable-control.directive';
-import {MatButtonModule} from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 import { AuthImagePipePipe } from './pipes/auth-image-pipe.pipe';
+import {MatTabsModule} from '@angular/material/tabs';
+import { ImagePickerComponent } from './components/image-picker/image-picker.component';
 
-const MATERIAL_MODULES = [MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule];
+const MATERIAL_MODULES = [
+  MatFormFieldModule,
+  MatInputModule,
+  MatSelectModule,
+  MatButtonModule,
+  MatTabsModule,
+];
 
 @NgModule({
   declarations: [
     FormErrorsComponent,
     LoadingButtonComponent,
+    ImagePickerComponent,
     DisableControlDirective,
     AuthImagePipePipe,
   ],
@@ -26,8 +35,9 @@ const MATERIAL_MODULES = [MatFormFieldModule, MatInputModule, MatSelectModule, M
     MATERIAL_MODULES,
     FormErrorsComponent,
     LoadingButtonComponent,
+    ImagePickerComponent,
     DisableControlDirective,
-    AuthImagePipePipe
+    AuthImagePipePipe,
   ],
 })
 export class SharedModule {}

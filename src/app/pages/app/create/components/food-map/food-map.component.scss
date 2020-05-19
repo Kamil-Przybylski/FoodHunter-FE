@@ -47,3 +47,8 @@ agm-map {
   height: 1rem;
   margin-bottom: 1rem;
 }
+
+.agm-selected {
+  background-color: limegreen;
+  transition: background-color .08s linear;
+}

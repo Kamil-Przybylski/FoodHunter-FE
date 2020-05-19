@@ -24,3 +24,16 @@ export const getFoodConditionSendErrors = createSelector(
   getDataCondition(EntitiesEnum.FOOD, 0),
   state => state ? state.sendErrors : null
 );
+
+export const getFoodIsMapValid = createSelector(
+  getFoodModuleState,
+  state => state.mapDraft && state.mapDraft.isValid
+);
+export const getFoodIsCameraValid = createSelector(
+  getFoodModuleState,
+  state => state.cameraDraft && state.cameraDraft.isValid
+);
+export const getFoodIsFormValid = createSelector(
+  getFoodModuleState,
+  state => state.foodDraft && state.foodDraft.isValid
+);

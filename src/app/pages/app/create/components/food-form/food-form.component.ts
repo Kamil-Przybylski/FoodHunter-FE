@@ -8,6 +8,7 @@ import { HttpErrorResDto } from '@core/models/custom-http.models';
 import { FormErrorUtil } from '@core/utils/form-error.util';
 import { FoodFormCreateModel, FoodFormCreateFields } from '@core/models/food.models';
 import { getFoodConditionIsSending, getFoodConditionSendErrors } from '@core/store/food/food.selectors';
+import { FoodDraftState } from '@core/store/food/food.reducer';
 
 @Component({
   selector: 'app-food-form',
@@ -16,7 +17,7 @@ import { getFoodConditionIsSending, getFoodConditionSendErrors } from '@core/sto
 })
 export class FoodFormComponent implements OnInit {
   @ViewChild('formRef', {static: true}) formRef: NgForm;
-  @Output() save = new EventEmitter<FoodFormCreateModel>();
+  @Output() save = new EventEmitter<FoodDraftState>();
 
   form: FormGroupTypeSafe<FoodFormCreateModel>;
   formFields = FoodFormCreateFields;
@@ -40,19 +41,12 @@ export class FoodFormComponent implements OnInit {
     this.form = this.fb.group<FoodFormCreateModel>({
       [this.formFields.NAME]: new FormControl('', Validators.required),
       [this.formFields.DESCRIPTION]: new FormControl('', Validators.maxLength(255)),
-      [this.formFields.PHOTO]: new FormControl(null),
-      [this.formFields.RATE]: new FormControl(6, [Validators.required]),
+      [this.formFields.RATE]: new FormControl(5, [Validators.required]),
       [this.formFields.IS_FAVORITE]: new FormControl(false, Validators.required),
       [this.formFields.IS_PRIVATE]: new FormControl(false, Validators.required),
       [this.formFields.IS_PLANNED]: new FormControl(false, Validators.required),
-      [this.formFields.RESTAURANT_ID]: new FormControl(1, Validators.required),
       [this.formFields.FOOD_TYPE_ID]: new FormControl(1, Validators.required),
     });
-  }
-
-  getFile(event: Event) {
-    const file = (event.target as HTMLInputElement).files[0];
-    this.form.get(this.formFields.PHOTO).setValue(file);
   }
 
   submitForm() {
@@ -61,7 +55,10 @@ export class FoodFormComponent implements OnInit {
 
   onSave() {
     if (this.form.valid) {
-      this.save.emit(this.form.value);
+      this.save.emit({
+        form: this.form.value,
+        isValid: this.form.valid
+      });
     } else {
       FormErrorUtil.setAllTouched(this.form);
     }
