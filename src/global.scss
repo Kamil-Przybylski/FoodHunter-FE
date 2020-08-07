@@ -35,9 +35,20 @@
   left: calc(50% - 14px) !important;
 }
 
-.app-center {
+.app-icon-button {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  
+  span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    ion-icon {
+      font-size: 26px;
+      margin: 0 0.5rem 0 0 !important;
+      padding: 0 !important;
+    }
+  }
 }

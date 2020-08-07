@@ -15,6 +15,16 @@ export const getAllFoods = createSelector(
   all => all
 );
 
+export const getAllFoodTypes = createSelector(
+  getEntitiesSelectAll(EntitiesEnum.FOOD_TYPE),
+  all => all
+);
+
+export const getAllFoodTags = createSelector(
+  getEntitiesSelectAll(EntitiesEnum.FOOD_TAG),
+  all => all
+);
+
 export const getFoodConditionIsSending = createSelector(
   getDataCondition(EntitiesEnum.FOOD, 0),
   state => state ? state.isSending : false
@@ -23,6 +33,11 @@ export const getFoodConditionIsSending = createSelector(
 export const getFoodConditionSendErrors = createSelector(
   getDataCondition(EntitiesEnum.FOOD, 0),
   state => state ? state.sendErrors : null
+);
+
+export const getFoodIsSubmitted = createSelector(
+  getFoodModuleState,
+  state => state.mapDraft && state.isSubmitted
 );
 
 export const getFoodIsMapValid = createSelector(

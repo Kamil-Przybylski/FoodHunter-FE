@@ -10,7 +10,13 @@
             name="checkmark-circle-outline"
           ></ion-icon>
           <ion-icon
-            *ngIf="!(isMapCorrect$ | async)"
+            *ngIf="!(isMapCorrect$ | async) && (isSubmitted$ | async)"
+            class="app_mat-stepper-icon ion-no-margin"
+            style="color: red"
+            name="alert-circle-outline"
+          ></ion-icon>
+          <ion-icon
+            *ngIf="!(isMapCorrect$ | async) && !(isSubmitted$ | async)"
             class="app_mat-stepper-icon ion-no-margin"
             name="map-outline"
           ></ion-icon>
@@ -38,7 +44,13 @@
             name="checkmark-circle-outline"
           ></ion-icon>
           <ion-icon
-            *ngIf="!(isCameraCorrect$ | async)"
+            *ngIf="!(isCameraCorrect$ | async) && (isSubmitted$ | async)"
+            class="app_mat-stepper-icon ion-no-margin"
+            style="color: red"
+            name="alert-circle-outline"
+          ></ion-icon>
+          <ion-icon
+            *ngIf="!(isCameraCorrect$ | async) && !(isSubmitted$ | async)"
             class="app_mat-stepper-icon ion-no-margin"
             name="camera-outline"
           ></ion-icon>
@@ -50,7 +62,7 @@
       <div class="h-100">
         <app-food-photo (selectPhoto)="setDraft(2, $event)"></app-food-photo>
       </div>
-    </mat-tab>
+    </mat-tab> 
     <mat-tab>
       <ng-template mat-tab-label>
         <div class="d-flex flex-column flex-x-center">
@@ -61,7 +73,13 @@
             name="checkmark-circle-outline"
           ></ion-icon>
           <ion-icon
-            *ngIf="!(isFormCorrect$ | async)"
+            *ngIf="!(isFormCorrect$ | async) && (isSubmitted$ | async)"
+            class="app_mat-stepper-icon ion-no-margin"
+            style="color: red"
+            name="alert-circle-outline"
+          ></ion-icon>
+          <ion-icon
+            *ngIf="!(isFormCorrect$ | async) && !(isSubmitted$ | async)"
             class="app_mat-stepper-icon ion-no-margin"
             name="document-text-outline"
           ></ion-icon>
@@ -73,6 +91,7 @@
       <div class="h-100 ion-margin">
         <app-food-form
           class="h-100"
+          [foodTypes$]="foodTypes$"
           (save)="save($event)"
           #form
         ></app-food-form>

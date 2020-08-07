@@ -1,16 +1,12 @@
-import {
-  createFeatureSelector,
-  createReducer,
-  combineReducers,
-  on,
-} from '@ngrx/store';
+import { createFeatureSelector, createReducer, on } from '@ngrx/store';
 import { RestaurantFormModel } from '@core/models/restaurant.models';
 import { FoodFormCreateModel } from '@core/models/food.models';
-import { PayloadAction } from '..';
 import {
   foodDraftMapAction,
   foodDraftCameraAction,
   foodDraftFoodAction,
+  foodCreateAction,
+  foodDraftTrueSubmitAction,
 } from './food.actions';
 import * as _ from 'lodash';
 
@@ -36,25 +32,29 @@ export interface FoodState {
   mapDraft: MapDraftState;
   cameraDraft: CameraDraftState;
   foodDraft: FoodDraftState;
+  isSubmitted: boolean;
 }
+const foodInitialState = {
+  mapDraft: MapInitialState,
+  cameraDraft: MapInitialState,
+  foodDraft: MapInitialState,
+  isSubmitted: false,
+};
 
-const mapDraftReducer = createReducer(
-  MapInitialState,
-  on(foodDraftMapAction, (state, { payload }) => _.assign({}, state, payload))
+export const foodReducer = createReducer(
+  foodInitialState,
+  on(foodDraftMapAction, (state, { payload }) =>
+    _.assign({}, state, { mapDraft: payload })
+  ),
+  on(foodDraftCameraAction, (state, { payload }) =>
+    _.assign({}, state, { cameraDraft: payload })
+  ),
+  on(foodDraftFoodAction, (state, { payload }) =>
+    _.assign({}, state, { foodDraft: payload })
+  ),
+  on(foodDraftTrueSubmitAction, foodCreateAction, (state) =>
+    _.assign({}, state, { isSubmitted: true })
+  )
 );
-const cameraDraftReducer = createReducer(
-  MapInitialState,
-  on(foodDraftCameraAction, (state, { payload }) => _.assign({}, state, payload))
-);
-const foodDraftReducer = createReducer(
-  MapInitialState,
-  on(foodDraftFoodAction, (state, { payload }) => _.assign({}, state, payload))
-);
-
-export const foodReducer = combineReducers<FoodState, PayloadAction>({
-  mapDraft: mapDraftReducer,
-  cameraDraft: cameraDraftReducer,
-  foodDraft: foodDraftReducer,
-});
 
 export const getFoodModuleState = createFeatureSelector<FoodState>('food');

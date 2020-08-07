@@ -11,7 +11,6 @@
   class="h-100 w-100"
   autocomplete="on"
 >
-
   <mat-form-field class="w-100">
     <mat-label>Nazwa dania</mat-label>
     <input
@@ -28,8 +27,22 @@
   </mat-form-field>
 
   <mat-form-field class="w-100">
+    <mat-label>Typ dania</mat-label>
+    <mat-select
+      [formControlName]="formFields.FOOD_TYPE_ID"
+      [appDisableControl]="isSending$ | async"
+      placeholder="Wybierz typ dania..."
+      required
+    >
+      <mat-option *ngFor="let type of foodTypes$ | async" [value]="type.id">
+        {{ type.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="w-100">
     <mat-label>Opis</mat-label>
-    <textarea 
+    <textarea
       matInput
       [formControlName]="formFields.DESCRIPTION"
       [appDisableControl]="isSending$ | async"
@@ -49,7 +62,7 @@
       [formControlName]="formFields.RATE"
       [appDisableControl]="isSending$ | async"
       type="number"
-      min="0" 
+      min="0"
       max="6"
       required
     />
@@ -58,4 +71,19 @@
     </mat-error>
   </mat-form-field>
 
+  <div class="w-100">
+    <mat-checkbox [formControlName]="formFields.IS_FAVORITE"
+      >Ulubione</mat-checkbox
+    >
+  </div>
+  <div class="w-100">
+    <mat-checkbox [formControlName]="formFields.IS_PRIVATE"
+      >Prywatne</mat-checkbox
+    >
+  </div>
+  <div class="w-100">
+    <mat-checkbox [formControlName]="formFields.IS_PLANNED"
+      >Planowane</mat-checkbox
+    >
+  </div>
 </form>

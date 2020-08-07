@@ -9,6 +9,9 @@ import {
   foodDraftMapAction,
   foodDraftCameraAction,
   foodDraftFoodAction,
+  foodDraftTrueSubmitAction,
+  foodTypesDownloadAction,
+  foodTagsDownloadAction,
 } from '@core/store/food/food.actions';
 import {
   getFoodConditionIsSending,
@@ -16,12 +19,17 @@ import {
   getFoodIsCameraValid,
   getFoodIsFormValid,
   getFoodState,
+  getFoodIsSubmitted,
+  getAllFoodTypes,
+  getAllFoodTags,
 } from '@core/store/food/food.selectors';
 import { Plugins, Capacitor } from '@capacitor/core';
 import { AlertController } from '@ionic/angular';
 import { RestaurantFormModel } from '@core/models/restaurant.models';
 import { MatTabGroup } from '@angular/material/tabs';
 import { filter, take, tap } from 'rxjs/operators';
+import { ResFoodTypesDto } from '@core/models/food-types.models';
+import { ResFoodTagsDto } from '@core/models/food-tags.models';
 
 @Component({
   selector: 'app-food-container',
@@ -32,10 +40,15 @@ export class FoodContainerComponent implements OnInit {
   @ViewChild(MatTabGroup, { static: false }) matTabGroup: MatTabGroup;
 
   isSending$: Observable<boolean>;
+  isSubmitted$: Observable<boolean>;
+  foodTypes$: Observable<ResFoodTypesDto[]>;
+  foodTags$: Observable<ResFoodTagsDto[]>;
+
   isMapCorrect$: Observable<boolean>;
   isCameraCorrect$: Observable<boolean>;
   isFormCorrect$: Observable<boolean>;
 
+  defaultGeo = { lat: 52.231687, lng: 21.006199 };
   geolocation = { lat: 0, lng: 0 };
 
   constructor(
@@ -49,9 +62,14 @@ export class FoodContainerComponent implements OnInit {
     this.isCameraCorrect$ = this.store.pipe(select(getFoodIsCameraValid));
     this.isFormCorrect$ = this.store.pipe(select(getFoodIsFormValid));
 
+    this.foodTypes$ = this.store.pipe(select(getAllFoodTypes));
+    this.foodTags$ = this.store.pipe(select(getAllFoodTags));
+
+    this.isSubmitted$ = this.store.pipe(select(getFoodIsSubmitted));
     this.isSending$ = this.store.pipe(select(getFoodConditionIsSending));
 
     this.setCurrentLocation();
+    this.downloadData();
   }
 
   setDraft(
@@ -79,19 +97,29 @@ export class FoodContainerComponent implements OnInit {
     }, 500);
   }
 
+  private downloadData() {
+    this.store.dispatch(foodTypesDownloadAction());
+    this.store.dispatch(foodTagsDownloadAction());
+  }
+
   private setCurrentLocation() {
     if (!Capacitor.isPluginAvailable('Geolocation')) {
       this.alertMsg();
 
-      this.geolocation.lat = 52.231687;
-      this.geolocation.lng = 21.006199;
+      this.geolocation.lat = this.defaultGeo.lat;
+      this.geolocation.lng = this.defaultGeo.lng;
     } else {
       Plugins.Geolocation.getCurrentPosition()
         .then((geoposition) => {
           this.geolocation.lat = geoposition.coords.latitude;
           this.geolocation.lng = geoposition.coords.longitude;
         })
-        .catch((err) => this.alertMsg());
+        .catch((err) => {
+          this.geolocation.lat = this.defaultGeo.lat;
+          this.geolocation.lng = this.defaultGeo.lng;
+
+          this.alertMsg();
+        });
     }
   }
 
@@ -114,18 +142,20 @@ export class FoodContainerComponent implements OnInit {
       .select(getFoodState)
       .pipe(
         take(1),
-        filter(
-          (state) =>
+        tap((state) => {
+          if (
             state.mapDraft.isValid &&
             state.cameraDraft.isValid &&
             state.foodDraft.isValid
-        ),
-        tap((state) => {
-          this.store.dispatch(
-            foodCreateAction({
-              payload: state,
-            })
-          );
+          ) {
+            this.store.dispatch(
+              foodCreateAction({
+                payload: state,
+              })
+            );
+          } else {
+            this.store.dispatch(foodDraftTrueSubmitAction());
+          }
         })
       )
       .subscribe();

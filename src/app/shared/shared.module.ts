@@ -12,13 +12,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { AuthImagePipePipe } from './pipes/auth-image-pipe.pipe';
 import {MatTabsModule} from '@angular/material/tabs';
 import { ImagePickerComponent } from './components/image-picker/image-picker.component';
-
+import {MatCheckboxModule} from '@angular/material/checkbox';
 const MATERIAL_MODULES = [
   MatFormFieldModule,
   MatInputModule,
   MatSelectModule,
   MatButtonModule,
   MatTabsModule,
+  MatCheckboxModule
 ];
 
 @NgModule({

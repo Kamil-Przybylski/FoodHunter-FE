@@ -1,7 +1,6 @@
 import { EntitiesStateComponents } from './../entities/entities.models';
 import { createAction, Action, props } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
 import { HttpErrorResDto } from '@core/models/custom-http.models';
 
 export const downloadAction = <T extends keyof EntitiesStateComponents, P>() =>

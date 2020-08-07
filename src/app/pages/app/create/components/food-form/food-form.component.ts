@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroupTypeSafe, FormBuilderTypeSafe } from '@core/utils/form-builder-type-safe';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '@core/store';
@@ -9,6 +9,7 @@ import { FormErrorUtil } from '@core/utils/form-error.util';
 import { FoodFormCreateModel, FoodFormCreateFields } from '@core/models/food.models';
 import { getFoodConditionIsSending, getFoodConditionSendErrors } from '@core/store/food/food.selectors';
 import { FoodDraftState } from '@core/store/food/food.reducer';
+import { ResFoodTypesDto } from '@core/models/food-types.models';
 
 @Component({
   selector: 'app-food-form',
@@ -16,6 +17,7 @@ import { FoodDraftState } from '@core/store/food/food.reducer';
   styleUrls: ['./food-form.component.scss'],
 })
 export class FoodFormComponent implements OnInit {
+  @Input() foodTypes$: Observable<ResFoodTypesDto[]>;
   @ViewChild('formRef', {static: true}) formRef: NgForm;
   @Output() save = new EventEmitter<FoodDraftState>();
 
@@ -45,7 +47,7 @@ export class FoodFormComponent implements OnInit {
       [this.formFields.IS_FAVORITE]: new FormControl(false, Validators.required),
       [this.formFields.IS_PRIVATE]: new FormControl(false, Validators.required),
       [this.formFields.IS_PLANNED]: new FormControl(false, Validators.required),
-      [this.formFields.FOOD_TYPE_ID]: new FormControl(1, Validators.required),
+      [this.formFields.FOOD_TYPE_ID]: new FormControl(null, Validators.required),
     });
   }
 

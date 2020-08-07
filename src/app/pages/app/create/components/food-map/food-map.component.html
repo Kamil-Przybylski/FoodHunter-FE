@@ -18,7 +18,7 @@
     >
       <option disabled selected [value]="''">Miejsca w okolicy...</option>
       <option *ngFor="let option of options" [ngValue]="option">
-        {{option.name}}
+        {{ option.name }}
       </option>
     </select>
   </div>
@@ -39,7 +39,7 @@
     >
       <agm-info-window [disableAutoPan]="false" #infoWindow>
         <ng-container *ngIf="!isPlaceLoading">
-          <h6 style="margin-top: 0; margin-bottom: 0.2rem">
+          <h6 style="margin-top: 0; margin-bottom: 0.2rem;">
             {{ selectedPlace?.name }}
           </h6>
           <p>{{ selectedPlace?.formatted_address }}</p>
@@ -47,7 +47,13 @@
             <a>{{ selectedPlace?.website }}</a>
           </div> -->
           <div class="w-100">
-            <button [class.agm-selected]="isChoice" class="w-100 agm-info-button" ion-button color="primary" (click)="submitPlace()">
+            <button
+              mat-stroked-button
+              [class.agm-selected]="isChoice"
+              class="w-100 agm-info-button"
+              color="primary"
+              (click)="submitPlace()"
+            >
               <ion-icon name="arrow-redo-circle-outline"></ion-icon>
               Wybierz
             </button>
