@@ -1,29 +1,20 @@
-import { environment } from './../../../environments/environment';
-import {
-  ReqSingInDto,
-  ResSingInDto,
-  ResUserDto,
-  ReqSingUpDto,
-  AuthFormSingInModel,
-} from '@core/models/auth.models';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '@core/store';
 import {
   getAuthState,
 } from '@core/store/core/auth/auth.selectors';
-import { take, map, filter } from 'rxjs/operators';
+import { take, map, filter, share } from 'rxjs/operators';
 import { FormSingUpModel } from 'src/app/pages/register/register-form/register-form.component';
 import { TokenEnum } from 'src/config';
+import { HttpDtoService } from './http-dto.service';
+import { AuthData, AuthDataDtoModel, AuthFormSingInModel, AuthUser, AuthUserDtoModel } from '@core/models/auth.models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private baseUrl = environment.apiUrl;
-
   private postfixes = {
     AUTH: 'auth',
     SING_IN: 'singin',
@@ -31,28 +22,28 @@ export class AuthService {
     LOGIN: 'login',
   };
 
-  constructor(private httpClient: HttpClient, private store: Store<AppState>) {}
+  constructor(private httpDtoService: HttpDtoService, private store: Store<AppState>) {}
 
-  singIn(credetials: AuthFormSingInModel): Observable<ResSingInDto> {
-    const req = new ReqSingInDto(credetials.email, credetials.password);
-    return this.httpClient.post<ResSingInDto>(
-      `${this.baseUrl}/${this.postfixes.AUTH}/${this.postfixes.SING_IN}`,
-      req
-    );
+  singIn(credetials: AuthFormSingInModel): Observable<AuthData> {
+    const req = AuthDataDtoModel.getReqSignInDto(credetials.email, credetials.password);
+
+    return this.httpDtoService
+      .post<AuthData>(AuthDataDtoModel, `${this.postfixes.AUTH}/${this.postfixes.SING_IN}`, req)
+      .pipe(share());
   }
 
   singUp(credetials: FormSingUpModel): Observable<null> {
-    const req = new ReqSingUpDto(credetials.username, credetials.email, credetials.password);
-    return this.httpClient.post<null>(
-      `${this.baseUrl}/${this.postfixes.AUTH}/${this.postfixes.SING_UP}`,
-      req
-    );
+    const req = AuthDataDtoModel.getReqSingUpDto(credetials.username, credetials.email, credetials.password);
+
+    return this.httpDtoService
+      .post<null>(AuthDataDtoModel, `${this.postfixes.AUTH}/${this.postfixes.SING_UP}`, req)
+      .pipe(share());
   }
 
-  login(): Observable<ResUserDto> {
-    return this.httpClient.get<ResUserDto>(
-      `${this.baseUrl}/${this.postfixes.AUTH}/${this.postfixes.LOGIN}`
-    );
+  login(): Observable<AuthUser> {
+    return this.httpDtoService
+      .get<AuthUser>(AuthUserDtoModel, `${this.postfixes.AUTH}/${this.postfixes.LOGIN}`)
+      .pipe(share());
   }
 
   isLogged(): Observable<boolean> {

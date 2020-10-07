@@ -1,7 +1,6 @@
-import { ResUserDto, AuthFormSingInModel } from '@core/models/auth.models';
+import { AuthData, AuthFormSingInModel, AuthUser } from '@core/models/auth.models';
 import { HttpErrorRes } from './../../../models/custom-http.models';
 import { createAction, props } from '@ngrx/store';
-import { ResSingInDto } from 'src/app/core/models/auth.models';
 import { FormSingUpModel } from 'src/app/pages/register/register-form/register-form.component';
 
 export const authSingInAction = createAction(
@@ -10,7 +9,7 @@ export const authSingInAction = createAction(
 );
 export const authSingInSuccessAction = createAction(
   '[Auth] Sing In Success',
-  props<{ payload: ResSingInDto }>()
+  props<{ payload: AuthData }>()
 );
 export const authSingInFailAction = createAction(
   '[Auth] Sing In Fail',
@@ -25,7 +24,7 @@ export const authLoginAction = createAction(
 );
 export const authLoginSuccessAction = createAction(
   '[Auth] Login Success',
-  props<{ payload: { user: ResUserDto; url: string } }>()
+  props<{ payload: { user: AuthUser; url: string } }>()
 );
 export const authLoginFailAction = createAction('[Auth] Login Fail Action');
 

@@ -9,7 +9,7 @@ import { FormErrorUtil } from '@core/utils/form-error.util';
 import { FoodFormCreateModel, FoodFormCreateFields } from '@core/models/food.models';
 import { getFoodConditionIsSending, getFoodConditionSendErrors } from '@core/store/food/food.selectors';
 import { FoodDraftState } from '@core/store/food/food.reducer';
-import { ResFoodTypesDto } from '@core/models/food-types.models';
+import { FoodType } from '@core/models/food-types.models';
 
 @Component({
   selector: 'app-food-form',
@@ -17,7 +17,7 @@ import { ResFoodTypesDto } from '@core/models/food-types.models';
   styleUrls: ['./food-form.component.scss'],
 })
 export class FoodFormComponent implements OnInit {
-  @Input() foodTypes$: Observable<ResFoodTypesDto[]>;
+  @Input() foodTypes$: Observable<FoodType[]>;
   @ViewChild('formRef', {static: true}) formRef: NgForm;
   @Output() save = new EventEmitter<FoodDraftState>();
 

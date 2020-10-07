@@ -1,3 +1,27 @@
+import { Expose } from 'class-transformer';
+import { IsNumber, IsString } from 'class-validator';
+
+export interface Restaurant {
+  id: string;
+  formattedAddress: string;
+  name: string;
+  rating: number;
+  types: string[];
+  url: string;
+  website: string;
+}
+export class RestaurantDtoModel {
+  @Expose() @IsString() id: string;
+  @Expose() @IsString() formattedAddress: string;
+  @Expose() @IsString() name: string;
+  @Expose() @IsNumber() rating: number;
+  @Expose() @IsString({each: true}) types: string[];
+  @Expose() @IsString() url: string;
+  @Expose() @IsString() website: string;
+}
+
+// FORMS
+
 export enum RestaurantFormFields {
   ID = 'id',
   NAME = 'name',
@@ -16,14 +40,4 @@ export interface RestaurantFormModel {
   [RestaurantFormFields.URL]: string;
   [RestaurantFormFields.WEBSITE]: string;
   [RestaurantFormFields.TYPES]: string[];
-}
-
-export interface ResRestaurantDto {
-  formatted_address: string;
-  id: string;
-  name: string;
-  rating: number;
-  types: string[];
-  url: string;
-  website: string;
 }

@@ -23,7 +23,7 @@ const getSelectors = <T extends keyof EntitiesStateComponents>(
 export const getEntitiesSelectIds = <T extends keyof EntitiesStateComponents>(
   type: T
 ) =>
-  createSelector(getEntityState(type) as any, getSelectors<T>(type).selectIds);
+  createSelector(getEntityState(type), getSelectors<T>(type).selectIds);
 
 export const getEntitiesSelectEntities = <
   T extends keyof EntitiesStateComponents
@@ -31,15 +31,15 @@ export const getEntitiesSelectEntities = <
   type: T
 ) =>
   createSelector(
-    getEntityState(type) as any,
-    getSelectors(type).selectEntities
+    getEntityState(type),
+    getSelectors<T>(type).selectEntities
   );
 
 export const getEntitiesSelectAll = <T extends keyof EntitiesStateComponents>(
   type: T
-) => createSelector(getEntityState(type) as any, getSelectors(type).selectAll);
+) => createSelector(getEntityState(type), getSelectors<T>(type).selectAll);
 
 export const getEntitiesSelectTotal = <T extends keyof EntitiesStateComponents>(
   type: T
 ) =>
-  createSelector(getEntityState(type) as any, getSelectors(type).selectTotal);
+  createSelector(getEntityState(type), getSelectors<T>(type).selectTotal);

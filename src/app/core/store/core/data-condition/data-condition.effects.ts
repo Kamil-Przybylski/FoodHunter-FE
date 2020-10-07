@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
-import { filter, tap, switchMap, mergeMap, catchError } from 'rxjs/operators';
+import { tap, switchMap, mergeMap, catchError } from 'rxjs/operators';
 import * as dataCondtitionActions from './data-condition.actions';
 import * as entitiesActions from '../entities/entities.actions';
 import * as _ from 'lodash';
@@ -222,8 +222,5 @@ export class DataConditionEffects {
     return !hasIds.length ? ids : [];
   }
 
-  constructor(
-    private actions$: Actions,
-    private notifierService: NotifierService
-  ) {}
+  constructor(private actions$: Actions, private notifierService: NotifierService) {}
 }

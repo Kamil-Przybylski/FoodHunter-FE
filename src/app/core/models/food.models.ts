@@ -1,54 +1,10 @@
 import { FoodState } from '@core/store/food/food.reducer';
-import { ResRestaurantDto } from './restaurant.models';
+import { HttpUtil } from '@core/utils/http.util';
+import { Expose, Transform, Type } from 'class-transformer';
+import { IsBoolean, IsNumber, IsString, ValidateNested } from 'class-validator';
+import { Restaurant, RestaurantDtoModel } from './restaurant.models';
 
-export class ReqFoodDto {
-  name: string;
-  description: string;
-  rate: number;
-  isFavorite: boolean;
-  isPrivate: boolean;
-  isPlanned: boolean;
-  foodTypeId: number;
-
-  photo: File;
-
-  restaurantId: string;
-  restaurantName: string;
-  restaurantFormattedAddress: string;
-  restaurantRating: number;
-  restaurantUrl: string;
-  restaurantWebsite: string;
-  restaurantTypes: string;
-
-  constructor(state: FoodState, file: File) {
-    const food = state.foodDraft.form;
-    const restaurant = state.mapDraft.form;
-
-    this.name = food.name;
-    this.description = food.description;
-    this.rate = food.rate;
-    this.isFavorite = food.isFavorite;
-    this.isPrivate = food.isPrivate;
-    this.isPlanned = food.isPlanned;
-    this.foodTypeId = food.foodTypeId;
-
-    this.photo = file;
-
-    this.restaurantId = restaurant.id;
-    this.restaurantName = restaurant.name;
-    this.restaurantFormattedAddress = restaurant.formattedAddress;
-    this.restaurantRating = restaurant.rating;
-    this.restaurantUrl = restaurant.url;
-    this.restaurantWebsite = restaurant.website;
-    this.restaurantTypes = this.createTypesString(restaurant.types);
-  }
-
-  createTypesString(types: string[]): string {
-    return types.join('$$$');
-  }
-}
-
-export interface ResFoodDto {
+export interface Food {
   id: number;
   name: string;
   description: string;
@@ -57,14 +13,57 @@ export interface ResFoodDto {
   isPrivate: boolean;
   isPlanned: boolean;
   photoPath: string;
-
   createDate: string;
 
   restaurantId: number;
-  restaurant: ResRestaurantDto;
+  restaurant: Restaurant;
   foodTypeId: number;
 }
+export class FoodDtoModel {
+  @Expose() @IsNumber() id: number;
+  @Expose() @IsString() name: string;
 
+  @Expose() @IsString() description: string;
+  @Expose() @IsNumber() rate: number;
+  @Expose() @IsBoolean() isFavorite: boolean;
+  @Expose() @IsBoolean() isPrivate: boolean;
+  @Expose() @IsBoolean() isPlanned: boolean;
+  @Expose() @IsString() @Transform(value => HttpUtil.getImgUrl(value), { toClassOnly: true }) photoPath: string;
+  @Expose() @IsString() createDate: string;
+
+  @Expose() @IsString() restaurantId: string;
+  @Expose() @Type(() => RestaurantDtoModel) @ValidateNested() restaurant: RestaurantDtoModel;
+  @Expose() @IsNumber() foodTypeId: number;
+
+  static createTypesString(types: string[]): string {
+    return types.join('$$$');
+  }
+
+  static getReqFoodDto(state: FoodState, file: File) {
+    const food = state.foodDraft.form;
+    const restaurant = state.mapDraft.form;
+
+    return {
+      name: food.name,
+      description: food.description,
+      rate: food.rate,
+      isFavorite: food.isFavorite,
+      isPrivate: food.isPrivate,
+      isPlanned: food.isPlanned,
+      foodTypeId: food.foodTypeId,
+
+      photo: file,
+
+      restaurantId: restaurant.id,
+      restaurantName: restaurant.name,
+      restaurantFormattedAddress: restaurant.formattedAddress,
+      restaurantRating: restaurant.rating,
+      restaurantUrl: restaurant.url,
+      restaurantWebsite: restaurant.website,
+      restaurantTypes: this.createTypesString(restaurant.types),
+    };
+  }
+}
 
 // FORM 
 

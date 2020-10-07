@@ -1,11 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  FormGroup,
-  FormControl,
-  FormBuilder,
-  AbstractControl,
-  FormArray
-} from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, AbstractControl, FormArray } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 export type FormGroupControlsOf<T> = {
@@ -17,17 +11,11 @@ export abstract class FormGroupTypeSafe<T> extends FormGroup {
   value: T;
 
   // create helper methods to achieve this syntax eg: this.form.getSafe(x => x.heroName).patchValue('Himan')
-  public abstract getSafe(
-    propertyFunction: (typeVal: T) => any
-  ): AbstractControl;
-  public abstract setControlSafe(
-    propertyFunction: (typeVal: T) => any,
-    control: AbstractControl
-  ): void;
+  public abstract getSafe(propertyFunction: (typeVal: T) => any): AbstractControl;
+  public abstract setControlSafe(propertyFunction: (typeVal: T) => any, control: AbstractControl): void;
+  
   // If you need more function implement declare them here but implement them on FormBuilderTypeSafe.group instantiation.
-  public abstract clearFormArray(
-    formArray: FormArray
-  ): void;
+  public abstract clearFormArray(formArray: FormArray): void;
   public abstract valueSafeChanges(): Observable<T>;
 }
 
@@ -36,10 +24,9 @@ export class FormControlTypeSafe<T> extends FormControl {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FormBuilderTypeSafe extends FormBuilder {
-
   group<T>(
     controlsConfig: FormGroupControlsOf<T>,
     extra?: {
@@ -75,18 +62,13 @@ export class FormBuilderTypeSafe extends FormBuilder {
       };
 
       // implement setControlSafe
-      gr.setControlSafe = (
-        propertyFunction: (typeVal: T) => any,
-        control: AbstractControl
-      ): void => {
+      gr.setControlSafe = (propertyFunction: (typeVal: T) => any, control: AbstractControl): void => {
         const getStr = getPropertyName(propertyFunction);
         gr.setControl(getStr, control);
       };
 
       // implement more functions as needed
-      gr.clearFormArray = (
-        formArray: FormArray
-      ): void => {
+      gr.clearFormArray = (formArray: FormArray): void => {
         if (!formArray) return;
         while (formArray.length !== 0) {
           formArray.removeAt(0);
@@ -100,5 +82,4 @@ export class FormBuilderTypeSafe extends FormBuilder {
 
     return gr;
   }
-
 }

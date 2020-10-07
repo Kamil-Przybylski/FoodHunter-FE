@@ -13,7 +13,7 @@ interface AdaptersType {
 }
 
 const getAdapters = (): AdaptersType => {
-  const adapterFactory = {} as any;
+  const adapterFactory = {};
   _.forEach(EntitiesEnum, (key) => {
     adapterFactory[key] = createEntityAdapter();
   });

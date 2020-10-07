@@ -1,4 +1,3 @@
-import { ResFoodDto } from '@core/models/food.models';
 import * as _ from 'lodash';
 import { environment } from 'src/environments/environment';
 
@@ -14,14 +13,7 @@ export class HttpUtil {
     return formData;
   }
 
-  static getImgUrl(foods: ResFoodDto[], postfix: string) {
-    return _.map(
-      foods,
-      (food) =>
-        ({
-          ...food,
-          photoPath: `${environment.apiUrl}/${food.photoPath}`,
-        } as ResFoodDto)
-    );
+  static getImgUrl(path: string): string {
+    return `${environment.apiUrl}/${path}`;
   }
 }

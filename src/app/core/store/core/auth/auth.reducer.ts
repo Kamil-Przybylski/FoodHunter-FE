@@ -1,8 +1,8 @@
 import { createReducer, on } from '@ngrx/store';
-import { ResUserDto } from 'src/app/core/models/auth.models';
 import * as authActions from './auth.actions';
 import * as _ from 'lodash';
 import { HttpErrorRes } from '@core/models/custom-http.models';
+import { AuthUser } from '@core/models/auth.models';
 
 export interface AuthState {
   isLogging: boolean;
@@ -12,7 +12,7 @@ export interface AuthState {
   isRegistration: boolean;
   registerErrors: HttpErrorRes;
 
-  userData: ResUserDto;
+  userData: AuthUser;
 }
 
 const initialState: AuthState = {

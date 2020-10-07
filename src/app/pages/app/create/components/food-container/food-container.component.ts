@@ -27,9 +27,9 @@ import { Plugins, Capacitor } from '@capacitor/core';
 import { AlertController } from '@ionic/angular';
 import { RestaurantFormModel } from '@core/models/restaurant.models';
 import { MatTabGroup } from '@angular/material/tabs';
-import { filter, take, tap } from 'rxjs/operators';
-import { ResFoodTypesDto } from '@core/models/food-types.models';
-import { ResFoodTagsDto } from '@core/models/food-tags.models';
+import { take, tap } from 'rxjs/operators';
+import { FoodType } from '@core/models/food-types.models';
+import { FoodTag } from '@core/models/food-tags.models';
 
 @Component({
   selector: 'app-food-container',
@@ -41,8 +41,8 @@ export class FoodContainerComponent implements OnInit {
 
   isSending$: Observable<boolean>;
   isSubmitted$: Observable<boolean>;
-  foodTypes$: Observable<ResFoodTypesDto[]>;
-  foodTags$: Observable<ResFoodTagsDto[]>;
+  foodTypes$: Observable<FoodType[]>;
+  foodTags$: Observable<FoodTag[]>;
 
   isMapCorrect$: Observable<boolean>;
   isCameraCorrect$: Observable<boolean>;
