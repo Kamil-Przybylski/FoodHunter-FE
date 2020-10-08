@@ -6,6 +6,7 @@ import { FoodState } from '@core/store/food/food.reducer';
 import { PhotoHelper } from '@core/utils/photo.helper';
 import { Food, FoodDtoModel } from '@core/models/food.models';
 import { HttpDtoService } from './http-dto.service';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,7 @@ export class FoodService {
 
   downloadFoods(): Observable<Food[]> {
     return this.httpDtoService
-      .get<FoodDtoModel, Food[]>(FoodDtoModel, this.postfixes.FOOD);
+      .get<Food[], FoodDtoModel>(FoodDtoModel, this.postfixes.FOOD);
   }
 
   createFood(payload: FoodState): Observable<Food[]> {
@@ -32,6 +33,7 @@ export class FoodService {
     const data = HttpUtil.toFormData(req);
 
     return this.httpDtoService
-      .post<FoodDtoModel, Food[]>(FoodDtoModel, this.postfixes.FOOD, data);
+      .post<Food, FoodDtoModel>(FoodDtoModel, this.postfixes.FOOD, data)
+      .pipe(map(res => [res]));
   }
 }

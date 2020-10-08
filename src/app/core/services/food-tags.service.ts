@@ -17,7 +17,7 @@ export class FoodTagsService {
 
   downloadFoodTags(): Observable<FoodTag[]> {
     return this.httpDtoService
-      .get<FoodTag[]>(FoodTagDtoModel, this.postfixes.TAGS);
+      .get<FoodTag[], FoodTagDtoModel>(FoodTagDtoModel, this.postfixes.TAGS);
   }
 
 }

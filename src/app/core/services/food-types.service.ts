@@ -15,6 +15,6 @@ export class FoodTypesService {
 
   downloadFoodTypes(): Observable<FoodType[]> {
     return this.httpDtoService
-      .get<FoodType[]>(FoodTypeDtoModel, this.postfixes.FOOD_TYPES);
+      .get<FoodType[], FoodTypeDtoModel>(FoodTypeDtoModel, this.postfixes.FOOD_TYPES);
   }
 }

@@ -7,7 +7,7 @@ import { plainToClass, classToPlain, ClassTransformOptions } from 'class-transfo
 import { ClassType } from 'class-transformer/ClassTransformer';
 import { validate, ValidationError } from 'class-validator';
 import * as _ from 'lodash';
-import { HttpOptions } from '@core/models/custom-http.models';
+import { DtoWrapper, HttpOptions } from '@core/models/custom-http.models';
 
 const plainToClassOptions: ClassTransformOptions = {
   strategy: 'excludeAll',
@@ -22,7 +22,7 @@ export class HttpDtoService {
 
   constructor(private httpClient: HttpClient) {}
 
-  private checkErrorsAndReturnPlain<C, R>({ res, errors }: { res: C; errors: ValidationError[] }): R {
+  private checkErrorsAndReturnPlain<R, C>({ res, errors }: { res: C; errors: ValidationError[] }): R {
     if (errors.length > 0) {
       console.error('FH-Error: Niepoprawny format przychodzących danych', errors);
       throw new Error('Niepoprawny format przychodzących danych');
@@ -45,20 +45,23 @@ export class HttpDtoService {
       return from(validate(r)).pipe(map((e) => ({ res: r, errors: e })));
     }
   }
-
-  get<C, R>(model: ClassType<C>, url: string, options?: HttpOptions): Observable<R> {
+  
+  get<R, C extends DtoWrapper<R>>(model: ClassType<C>, url: string, options?: HttpOptions): Observable<R> {
     return this.httpClient.get<unknown>(`${this.baseAuthApiUrl}/${url}`, options || {}).pipe(
       map((r) => plainToClass<C, unknown>(model, r, plainToClassOptions)),
       switchMap((r) => this.validateClass<C>(r)),
-      map((r) => this.checkErrorsAndReturnPlain<C, R>(r))
+      map((r) => this.checkErrorsAndReturnPlain<R, C>(r))
     );
   }
 
-  post<C, R>(model: ClassType<C>, url: string, payload: unknown, options?: HttpOptions): Observable<R> {
+  post<R, C extends DtoWrapper<R>>(model: ClassType<C>, url: string, payload: unknown, options?: HttpOptions): Observable<R> {
     return this.httpClient.post<unknown>(`${this.baseAuthApiUrl}/${url}`, payload, options || {}).pipe(
       map((r) => plainToClass<C, unknown>(model, r, plainToClassOptions)),
       switchMap((r) => this.validateClass<C>(r)),
-      map((r) => this.checkErrorsAndReturnPlain<C, R>(r))
+      map((r) => this.checkErrorsAndReturnPlain<R, C>(r))
     );
   }
 }
+
+
+

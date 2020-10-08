@@ -28,3 +28,5 @@ export interface HttpOptions {
   responseType?: 'json';
   withCredentials?: boolean;
 }
+
+export abstract class DtoWrapper<T> {}

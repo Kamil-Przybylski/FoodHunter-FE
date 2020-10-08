@@ -28,7 +28,7 @@ export class AuthService {
     const req = AuthDataDtoModel.getReqSignInDto(credetials.email, credetials.password);
 
     return this.httpDtoService
-      .post<AuthData>(AuthDataDtoModel, `${this.postfixes.AUTH}/${this.postfixes.SING_IN}`, req)
+      .post<AuthData, AuthDataDtoModel>(AuthDataDtoModel, `${this.postfixes.AUTH}/${this.postfixes.SING_IN}`, req)
       .pipe(share());
   }
 
@@ -36,13 +36,13 @@ export class AuthService {
     const req = AuthDataDtoModel.getReqSingUpDto(credetials.username, credetials.email, credetials.password);
 
     return this.httpDtoService
-      .post<null>(AuthDataDtoModel, `${this.postfixes.AUTH}/${this.postfixes.SING_UP}`, req)
+      .post<null, AuthDataDtoModel>(AuthDataDtoModel, `${this.postfixes.AUTH}/${this.postfixes.SING_UP}`, req)
       .pipe(share());
   }
 
   login(): Observable<AuthUser> {
     return this.httpDtoService
-      .get<AuthUser>(AuthUserDtoModel, `${this.postfixes.AUTH}/${this.postfixes.LOGIN}`)
+      .get<AuthUser, AuthUserDtoModel>(AuthUserDtoModel, `${this.postfixes.AUTH}/${this.postfixes.LOGIN}`)
       .pipe(share());
   }
 

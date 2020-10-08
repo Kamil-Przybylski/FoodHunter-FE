@@ -2,6 +2,7 @@ import { FoodState } from '@core/store/food/food.reducer';
 import { HttpUtil } from '@core/utils/http.util';
 import { Expose, Transform, Type } from 'class-transformer';
 import { IsBoolean, IsNumber, IsString, ValidateNested } from 'class-validator';
+import { DtoWrapper } from './custom-http.models';
 import { Restaurant, RestaurantDtoModel } from './restaurant.models';
 
 export interface Food {
@@ -15,11 +16,11 @@ export interface Food {
   photoPath: string;
   createDate: string;
 
-  restaurantId: number;
+  restaurantId: string;
   restaurant: Restaurant;
   foodTypeId: number;
 }
-export class FoodDtoModel {
+export class FoodDtoModel implements Food, DtoWrapper<Food> {
   @Expose() @IsNumber() id: number;
   @Expose() @IsString() name: string;
 
@@ -32,7 +33,7 @@ export class FoodDtoModel {
   @Expose() @IsString() createDate: string;
 
   @Expose() @IsString() restaurantId: string;
-  @Expose() @Type(() => RestaurantDtoModel) @ValidateNested() restaurant: RestaurantDtoModel;
+  @Expose() @Type(() => RestaurantDtoModel) @ValidateNested() restaurant: Restaurant;
   @Expose() @IsNumber() foodTypeId: number;
 
   static createTypesString(types: string[]): string {

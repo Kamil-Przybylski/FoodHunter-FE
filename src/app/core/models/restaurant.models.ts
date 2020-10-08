@@ -1,5 +1,6 @@
 import { Expose } from 'class-transformer';
 import { IsNumber, IsString } from 'class-validator';
+import { DtoWrapper } from './custom-http.models';
 
 export interface Restaurant {
   id: string;
@@ -10,7 +11,7 @@ export interface Restaurant {
   url: string;
   website: string;
 }
-export class RestaurantDtoModel {
+export class RestaurantDtoModel implements Restaurant, DtoWrapper<Restaurant> {
   @Expose() @IsString() id: string;
   @Expose() @IsString() formattedAddress: string;
   @Expose() @IsString() name: string;

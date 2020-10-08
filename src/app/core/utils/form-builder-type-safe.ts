@@ -9,14 +9,17 @@ export type FormGroupControlsOf<T> = {
 export abstract class FormGroupTypeSafe<T> extends FormGroup {
   // give the value a custom type s
   value: T;
-
+  valueSafeChanges: Observable<T>;
+  
   // create helper methods to achieve this syntax eg: this.form.getSafe(x => x.heroName).patchValue('Himan')
   public abstract getSafe(propertyFunction: (typeVal: T) => any): AbstractControl;
   public abstract setControlSafe(propertyFunction: (typeVal: T) => any, control: AbstractControl): void;
   
   // If you need more function implement declare them here but implement them on FormBuilderTypeSafe.group instantiation.
   public abstract clearFormArray(formArray: FormArray): void;
-  public abstract valueSafeChanges(): Observable<T>;
+  public abstract getSafeRawValue(): T;
+  public abstract setSafeValue(typeVal: T): void;
+  public abstract patchSafeValue(typeVal: Partial<T>): void;
 }
 
 export class FormControlTypeSafe<T> extends FormControl {
@@ -68,6 +71,7 @@ export class FormBuilderTypeSafe extends FormBuilder {
       };
 
       // implement more functions as needed
+
       gr.clearFormArray = (formArray: FormArray): void => {
         if (!formArray) return;
         while (formArray.length !== 0) {
@@ -75,8 +79,18 @@ export class FormBuilderTypeSafe extends FormBuilder {
         }
       };
 
-      gr.valueSafeChanges = (): Observable<T> => {
-        return gr.valueChanges as Observable<T>;
+      gr.valueSafeChanges = gr.valueChanges as Observable<T>;
+
+      gr.getSafeRawValue = (): T => {
+        return gr.getRawValue();
+      };
+
+      gr.setSafeValue = (typeVal: T): void => {
+        return gr.setValue(typeVal);
+      };
+
+      gr.patchSafeValue = (typeVal: Partial<T>): void => {
+        return gr.patchValue(typeVal);
       };
     }
 

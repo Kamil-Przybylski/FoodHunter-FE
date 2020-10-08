@@ -1,6 +1,7 @@
 import { IsStringOrNull } from '@core/decorators/validation.decorator';
 import { Expose, Type } from 'class-transformer';
 import { IsNumber, IsString, ValidateNested } from 'class-validator';
+import { DtoWrapper } from './custom-http.models';
 
 // Auth User
 export interface AuthUser {
@@ -11,8 +12,8 @@ export interface AuthUser {
   photoPath: string;
   about: string;
 }
-export class AuthUserDtoModel {
-  @Expose() @IsNumber() id: string;
+export class AuthUserDtoModel implements AuthUser, DtoWrapper<AuthUser> {
+  @Expose() @IsNumber() id: number;
   @Expose() @IsString() username: string;
   @Expose() @IsString() email: string;
   @Expose() @IsStringOrNull() birthDate: string;
@@ -25,9 +26,9 @@ export interface AuthData {
   accessToken: string;
   user: AuthUser;
 }
-export class AuthDataDtoModel {
+export class AuthDataDtoModel implements AuthData, DtoWrapper<AuthData> {
   @Expose() @IsString() accessToken: string;
-  @Expose() @Type(() => AuthUserDtoModel) @ValidateNested() user: AuthUserDtoModel;
+  @Expose() @Type(() => AuthUserDtoModel) @ValidateNested() user: AuthUser;
 
   static getReqSignInDto(email: string, password: string) {
     return { email, password };
