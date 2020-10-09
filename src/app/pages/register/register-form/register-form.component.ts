@@ -49,7 +49,7 @@ export class RegisterFormComponent implements OnInit, OnDestroy {
   isRegistration$: Observable<boolean>;
   retisterErrors$: Observable<HttpErrorResDto>;
 
-  destroyed$: Subject<boolean> = new Subject<boolean>();
+  // destroyed$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
     private store: Store<AppState>,
@@ -64,7 +64,7 @@ export class RegisterFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.destroyed$.next(true);
+    // this.destroyed$.next(true);
   }
 
   private createForm() {

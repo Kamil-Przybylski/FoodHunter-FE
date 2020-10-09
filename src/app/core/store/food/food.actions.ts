@@ -1,9 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { MapDraftState, CameraDraftState, FoodDraftState, FoodState } from './food.reducer';
 
-export const foodDownloadAction = createAction(
-  '[Food] Download Food Data Action',
-);
 export const foodTypesDownloadAction = createAction(
   '[Food] Download Food Types Data Action',
 );
@@ -17,20 +14,20 @@ export const foodCreateAction = createAction(
 );
 
 export const foodDraftMapAction = createAction(
-  '[Food Draft] Food Draft Map Action',
+  '[Food Draft] Set Draft Map Action',
   props<{ payload: MapDraftState }>()
 );
 
 export const foodDraftCameraAction = createAction(
-  '[Food Draft] Food Draft Camera Action',
+  '[Food Draft] Set Draft Camera Action',
   props<{ payload: CameraDraftState }>()
 );
 
 export const foodDraftFoodAction = createAction(
-  '[Food Draft] Food Draft Food Action',
+  '[Food Draft] Set Draft Food Action',
   props<{ payload: FoodDraftState }>()
 );
 
 export const foodDraftTrueSubmitAction = createAction(
-  '[Food Draft] Food Draft True Submit Action',
+  '[Food Draft] Draft True Submit Action',
 );

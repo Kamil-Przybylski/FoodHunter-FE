@@ -1,19 +1,9 @@
 <ion-content>
   <ion-list *ngFor="let food of foods$ | async">
-    <div class="w-100">
-      <div class="w-100">
-        <small>{{ food.user.username }}</small>
-      </div>
-      <div class="w-100">
-        Name: {{ food.name }}
-      </div>
-      <div class="w-100">
-        <img class="w-100" [src]="food.photoPath" alt="Food" />
-      </div>
-    </div>
+    <app-food-list-item [food]="food" class="w-100"></app-food-list-item>
   </ion-list>
 
-  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadNextData($event)">
     <ion-infinite-scroll-content loadingSpinner="bubbles">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>

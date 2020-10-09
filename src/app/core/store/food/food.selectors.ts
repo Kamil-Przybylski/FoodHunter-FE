@@ -1,4 +1,3 @@
-import { AppState } from '@core/store';
 import { createSelector } from '@ngrx/store';
 import { getFoodModuleState } from './food.reducer';
 import { getDataCondition } from '../core/data-condition/data-condition.selectors';
@@ -10,17 +9,12 @@ export const getFoodState = createSelector(
   foodState => foodState
 );
 
-export const getAllFoods = createSelector(
-  getEntitiesSelectAll(EntitiesEnum.FOOD),
-  all => all
-);
-
-export const getAllFoodTypes = createSelector(
+export const getFoodAllFoodTypes = createSelector(
   getEntitiesSelectAll(EntitiesEnum.FOOD_TYPE),
   all => all
 );
 
-export const getAllFoodTags = createSelector(
+export const getFoodAllFoodTags = createSelector(
   getEntitiesSelectAll(EntitiesEnum.FOOD_TAG),
   all => all
 );

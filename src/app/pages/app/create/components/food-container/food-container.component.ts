@@ -20,8 +20,8 @@ import {
   getFoodIsFormValid,
   getFoodState,
   getFoodIsSubmitted,
-  getAllFoodTypes,
-  getAllFoodTags,
+  getFoodAllFoodTypes,
+  getFoodAllFoodTags,
 } from '@core/store/food/food.selectors';
 import { Plugins, Capacitor } from '@capacitor/core';
 import { AlertController } from '@ionic/angular';
@@ -62,8 +62,8 @@ export class FoodContainerComponent implements OnInit {
     this.isCameraCorrect$ = this.store.pipe(select(getFoodIsCameraValid));
     this.isFormCorrect$ = this.store.pipe(select(getFoodIsFormValid));
 
-    this.foodTypes$ = this.store.pipe(select(getAllFoodTypes));
-    this.foodTags$ = this.store.pipe(select(getAllFoodTags));
+    this.foodTypes$ = this.store.pipe(select(getFoodAllFoodTypes));
+    this.foodTags$ = this.store.pipe(select(getFoodAllFoodTags));
 
     this.isSubmitted$ = this.store.pipe(select(getFoodIsSubmitted));
     this.isSending$ = this.store.pipe(select(getFoodConditionIsSending));

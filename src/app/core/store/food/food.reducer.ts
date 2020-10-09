@@ -23,7 +23,7 @@ export interface FoodDraftState {
   isValid: boolean;
 }
 
-const MapInitialState = {
+const mapInitialState = {
   form: null,
   isValid: false,
 };
@@ -34,10 +34,10 @@ export interface FoodState {
   foodDraft: FoodDraftState;
   isSubmitted: boolean;
 }
-const foodInitialState = {
-  mapDraft: MapInitialState,
-  cameraDraft: MapInitialState,
-  foodDraft: MapInitialState,
+const foodInitialState: FoodState = {
+  mapDraft: mapInitialState,
+  cameraDraft: mapInitialState,
+  foodDraft: mapInitialState,
   isSubmitted: false,
 };
 

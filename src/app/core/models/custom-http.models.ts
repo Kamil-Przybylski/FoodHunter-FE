@@ -28,5 +28,17 @@ export interface HttpOptions {
   responseType?: 'json';
   withCredentials?: boolean;
 }
+export interface HttpPaginatorMeta {
+  totalItems: number;
+  itemCount: number;
+  itemsPerPage: number;
+  totalPages: number;
+  currentPage: number;
+}
+export interface HttpPaginator<T> {
+  items: T;
+  links: { first: string; previous: string; next: string; last: string };
+  meta: HttpPaginatorMeta;
+}
 
 export abstract class DtoWrapper<T> {}

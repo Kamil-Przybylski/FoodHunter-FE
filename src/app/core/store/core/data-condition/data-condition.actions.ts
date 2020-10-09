@@ -3,40 +3,37 @@ import { createAction, Action, props } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { HttpErrorResDto } from '@core/models/custom-http.models';
 
+export interface DataConditionLoadData<T extends keyof EntitiesStateComponents, P> {
+  entities: EntitiesStateComponents[T][];
+  loadData: P;
+}
+export interface DataConditionSendData<T extends keyof EntitiesStateComponents, P> {
+  entities: EntitiesStateComponents[T][];
+  sendData: P;
+}
+
 export const downloadAction = <T extends keyof EntitiesStateComponents, P>() =>
   createAction(
     '[Data Condition] Download',
     props<{
       key: T;
       dataId: number;
-      requestObservable: Observable<
-        | EntitiesStateComponents[T][]
-        | { entities: EntitiesStateComponents[T][]; loadData: P }
-      >;
+      requestObservable: Observable<EntitiesStateComponents[T][] | DataConditionLoadData<T, P>>;
       nextActions?: Action[];
     }>()
   );
 
-export const switchDownloadAction = <
-  T extends keyof EntitiesStateComponents,
-  P
->() =>
+export const switchDownloadAction = <T extends keyof EntitiesStateComponents, P>() =>
   createAction(
     '[Data Condition] Switch Download',
     props<{
       key: T;
       dataId: number;
-      requestObservable: Observable<
-        | EntitiesStateComponents[T][]
-        | { entities: EntitiesStateComponents[T][]; loadData: P }
-      >;
+      requestObservable: Observable<EntitiesStateComponents[T][] | DataConditionLoadData<T, P>>;
       nextActions?: Action[];
     }>()
   );
-export const downloadSuccessAction = <
-  T extends keyof EntitiesStateComponents,
-  P
->() =>
+export const downloadSuccessAction = <T extends keyof EntitiesStateComponents, P>() =>
   createAction(
     '[Data Condition] Download Success',
     props<{
@@ -62,17 +59,11 @@ export const saveAction = <T extends keyof EntitiesStateComponents, P>() =>
     props<{
       key: T;
       dataId: number;
-      requestObservable: Observable<
-        | EntitiesStateComponents[T][]
-        | { entities: EntitiesStateComponents[T][]; sendData: P }
-      >;
+      requestObservable: Observable<EntitiesStateComponents[T][] | DataConditionSendData<T, P>>;
       nextActions?: Action[];
     }>()
   );
-export const saveSuccessAction = <
-  T extends keyof EntitiesStateComponents,
-  P
->() =>
+export const saveSuccessAction = <T extends keyof EntitiesStateComponents, P>() =>
   createAction(
     '[Data Condition] Save Success',
     props<{
@@ -98,17 +89,11 @@ export const deleteAction = <T extends keyof EntitiesStateComponents, P>() =>
     props<{
       key: T;
       dataId: number;
-      serviceMethod: () => Observable<
-        | EntitiesStateComponents[T][]
-        | { entities: EntitiesStateComponents[T][]; sendData: P }
-      >;
+      serviceMethod: () => Observable<EntitiesStateComponents[T][] | DataConditionSendData<T, P>>;
       nextActions?: Action[];
     }>()
   );
-export const deleteSuccessAction = <
-  T extends keyof EntitiesStateComponents,
-  P
->() =>
+export const deleteSuccessAction = <T extends keyof EntitiesStateComponents, P>() =>
   createAction(
     '[Data Condition] Delete Success',
     props<{
