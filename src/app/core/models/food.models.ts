@@ -4,6 +4,7 @@ import { Expose, Transform, Type } from 'class-transformer';
 import { IsBoolean, IsNumber, IsString, ValidateNested } from 'class-validator';
 import { DtoWrapper } from './custom-http.models';
 import { Restaurant, RestaurantDtoModel } from './restaurant.models';
+import { User, UserDtoModel } from './user.models';
 
 export interface Food {
   id: number;
@@ -16,7 +17,7 @@ export interface Food {
   photoPath: string;
   createDate: string;
 
-  restaurantId: string;
+  user: User;
   restaurant: Restaurant;
   foodTypeId: number;
 }
@@ -32,9 +33,9 @@ export class FoodDtoModel implements Food, DtoWrapper<Food> {
   @Expose() @IsString() @Transform(value => HttpUtil.getImgUrl(value), { toClassOnly: true }) photoPath: string;
   @Expose() @IsString() createDate: string;
 
-  @Expose() @IsString() restaurantId: string;
-  @Expose() @Type(() => RestaurantDtoModel) @ValidateNested() restaurant: Restaurant;
   @Expose() @IsNumber() foodTypeId: number;
+  @Expose() @Type(() => UserDtoModel) @ValidateNested() user: User;
+  @Expose() @Type(() => RestaurantDtoModel) @ValidateNested() restaurant: Restaurant;
 
   static createTypesString(types: string[]): string {
     return types.join('$$$');

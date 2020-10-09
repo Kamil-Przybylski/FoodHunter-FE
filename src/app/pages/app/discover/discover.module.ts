@@ -9,6 +9,7 @@ import { DiscoverPageRoutingModule } from './discover-routing.module';
 
 import { DiscoverPage } from './discover.page';
 import { FoodListComponent } from './components/food-list/food-list.component';
+import { FoodListContainerComponent } from './components/food-list-container/food-list-container.component';
 
 @NgModule({
   imports: [
@@ -18,6 +19,6 @@ import { FoodListComponent } from './components/food-list/food-list.component';
     DiscoverPageRoutingModule,
     SharedModule
   ],
-  declarations: [DiscoverPage, FoodListComponent]
+  declarations: [DiscoverPage, FoodListContainerComponent, FoodListComponent]
 })
 export class DiscoverPageModule {}

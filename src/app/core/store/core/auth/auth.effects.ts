@@ -12,19 +12,12 @@ import {
   authSingUpAction,
   authSingUpSuccessAction,
   authSingUpFailAction,
+  authLogoutction,
 } from './auth.actions';
-import {
-  map,
-  switchMap,
-  catchError,
-  tap,
-  withLatestFrom,
-  debounceTime,
-} from 'rxjs/operators';
+import { map, switchMap, catchError, tap, withLatestFrom, debounceTime } from 'rxjs/operators';
 import { AuthService } from '@core/services/auth.service';
 import { of } from 'rxjs';
 import { HttpErrorResDto } from '@core/models/custom-http.models';
-import { TokenEnum } from 'src/config';
 import { getLayoutLoginUrl } from '../layout/layout.selectors';
 import { Router } from '@angular/router';
 import { NotifierService } from '@shared/services/notifier.service';
@@ -72,10 +65,7 @@ export class AuthEffects {
         ofType(authSingInRedirectAction),
         withLatestFrom(this.store.pipe(select(getLayoutLoginUrl))),
         tap(([action, loginUrl]) => {
-          if (
-            loginUrl === `/${AppRoutesEnum.LOGIN}` ||
-            loginUrl === `/${AppRoutesEnum.REGISTER}`
-          )
+          if (loginUrl === `/${AppRoutesEnum.LOGIN}` || loginUrl === `/${AppRoutesEnum.REGISTER}`)
             this.router.navigate([AppRoutesEnum.APP]);
           else this.router.navigateByUrl(loginUrl);
         })
@@ -152,6 +142,18 @@ export class AuthEffects {
         ),
         debounceTime(2000),
         tap(() => this.router.navigateByUrl(AppRoutesEnum.LOGIN))
+      ),
+    { dispatch: false }
+  );
+
+  logout$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(authLogoutction),
+        tap(() => {
+          this.authService.logout();
+          window.location.reload();
+        })
       ),
     { dispatch: false }
   );

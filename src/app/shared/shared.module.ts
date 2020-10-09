@@ -13,6 +13,7 @@ import { AuthImagePipePipe } from './pipes/auth-image-pipe.pipe';
 import {MatTabsModule} from '@angular/material/tabs';
 import { ImagePickerComponent } from './components/image-picker/image-picker.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
 const MATERIAL_MODULES = [
   MatFormFieldModule,
   MatInputModule,
@@ -27,6 +28,7 @@ const MATERIAL_MODULES = [
     FormErrorsComponent,
     LoadingButtonComponent,
     ImagePickerComponent,
+    ToolbarComponent,
     DisableControlDirective,
     AuthImagePipePipe,
   ],
@@ -37,6 +39,7 @@ const MATERIAL_MODULES = [
     FormErrorsComponent,
     LoadingButtonComponent,
     ImagePickerComponent,
+    ToolbarComponent,
     DisableControlDirective,
     AuthImagePipePipe,
   ],

@@ -46,6 +46,10 @@ export class AuthService {
       .pipe(share());
   }
 
+  logout() {
+    this.removeToken();
+  }
+
   isLogged(): Observable<boolean> {
     return this.store.pipe(
       select(getAuthState),
@@ -64,6 +68,6 @@ export class AuthService {
   }
 
   removeToken() {
-    return localStorage.getItem(TokenEnum.AUTH);
+    return localStorage.removeItem(TokenEnum.AUTH);
   }
 }
