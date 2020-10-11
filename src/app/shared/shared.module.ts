@@ -10,17 +10,22 @@ import { IonicModule } from '@ionic/angular';
 import { DisableControlDirective } from './directives/disable-control.directive';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthImagePipePipe } from './pipes/auth-image-pipe.pipe';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
 import { ImagePickerComponent } from './components/image-picker/image-picker.component';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { CommentsModalComponent } from './components/comments-modal/comments-modal.component';
+import { DialogContainerComponent } from './components/dialog-container/dialog-container.component';
+import {MatDividerModule} from '@angular/material/divider';
+
 const MATERIAL_MODULES = [
   MatFormFieldModule,
   MatInputModule,
   MatSelectModule,
   MatButtonModule,
   MatTabsModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatDividerModule
 ];
 
 @NgModule({
@@ -31,6 +36,8 @@ const MATERIAL_MODULES = [
     ToolbarComponent,
     DisableControlDirective,
     AuthImagePipePipe,
+    CommentsModalComponent,
+    DialogContainerComponent
   ],
   imports: [CommonModule, ReactiveFormsModule, IonicModule, MATERIAL_MODULES],
   exports: [
@@ -42,6 +49,8 @@ const MATERIAL_MODULES = [
     ToolbarComponent,
     DisableControlDirective,
     AuthImagePipePipe,
+    CommentsModalComponent,
   ],
+  entryComponents: [CommentsModalComponent]
 })
 export class SharedModule {}

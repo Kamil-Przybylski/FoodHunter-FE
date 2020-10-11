@@ -4,9 +4,17 @@
       <ion-label>Odkryj</ion-label>
       <ion-icon name="search"></ion-icon>
     </ion-tab-button>
+    <ion-tab-button [tab]="AppRoutesEnum.DISCOVER">
+      <ion-label>Biblioteka</ion-label>
+      <ion-icon name="book-outline"></ion-icon>
+    </ion-tab-button>
     <ion-tab-button [tab]="AppRoutesEnum.CREATE">
       <ion-label>Stwórz</ion-label>
       <ion-icon name="pizza-outline"></ion-icon>
+    </ion-tab-button>
+    <ion-tab-button [tab]="AppRoutesEnum.ACCOUNT">
+      <ion-label>Użytkownik</ion-label>
+      <ion-icon name="people-outline"></ion-icon>
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>

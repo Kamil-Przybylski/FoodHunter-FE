@@ -7,20 +7,22 @@ import {
   Output,
   EventEmitter,
   Input,
+  OnDestroy,
 } from '@angular/core';
 import { MapsAPILoader, MouseEvent, AgmMap, AgmInfoWindow } from '@agm/core';
 import * as _ from 'lodash';
 import { FormControl } from '@angular/forms';
-import { tap } from 'rxjs/operators';
+import { takeUntil, tap } from 'rxjs/operators';
 import { ActionSheetController, AlertController } from '@ionic/angular';
 import { RestaurantFormModel, RestaurantFormFields } from '@core/models/restaurant.models';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-food-map',
   templateUrl: './food-map.component.html',
   styleUrls: ['./food-map.component.scss'],
 })
-export class FoodMapComponent implements OnInit {
+export class FoodMapComponent implements OnInit, OnDestroy {
   
   @Input() latitude: number;
   @Input() longitude: number;
@@ -42,6 +44,8 @@ export class FoodMapComponent implements OnInit {
 
   private placesService: google.maps.places.PlacesService;
 
+  destroyed$: Subject<boolean> = new Subject<boolean>();
+
   constructor(
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
@@ -50,6 +54,10 @@ export class FoodMapComponent implements OnInit {
   ngOnInit() {
     this.prepareMap();
     this.selectModel();
+  }
+
+  ngOnDestroy() {
+    this.destroyed$.next(true);
   }
 
   private prepareMap() {
@@ -130,6 +138,7 @@ export class FoodMapComponent implements OnInit {
   selectModel() {
     this.selectControl.valueChanges
       .pipe(
+        takeUntil(this.destroyed$),
         tap((val: google.maps.places.PlaceResult) => {
           if (!val.place_id) return;
           const lat = val.geometry.location.lat();

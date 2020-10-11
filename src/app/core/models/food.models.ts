@@ -1,7 +1,8 @@
 import { FoodState } from '@core/store/food/food.reducer';
 import { HttpUtil } from '@core/utils/http.util';
 import { Expose, Transform, Type } from 'class-transformer';
-import { IsBoolean, IsNumber, IsString, ValidateNested } from 'class-validator';
+import { IsBoolean, IsNotEmptyObject, IsNumber, IsString, ValidateNested } from 'class-validator';
+import { ShortComment, ShortCommentDtoModel } from './comment.model';
 import { DtoWrapper } from './custom-http.models';
 import { Restaurant, RestaurantDtoModel } from './restaurant.models';
 import { User, UserDtoModel } from './user.models';
@@ -15,11 +16,12 @@ export interface Food {
   isPrivate: boolean;
   isPlanned: boolean;
   photoPath: string;
+  foodTypeId: number;
   createDate: string;
 
   user: User;
   restaurant: Restaurant;
-  foodTypeId: number;
+  shortComment: ShortComment;
 }
 export class FoodDtoModel implements Food, DtoWrapper<Food> {
   @Expose() @IsNumber() id: number;
@@ -30,12 +32,13 @@ export class FoodDtoModel implements Food, DtoWrapper<Food> {
   @Expose() @IsBoolean() isFavorite: boolean;
   @Expose() @IsBoolean() isPrivate: boolean;
   @Expose() @IsBoolean() isPlanned: boolean;
-  @Expose() @IsString() @Transform(value => HttpUtil.getImgUrl(value), { toClassOnly: true }) photoPath: string;
+  @Expose() @IsString() @Transform((value) => HttpUtil.getImgUrl(value), { toClassOnly: true }) photoPath: string;
+  @Expose() @IsNumber() foodTypeId: number;
   @Expose() @IsString() createDate: string;
 
-  @Expose() @IsNumber() foodTypeId: number;
-  @Expose() @Type(() => UserDtoModel) @ValidateNested() user: User;
-  @Expose() @Type(() => RestaurantDtoModel) @ValidateNested() restaurant: Restaurant;
+  @Expose() @Type(() => UserDtoModel) @IsNotEmptyObject() @ValidateNested() user: User;
+  @Expose() @Type(() => RestaurantDtoModel) @IsNotEmptyObject() @ValidateNested() restaurant: Restaurant;
+  @Expose() @Type(() => ShortCommentDtoModel) @IsNotEmptyObject() @ValidateNested() shortComment: ShortComment;
 
   static createTypesString(types: string[]): string {
     return types.join('$$$');
@@ -67,7 +70,7 @@ export class FoodDtoModel implements Food, DtoWrapper<Food> {
   }
 }
 
-// FORM 
+// FORM
 
 export enum FoodFormCreateFields {
   NAME = 'name',

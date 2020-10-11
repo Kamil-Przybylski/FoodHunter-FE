@@ -4,11 +4,14 @@ import { User } from '@core/models/user.models';
 import { Food } from '@core/models/food.models';
 import { FoodTag } from '@core/models/food-tags.models';
 import { FoodType } from '@core/models/food-types.models';
+import { IComment } from '@core/models/comment.model';
 
 export enum EntitiesEnum {
   FOOD = 'foodEntities',
   FOOD_TYPE = 'foodTypeEntities',
   FOOD_TAG = 'foodTagEntities',
+
+  COMMENT = 'comment',
   // RESTAURANT = 'restaurantEntities',
   // CATALOG = 'catalogEntities',
   USER = 'userEntities',
@@ -18,6 +21,8 @@ export interface EntitiesStateComponents {
   [EntitiesEnum.FOOD]: Food;
   [EntitiesEnum.FOOD_TYPE]: FoodType;
   [EntitiesEnum.FOOD_TAG]: FoodTag;
+
+  [EntitiesEnum.COMMENT]: IComment;
 
   [EntitiesEnum.USER]: User;
 }

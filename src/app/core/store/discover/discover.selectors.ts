@@ -1,5 +1,6 @@
 import { HttpPaginatorMeta } from '@core/models/custom-http.models';
 import { createSelector } from '@ngrx/store';
+import * as _ from 'lodash';
 import { getDataCondition } from '../core/data-condition/data-condition.selectors';
 import { EntitiesEnum } from '../core/entities/entities.models';
 import { getEntitiesSelectAll } from '../core/entities/entities.selectors';
@@ -9,9 +10,11 @@ export const getDiscoverState = createSelector(getDiscoverModuleState, (discover
 
 export const getDiscoverDataConditionLoadData = createSelector(
   getDataCondition(EntitiesEnum.FOOD, 0),
-  state => state && state.loadData as HttpPaginatorMeta
+  (state) => state && (state.loadData as HttpPaginatorMeta)
 );
 
 export const getDiscoverPaginator = createSelector(getDiscoverState, (discoverState) => discoverState.paginator);
 
-export const getDiscoverAllFoods = createSelector(getEntitiesSelectAll(EntitiesEnum.FOOD), (all) => all);
+export const getDiscoverAllFoods = createSelector(getEntitiesSelectAll(EntitiesEnum.FOOD), (all) =>
+  _.sortBy(all, (item) => item.createDate).reverse()
+);

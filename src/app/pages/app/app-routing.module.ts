@@ -10,6 +10,10 @@ const routes: Routes = [
     component: AppPage,
     children: [
       {
+        path: '',
+        redirectTo: AppRoutesEnum.DISCOVER
+      },
+      {
         path: AppRoutesEnum.DISCOVER,
         loadChildren: () => import('./discover/discover.module').then(m => m.DiscoverPageModule)
       },
@@ -18,14 +22,18 @@ const routes: Routes = [
         loadChildren: () => import('./create/create.module').then( m => m.CreatePageModule)
       },
       {
-        path: '',
-        redirectTo: AppRoutesEnum.DISCOVER
+        path: AppRoutesEnum.ACCOUNT,
+        loadChildren: () => import('./account/account.module').then( m => m.AccountPageModule)
       },
     ]
   },
   {
     path: '',
     redirectTo: AppRoutesEnum.TABS
+  },
+  {
+    path: 'account',
+    loadChildren: () => import('./account/account.module').then( m => m.AccountPageModule)
   },
 ];
 

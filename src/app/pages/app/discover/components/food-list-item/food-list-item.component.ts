@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Food } from '@core/models/food.models';
 
 @Component({
@@ -9,8 +9,14 @@ import { Food } from '@core/models/food.models';
 export class FoodListItemComponent implements OnInit {
   @Input() food: Food;
 
+  @Output() showComments = new EventEmitter<Food>();
+
   constructor() { }
 
   ngOnInit() {}
+
+  showCommentsEmmit() {
+    this.showComments.emit(this.food);
+  }
 
 }

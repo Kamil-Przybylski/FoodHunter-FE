@@ -1,6 +1,6 @@
 import { IsStringOrNull } from '@core/decorators/validation.decorator';
 import { Expose, Type } from 'class-transformer';
-import { IsNumber, IsString, ValidateNested } from 'class-validator';
+import { IsNotEmptyObject, IsNumber, IsString, ValidateNested } from 'class-validator';
 import { DtoWrapper } from './custom-http.models';
 
 // Auth User
@@ -28,7 +28,7 @@ export interface AuthData {
 }
 export class AuthDataDtoModel implements AuthData, DtoWrapper<AuthData> {
   @Expose() @IsString() accessToken: string;
-  @Expose() @Type(() => AuthUserDtoModel) @ValidateNested() user: AuthUser;
+  @Expose() @Type(() => AuthUserDtoModel) @IsNotEmptyObject() @ValidateNested() user: AuthUser;
 
   static getReqSignInDto(email: string, password: string) {
     return { email, password };
@@ -48,4 +48,21 @@ export enum AuthFormSingInFields {
 export interface AuthFormSingInModel {
   [AuthFormSingInFields.EMAIL]: string;
   [AuthFormSingInFields.PASSWORD]: string;
+}
+
+export enum AuthFormUserFields {
+  ID = 'id',
+  USERNAME = 'username',
+  EMAIL = 'email',
+  BIRTH_DATE = 'birthDate',
+  PHOTO_PATH = 'photoPath',
+  ABOUT = 'about',
+}
+export interface AuthFormUserModel {
+  [AuthFormUserFields.ID]: number;
+  [AuthFormUserFields.USERNAME]: string;
+  [AuthFormUserFields.EMAIL]: string;
+  [AuthFormUserFields.BIRTH_DATE]: Date;
+  [AuthFormUserFields.PHOTO_PATH]: string;
+  [AuthFormUserFields.ABOUT]: string;
 }

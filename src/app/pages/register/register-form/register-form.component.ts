@@ -4,7 +4,6 @@ import {
   ViewChild,
   Output,
   EventEmitter,
-  OnDestroy,
 } from '@angular/core';
 import { NgForm, FormControl, Validators } from '@angular/forms';
 import {
@@ -39,7 +38,7 @@ export interface FormSingUpModel {
   templateUrl: './register-form.component.html',
   styleUrls: ['./register-form.component.scss'],
 })
-export class RegisterFormComponent implements OnInit, OnDestroy {
+export class RegisterFormComponent implements OnInit {
   @ViewChild('formRef', { static: true }) formRef: NgForm;
   @Output() singUp = new EventEmitter<FormSingUpModel>();
 
@@ -48,8 +47,6 @@ export class RegisterFormComponent implements OnInit, OnDestroy {
 
   isRegistration$: Observable<boolean>;
   retisterErrors$: Observable<HttpErrorResDto>;
-
-  // destroyed$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
     private store: Store<AppState>,
@@ -61,10 +58,6 @@ export class RegisterFormComponent implements OnInit, OnDestroy {
     this.retisterErrors$ = this.store.pipe(select(getRegisterErrors));
 
     this.createForm();
-  }
-
-  ngOnDestroy() {
-    // this.destroyed$.next(true);
   }
 
   private createForm() {

@@ -6,6 +6,6 @@ export enum AppRoutesEnum {
   TABS = 'tabs',
 
   DISCOVER = 'odkryj',
-
-  CREATE = 'create',
+  CREATE = 'dodaj',
+  ACCOUNT = 'uzytkownik',
 }

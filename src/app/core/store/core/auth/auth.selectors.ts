@@ -30,3 +30,9 @@ export const getRegisterErrors = createSelector(
   getAuthState,
   authState => authState.registerErrors
 );
+
+
+export const getAuthUser = createSelector(
+  getAuthState,
+  authState => authState.userData
+);
