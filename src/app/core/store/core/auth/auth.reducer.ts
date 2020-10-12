@@ -53,48 +53,48 @@ export const authReducer = createReducer(
     } as AuthState)
   ),
 
-  on(authActions.authLoginAction, (state) => {
-    return _.assign({}, state, {
+  on(authActions.authLoginAction, (state) =>
+    _.assign({}, state, {
       isLogging: true,
       isLoginSuccess: false,
       loginErrors: null,
       userData: null,
-    } as AuthState);
-  }),
-  on(authActions.authLoginSuccessAction, (state, { payload }) => {
-    return _.assign({}, state, {
+    } as AuthState)
+  ),
+  on(authActions.authLoginSuccessAction, (state, { payload }) =>
+    _.assign({}, state, {
       isLogging: false,
       isLoginSuccess: true,
       loginErrors: null,
       userData: payload.user,
-    } as AuthState);
-  }),
-  on(authActions.authLoginFailAction, (state) => {
-    return _.assign({}, state, {
+    } as AuthState)
+  ),
+  on(authActions.authLoginFailAction, (state) =>
+    _.assign({}, state, {
       isLogging: false,
       isLoginSuccess: false,
       loginErrors: null,
       userData: null,
-    } as AuthState);
-  }),
+    } as AuthState)
+  ),
 
-  on(authActions.authSingUpAction, (state) => {
-    return _.assign({}, state, {
+  on(authActions.authSingUpAction, (state) =>
+    _.assign({}, state, {
       isRegistration: true,
-    } as AuthState);
-  }),
-  on(authActions.authSingUpSuccessAction, (state) => {
-    return _.assign({}, state, {
+    } as AuthState)
+  ),
+  on(authActions.authSingUpSuccessAction, (state) =>
+    _.assign({}, state, {
       isRegistration: false,
-    } as AuthState);
-  }),
-  on(authActions.authSingUpFailAction, (state, { payload }) => {
-    return _.assign({}, state, {
+    } as AuthState)
+  ),
+  on(authActions.authSingUpFailAction, (state, { payload }) =>
+    _.assign({}, state, {
       isRegistration: false,
       registerErrors: payload.httpError,
-    } as AuthState);
-  }),
-  on(authActions.authUpdateUser, (state, { payload }) => {
-    return _.assign({}, state, { userData: payload.authUser } as AuthState);
-  })
+    } as AuthState)
+  ),
+  on(authActions.authUpdateUser, (state, { payload }) =>
+    _.assign({}, state, { userData: payload.authUser } as AuthState)
+  )
 );

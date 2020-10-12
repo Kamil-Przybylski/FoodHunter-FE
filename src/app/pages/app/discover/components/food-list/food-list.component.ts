@@ -24,7 +24,7 @@ export class FoodListComponent implements OnInit, OnDestroy {
 
   foods$: Observable<Food[]>;
   paginator$: Observable<HttpPaginatorMeta>;
-  dataCondition$: Observable<HttpPaginatorMeta>;
+  dataConditionPaginator$: Observable<HttpPaginatorMeta>;
 
   destroyed$: Subject<boolean> = new Subject<boolean>();
 
@@ -33,9 +33,9 @@ export class FoodListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.foods$ = this.store.pipe(select(getDiscoverListAllFoods));
     this.paginator$ = this.store.pipe(select(getDiscoverListPaginator));
-    this.dataCondition$ = this.store.pipe(select(getDiscoverListDataConditionLoadData));
+    this.dataConditionPaginator$ = this.store.pipe(select(getDiscoverListDataConditionLoadData));
 
-    this.dataCondition$
+    this.dataConditionPaginator$
       .pipe(
         takeUntil(this.destroyed$),
         filter((paginator) => !!paginator),

@@ -13,5 +13,7 @@ const discoverListInitialState: DiscoverListState = {
 
 export const discoverListReducer = createReducer(
   discoverListInitialState,
-  on(discoverListSetPaginatorAction, (state, { payload }) => _.assign({}, state, { paginator: payload }))
+  on(discoverListSetPaginatorAction, (state, { payload }) =>
+    _.assign({}, state, { paginator: payload.paginator } as DiscoverListState)
+  )
 );
