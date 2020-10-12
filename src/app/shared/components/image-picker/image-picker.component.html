@@ -1,11 +1,11 @@
 <div class="picker">
-  <img 
+  <img
     class="w-100"
-    [src]="selectedImage" 
+    [src]="selectedImage"
     (click)="onPickImage()"
     *ngIf="!!selectedImage && !!showPreview"
     alt="my photo"
-  >
+  />
   <button
     mat-flat-button
     color="primary"
@@ -17,10 +17,4 @@
     <ion-label>Zrób zdjęcie</ion-label>
   </button>
 </div>
-<input
-  type="file"
-  accept="image/jpeg"
-  *ngIf="usePicker"
-  #filePicker
-  (change)="onFileChosen($event)"
-/>
+<input type="file" accept="image/jpeg" *ngIf="usePicker" #filePicker (change)="onFileChosen($event)" />

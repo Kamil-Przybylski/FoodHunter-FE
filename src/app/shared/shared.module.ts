@@ -50,6 +50,7 @@ const MATERIAL_MODULES = [
     DisableControlDirective,
     AuthImagePipePipe,
     CommentsModalComponent,
+    DialogContainerComponent,
   ],
   entryComponents: [CommentsModalComponent]
 })

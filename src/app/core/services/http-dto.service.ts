@@ -79,7 +79,7 @@ export class HttpDtoService {
     const http$ = this.httpClient.post<unknown>(`${this.baseAuthApiUrl}/${url}`, payload, options || {});
     return this.mapper<R, C>(http$, model);
   }
-  posMapt<R, C extends DtoWrapper<R>>(
+  postMap<R, C extends DtoWrapper<R>>(
     model: ClassType<C>,
     url: string,
     payload: unknown,
@@ -88,6 +88,28 @@ export class HttpDtoService {
   ): Observable<R> {
     const http$ = this.httpClient
       .post<unknown>(`${this.baseAuthApiUrl}/${url}`, payload, options || {})
+      .pipe(map((r) => mapFn(r)));
+    return this.mapper<R, C>(http$, model);
+  }
+
+  patch<R, C extends DtoWrapper<R>>(
+    model: ClassType<C>,
+    url: string,
+    payload: unknown,
+    options?: HttpOptions
+  ): Observable<R> {
+    const http$ = this.httpClient.patch<unknown>(`${this.baseAuthApiUrl}/${url}`, payload, options || {});
+    return this.mapper<R, C>(http$, model);
+  }
+  patchMap<R, C extends DtoWrapper<R>>(
+    model: ClassType<C>,
+    url: string,
+    payload: unknown,
+    mapFn: (r: any) => any,
+    options?: HttpOptions
+  ): Observable<R> {
+    const http$ = this.httpClient
+      .patch<unknown>(`${this.baseAuthApiUrl}/${url}`, payload, options || {})
       .pipe(map((r) => mapFn(r)));
     return this.mapper<R, C>(http$, model);
   }

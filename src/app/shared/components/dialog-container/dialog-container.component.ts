@@ -10,6 +10,7 @@ export class DialogContainerComponent implements OnInit {
   @Input() tittle: string;
   @Input() description: string;
   @Input() userName: string;
+  @Input() avatarPath: string;
   
   constructor(private modalCtrl: ModalController) { }
 

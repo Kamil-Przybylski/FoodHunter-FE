@@ -1,18 +1,5 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  ElementRef,
-  Output,
-  EventEmitter,
-  Input,
-} from '@angular/core';
-import {
-  Plugins,
-  Capacitor,
-  CameraSource,
-  CameraResultType,
-} from '@capacitor/core';
+import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, Input } from '@angular/core';
+import { Plugins, Capacitor, CameraSource, CameraResultType } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
 
 @Component({
@@ -21,9 +8,7 @@ import { Platform } from '@ionic/angular';
   styleUrls: ['./image-picker.component.scss'],
 })
 export class ImagePickerComponent implements OnInit {
-  @ViewChild('filePicker', { static: false }) filePickerRef: ElementRef<
-    HTMLInputElement
-  >;
+  @ViewChild('filePicker', { static: false }) filePickerRef: ElementRef<HTMLInputElement>;
   @Output() imagePick = new EventEmitter<string>();
   @Input() showPreview = true;
 
@@ -33,10 +18,7 @@ export class ImagePickerComponent implements OnInit {
   constructor(private platform: Platform) {}
 
   ngOnInit() {
-    if (
-      (this.platform.is('mobile') && !this.platform.is('hybrid')) ||
-      this.platform.is('desktop')
-    ) {
+    if ((this.platform.is('mobile') && !this.platform.is('hybrid')) || this.platform.is('desktop')) {
       this.usePicker = true;
     }
   }

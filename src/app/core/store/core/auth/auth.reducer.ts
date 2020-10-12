@@ -83,21 +83,18 @@ export const authReducer = createReducer(
       isRegistration: true,
     });
   }),
-  on(
-    authActions.authSingUpSuccessAction,
-    (state) => {
-      return _.assign({}, state, {
-        isRegistration: false,
-      });
-    }
-  ),
-  on(
-    authActions.authSingUpFailAction,
-    (state, { payload }) => {
-      return _.assign({}, state, {
-        isRegistration: false,
-        registerErrors: payload
-      });
-    }
-  ),
+  on(authActions.authSingUpSuccessAction, (state) => {
+    return _.assign({}, state, {
+      isRegistration: false,
+    });
+  }),
+  on(authActions.authSingUpFailAction, (state, { payload }) => {
+    return _.assign({}, state, {
+      isRegistration: false,
+      registerErrors: payload,
+    });
+  }),
+  on(authActions.authUpdateUser, (state, { payload }) => {
+    return _.assign({}, state, { userData: payload });
+  })
 );

@@ -1,13 +1,13 @@
 import { ActionReducer, combineReducers, createFeatureSelector } from '@ngrx/store';
 import { PayloadAction } from '..';
-import { accountUserReducer } from './account-user/account-user.reducer';
+import { accountUserReducer, AccountUserState } from './account-user/account-user.reducer';
 
 export interface AccountModuleState {
-  accountUser: null;
+  accountUser: AccountUserState;
 }
 
 export const accountMduleReducer: ActionReducer<AccountModuleState, PayloadAction> = combineReducers({
   accountUser: accountUserReducer,
 });
 
-export const getPrzychodyModuleState = createFeatureSelector<AccountModuleState>('account');
+export const getAccountModuleState = createFeatureSelector<AccountModuleState>('account');

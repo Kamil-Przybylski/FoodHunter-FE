@@ -20,10 +20,6 @@ export class CommentsModalComponent implements OnInit {
 
   comments$: Observable<IComment[]>;
 
-  avatarPath =
-  // tslint:disable-next-line: max-line-length
-    'https://vignette.wikia.nocookie.net/james-camerons-avatar/images/d/d4/Neytiri_Profil.jpg/revision/latest/top-crop/width/360/height/450?cb=20100226001342&path-prefix=pl';
-
   constructor(private store: Store<AppState>) {}
 
   ngOnInit() {

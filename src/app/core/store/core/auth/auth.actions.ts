@@ -19,4 +19,6 @@ export const authLoginSuccessAction = createAction(
 );
 export const authLoginFailAction = createAction('[Auth] Login Fail Action');
 
-export const authLogoutction = createAction('[Auth] Logout Action');
+export const authLogoutAction = createAction('[Auth] Logout Action');
+
+export const authUpdateUser = createAction('[Auth] Update User Action', props<{ payload: AuthUser }>());

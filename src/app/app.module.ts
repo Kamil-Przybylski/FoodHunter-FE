@@ -26,6 +26,7 @@ import { FoodEffects } from '@core/store/food/food.effects';
 import { DataConditionEffects } from '@core/store/core/data-condition/data-condition.effects';
 import { DiscoverEffects } from '@core/store/discover/discover.effects';
 import { CommentEffects } from '@core/store/comment/comment.effects';
+import { AccountUserEffects } from '@core/store/account/account-user/account-user.effects';
 
 const REDUCER_TOKEN = new InjectionToken<ActionReducerMap<AppState>>('root reducer');
 
@@ -54,7 +55,8 @@ const REDUCER_TOKEN = new InjectionToken<ActionReducerMap<AppState>>('root reduc
       AuthEffects,
       FoodEffects,
       DiscoverEffects,
-      CommentEffects
+      CommentEffects,
+      AccountUserEffects
     ]),
     // StoreRouterConnectingModule.forRoot({
     //   routerState: RouterState.Minimal

@@ -1,4 +1,10 @@
-<app-dialog-container class="h-100" tittle="Komentarze" [description]="food.name" [userName]="food.user.username">
+<app-dialog-container
+  class="h-100"
+  tittle="Komentarze"
+  [description]="food.name"
+  [userName]="food.user.username"
+  [avatarPath]="food.photoPath"
+>
   <ion-list>
     <ion-item lines="none">
       <mat-form-field class="w-100">
@@ -16,7 +22,7 @@
     </ion-item>
     <ion-item *ngFor="let comment of comments$ | async">
       <ion-avatar slot="start">
-        <img [src]="avatarPath" />
+        <img [src]="comment.user.photoPath" />
       </ion-avatar>
       <ion-label>
         <h2>{{ comment.user.username }}</h2>

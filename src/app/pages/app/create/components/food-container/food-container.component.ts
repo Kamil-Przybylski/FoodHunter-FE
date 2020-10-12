@@ -51,11 +51,7 @@ export class FoodContainerComponent implements OnInit {
   defaultGeo = { lat: 52.231687, lng: 21.006199 };
   geolocation = { lat: 0, lng: 0 };
 
-  constructor(
-    private store: Store<AppState>,
-    private alertCtr: AlertController,
-    private ngZone: NgZone
-  ) {}
+  constructor(private store: Store<AppState>, private alertCtr: AlertController, private ngZone: NgZone) {}
 
   ngOnInit() {
     this.isMapCorrect$ = this.store.pipe(select(getFoodIsMapValid));
@@ -72,10 +68,7 @@ export class FoodContainerComponent implements OnInit {
     this.downloadData();
   }
 
-  setDraft(
-    formNo: number,
-    data: RestaurantFormModel | string | FoodFormCreateModel
-  ) {
+  setDraft(formNo: number, data: RestaurantFormModel | string | FoodFormCreateModel) {
     setTimeout(() => {
       this.ngZone.run(() => {
         if (formNo === 1) {
@@ -143,11 +136,7 @@ export class FoodContainerComponent implements OnInit {
       .pipe(
         take(1),
         tap((state) => {
-          if (
-            state.mapDraft.isValid &&
-            state.cameraDraft.isValid &&
-            state.foodDraft.isValid
-          ) {
+          if (state.mapDraft.isValid && state.cameraDraft.isValid && state.foodDraft.isValid) {
             this.store.dispatch(
               foodCreateAction({
                 payload: state,

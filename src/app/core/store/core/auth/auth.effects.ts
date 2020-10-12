@@ -12,7 +12,7 @@ import {
   authSingUpAction,
   authSingUpSuccessAction,
   authSingUpFailAction,
-  authLogoutction,
+  authLogoutAction,
 } from './auth.actions';
 import { map, switchMap, catchError, tap, withLatestFrom, debounceTime } from 'rxjs/operators';
 import { AuthService } from '@core/services/auth.service';
@@ -149,7 +149,7 @@ export class AuthEffects {
   logout$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(authLogoutction),
+        ofType(authLogoutAction),
         tap(() => {
           this.authService.logout();
           window.location.reload();

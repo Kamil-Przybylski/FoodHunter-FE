@@ -6,13 +6,13 @@
           <ion-icon
             *ngIf="isMapCorrect$ | async"
             class="app_mat-stepper-icon ion-no-margin"
-            style="color: green"
+            style="color: green;"
             name="checkmark-circle-outline"
           ></ion-icon>
           <ion-icon
             *ngIf="!(isMapCorrect$ | async) && (isSubmitted$ | async)"
             class="app_mat-stepper-icon ion-no-margin"
-            style="color: red"
+            style="color: red;"
             name="alert-circle-outline"
           ></ion-icon>
           <ion-icon
@@ -40,13 +40,13 @@
           <ion-icon
             *ngIf="isCameraCorrect$ | async"
             class="app_mat-stepper-icon ion-no-margin"
-            style="color: green"
+            style="color: green;"
             name="checkmark-circle-outline"
           ></ion-icon>
           <ion-icon
             *ngIf="!(isCameraCorrect$ | async) && (isSubmitted$ | async)"
             class="app_mat-stepper-icon ion-no-margin"
-            style="color: red"
+            style="color: red;"
             name="alert-circle-outline"
           ></ion-icon>
           <ion-icon
@@ -62,20 +62,20 @@
       <div class="h-100">
         <app-food-photo (selectPhoto)="setDraft(2, $event)"></app-food-photo>
       </div>
-    </mat-tab> 
+    </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
         <div class="d-flex flex-column flex-x-center">
           <ion-icon
             *ngIf="isFormCorrect$ | async"
             class="app_mat-stepper-icon ion-no-margin"
-            style="color: green"
+            style="color: green;"
             name="checkmark-circle-outline"
           ></ion-icon>
           <ion-icon
             *ngIf="!(isFormCorrect$ | async) && (isSubmitted$ | async)"
             class="app_mat-stepper-icon ion-no-margin"
-            style="color: red"
+            style="color: red;"
             name="alert-circle-outline"
           ></ion-icon>
           <ion-icon
@@ -89,12 +89,7 @@
         </div>
       </ng-template>
       <div class="h-100 ion-margin">
-        <app-food-form
-          class="h-100"
-          [foodTypes$]="foodTypes$"
-          (save)="save($event)"
-          #form
-        ></app-food-form>
+        <app-food-form class="h-100" [foodTypes$]="foodTypes$" (save)="save($event)" #form></app-food-form>
         <button mat-button (click)="form.submitForm()">
           Zapisz
         </button>

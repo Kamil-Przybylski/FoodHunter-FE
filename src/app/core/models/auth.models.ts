@@ -1,5 +1,6 @@
 import { IsStringOrNull } from '@core/decorators/validation.decorator';
-import { Expose, Type } from 'class-transformer';
+import { HttpUtil } from '@core/utils/http.util';
+import { Expose, Transform, Type } from 'class-transformer';
 import { IsNotEmptyObject, IsNumber, IsString, ValidateNested } from 'class-validator';
 import { DtoWrapper } from './custom-http.models';
 
@@ -17,8 +18,17 @@ export class AuthUserDtoModel implements AuthUser, DtoWrapper<AuthUser> {
   @Expose() @IsString() username: string;
   @Expose() @IsString() email: string;
   @Expose() @IsStringOrNull() birthDate: string;
-  @Expose() @IsStringOrNull() photoPath: string;
+  @Expose() @IsStringOrNull() @Transform((value) => HttpUtil.getImgUrl(value), { toClassOnly: true }) photoPath: string;
   @Expose() @IsStringOrNull() about: string;
+
+  static getReqAuthUserDto(authUser: AuthFormUserModel, file: File) {
+    const req = { id: authUser.id } as any;
+    if (authUser.birthDate) req.birthDate = authUser.birthDate;
+    if (authUser.about) req.about = authUser.about;
+    if (file) req.photo = file;
+
+    return req;
+  }
 }
 
 // Auth Data
