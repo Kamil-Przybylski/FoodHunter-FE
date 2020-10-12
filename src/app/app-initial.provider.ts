@@ -14,8 +14,8 @@ export class AppInitialProvider {
     const url = window.location.pathname;
     const token = this.authService.getToken();
 
-    this.store.dispatch(layoutRouterLoginAction({ payload: url }));
-    if (token) this.store.dispatch(authLoginAction({ payload: url }));
+    this.store.dispatch(layoutRouterLoginAction({ payload: { url } }));
+    if (token) this.store.dispatch(authLoginAction({ payload: { url } }));
   }
 }
 

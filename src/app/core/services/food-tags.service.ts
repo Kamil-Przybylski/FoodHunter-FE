@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { FoodTag, FoodTagDtoModel } from '@core/models/food-tags.models';
-import { HttpDtoService } from './http-dto.service';
+import { HttpDtoService } from '@core/utils/http-dto-service';
 
 @Injectable({
   providedIn: 'root'

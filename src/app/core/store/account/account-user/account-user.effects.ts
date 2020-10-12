@@ -22,9 +22,11 @@ export class AccountUserEffects {
             of(
               accountUserSaveFailAction({
                 payload: {
-                  error: err.error,
-                  message: err.message,
-                  statusCode: err.statusCode,
+                  httpError: {
+                    error: err.error,
+                    message: err.message,
+                    statusCode: err.statusCode,
+                  },
                 },
               })
             )
@@ -38,7 +40,7 @@ export class AccountUserEffects {
     this.actions$.pipe(
       ofType(accountUserSaveSuccessAction),
       map((action) => action.payload),
-      map(({ data }) => authUpdateUser({ payload: data }))
+      map(({ data }) => authUpdateUser({ payload: { authUser: data } }))
     )
   );
 
@@ -47,7 +49,7 @@ export class AccountUserEffects {
       this.actions$.pipe(
         ofType(accountUserSaveFailAction),
         map((action) => action.payload),
-        tap((err) => this.notifierService.snackBarError(err.message))
+        tap(({ httpError }) => this.notifierService.snackBarError(httpError.message))
       ),
     { dispatch: false }
   );

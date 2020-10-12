@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CommentDtoModel, IComment } from '@core/models/comment.model';
+import { HttpDtoService } from '@core/utils/http-dto-service';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { HttpDtoService } from './http-dto.service';
 
 @Injectable({
   providedIn: 'root',

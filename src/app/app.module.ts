@@ -22,9 +22,9 @@ import { AppState, reducers } from '@core/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment.prod';
-import { FoodEffects } from '@core/store/food/food.effects';
+import { FoodEffects } from '@core/store/food/food-create/food-create.effects';
 import { DataConditionEffects } from '@core/store/core/data-condition/data-condition.effects';
-import { DiscoverEffects } from '@core/store/discover/discover.effects';
+import { DiscoverListEffects } from '@core/store/discover/discover-list/discover-list.effects';
 import { CommentEffects } from '@core/store/comment/comment.effects';
 import { AccountUserEffects } from '@core/store/account/account-user/account-user.effects';
 
@@ -54,7 +54,7 @@ const REDUCER_TOKEN = new InjectionToken<ActionReducerMap<AppState>>('root reduc
       
       AuthEffects,
       FoodEffects,
-      DiscoverEffects,
+      DiscoverListEffects,
       CommentEffects,
       AccountUserEffects
     ]),

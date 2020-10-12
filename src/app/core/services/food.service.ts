@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpUtil } from '@core/utils/http.util';
 import * as _ from 'lodash';
-import { FoodState } from '@core/store/food/food.reducer';
 import { PhotoHelper } from '@core/utils/photo.helper';
 import { Food, FoodDtoModel } from '@core/models/food.models';
-import { HttpDtoService } from './http-dto.service';
 import { map } from 'rxjs/operators';
 import { HttpPaginator } from '@core/models/custom-http.models';
+import { HttpDtoService } from '@core/utils/http-dto-service';
+import { FoodCreateState } from '@core/store/food/food-create/food-create.reducer';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +25,7 @@ export class FoodService {
     });
   }
 
-  createFood(payload: FoodState): Observable<Food[]> {
+  createFood(payload: FoodCreateState): Observable<Food[]> {
     const file = PhotoHelper.dataURItoBlob(payload.cameraDraft.form, payload.foodDraft.form.name);
 
     const req = FoodDtoModel.getReqFoodDto(payload, file);

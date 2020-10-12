@@ -1,60 +1,13 @@
-import { createFeatureSelector, createReducer, on } from '@ngrx/store';
-import { RestaurantFormModel } from '@core/models/restaurant.models';
-import { FoodFormCreateModel } from '@core/models/food.models';
-import {
-  foodDraftMapAction,
-  foodDraftCameraAction,
-  foodDraftFoodAction,
-  foodCreateAction,
-  foodDraftTrueSubmitAction,
-} from './food.actions';
-import * as _ from 'lodash';
+import { ActionReducer, combineReducers, createFeatureSelector } from '@ngrx/store';
+import { PayloadAction } from '..';
+import { foodCreateReducer, FoodCreateState } from './food-create/food-create.reducer';
 
-export interface MapDraftState {
-  form: RestaurantFormModel;
-  isValid: boolean;
-}
-export interface CameraDraftState {
-  form: string;
-  isValid: boolean;
-}
-export interface FoodDraftState {
-  form: FoodFormCreateModel;
-  isValid: boolean;
+export interface FoodModuleState {
+  foodCreate: FoodCreateState;
 }
 
-const mapInitialState = {
-  form: null,
-  isValid: false,
-};
+export const foodModuleReducer: ActionReducer<FoodModuleState, PayloadAction> = combineReducers({
+  foodCreate: foodCreateReducer,
+});
 
-export interface FoodState {
-  mapDraft: MapDraftState;
-  cameraDraft: CameraDraftState;
-  foodDraft: FoodDraftState;
-  isSubmitted: boolean;
-}
-const foodInitialState: FoodState = {
-  mapDraft: mapInitialState,
-  cameraDraft: mapInitialState,
-  foodDraft: mapInitialState,
-  isSubmitted: false,
-};
-
-export const foodReducer = createReducer(
-  foodInitialState,
-  on(foodDraftMapAction, (state, { payload }) =>
-    _.assign({}, state, { mapDraft: payload })
-  ),
-  on(foodDraftCameraAction, (state, { payload }) =>
-    _.assign({}, state, { cameraDraft: payload })
-  ),
-  on(foodDraftFoodAction, (state, { payload }) =>
-    _.assign({}, state, { foodDraft: payload })
-  ),
-  on(foodDraftTrueSubmitAction, foodCreateAction, (state) =>
-    _.assign({}, state, { isSubmitted: true })
-  )
-);
-
-export const getFoodModuleState = createFeatureSelector<FoodState>('food');
+export const getFoodModuleState = createFeatureSelector<FoodModuleState>('food');

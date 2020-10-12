@@ -6,7 +6,7 @@ export interface AccountModuleState {
   accountUser: AccountUserState;
 }
 
-export const accountMduleReducer: ActionReducer<AccountModuleState, PayloadAction> = combineReducers({
+export const accountModuleReducer: ActionReducer<AccountModuleState, PayloadAction> = combineReducers({
   accountUser: accountUserReducer,
 });
 

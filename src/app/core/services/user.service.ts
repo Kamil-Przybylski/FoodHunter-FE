@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AuthFormUserModel, AuthUser, AuthUserDtoModel } from '@core/models/auth.models';
+import { HttpDtoService } from '@core/utils/http-dto-service';
 import { HttpUtil } from '@core/utils/http.util';
 import { PhotoHelper } from '@core/utils/photo.helper';
 import { Observable } from 'rxjs';
-import { HttpDtoService } from './http-dto.service';
 
 @Injectable({
   providedIn: 'root'

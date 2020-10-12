@@ -1,4 +1,4 @@
-import { FoodState } from '@core/store/food/food.reducer';
+import { FoodCreateState } from '@core/store/food/food-create/food-create.reducer';
 import { HttpUtil } from '@core/utils/http.util';
 import { Expose, Transform, Type } from 'class-transformer';
 import { IsBoolean, IsNotEmptyObject, IsNumber, IsString, ValidateNested } from 'class-validator';
@@ -44,7 +44,7 @@ export class FoodDtoModel implements Food, DtoWrapper<Food> {
     return types.join('$$$');
   }
 
-  static getReqFoodDto(state: FoodState, file: File) {
+  static getReqFoodDto(state: FoodCreateState, file: File) {
     const food = state.foodDraft.form;
     const restaurant = state.mapDraft.form;
 

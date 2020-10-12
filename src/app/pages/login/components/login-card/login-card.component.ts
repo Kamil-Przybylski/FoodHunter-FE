@@ -17,16 +17,17 @@ export class LoginCardComponent implements OnInit {
 
   isLogging$: Observable<boolean>;
 
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit() {
     this.isLogging$ = this.store.pipe(select(getAuthIsLogging));
   }
 
   singIn(credetials: AuthFormSingInModel) {
-    this.store.dispatch(authSingInAction({
-      payload: credetials
-    }));
+    this.store.dispatch(
+      authSingInAction({
+        payload: { formModel: credetials },
+      })
+    );
   }
-
 }

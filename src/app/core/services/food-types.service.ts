@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpDtoService } from './http-dto.service';
 import { FoodType, FoodTypeDtoModel } from '@core/models/food-types.models';
+import { HttpDtoService } from '@core/utils/http-dto-service';
 
 @Injectable({
   providedIn: 'root'

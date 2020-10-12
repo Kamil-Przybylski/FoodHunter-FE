@@ -8,8 +8,8 @@ import {
 import { take, map, filter, share } from 'rxjs/operators';
 import { FormSingUpModel } from 'src/app/pages/register/register-form/register-form.component';
 import { TokenEnum } from 'src/config';
-import { HttpDtoService } from './http-dto.service';
 import { AuthData, AuthDataDtoModel, AuthFormSingInModel, AuthFormUserModel, AuthUser, AuthUserDtoModel } from '@core/models/auth.models';
+import { HttpDtoService } from '@core/utils/http-dto-service';
 
 @Injectable({
   providedIn: 'root',

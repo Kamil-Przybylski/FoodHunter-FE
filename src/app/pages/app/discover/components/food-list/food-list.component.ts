@@ -4,12 +4,12 @@ import { AppState } from '@core/store';
 import { from, Observable, Subject } from 'rxjs';
 import { Food } from '@core/models/food.models';
 import { IonInfiniteScroll, ModalController } from '@ionic/angular';
-import { discoverDownloadFoodAction, discoverSetPaginatorAction } from '@core/store/discover/discover.actions';
+import { discoverListDownloadFoodAction, discoverListSetPaginatorAction } from '@core/store/discover/discover-list/discover-list.actions';
 import {
-  getDiscoverAllFoods,
-  getDiscoverDataConditionLoadData,
-  getDiscoverPaginator,
-} from '@core/store/discover/discover.selectors';
+  getDiscoverListAllFoods,
+  getDiscoverListDataConditionLoadData,
+  getDiscoverListPaginator,
+} from '@core/store/discover/discover-list/discover-list.selectors';
 import { HttpPaginatorMeta } from '@core/models/custom-http.models';
 import { filter, take, takeUntil, tap } from 'rxjs/operators';
 import { CommentsModalComponent } from '@shared/components/comments-modal/comments-modal.component';
@@ -31,22 +31,22 @@ export class FoodListComponent implements OnInit, OnDestroy {
   constructor(private store: Store<AppState>, private modalCtrl: ModalController) {}
 
   ngOnInit() {
-    this.foods$ = this.store.pipe(select(getDiscoverAllFoods));
-    this.paginator$ = this.store.pipe(select(getDiscoverPaginator));
-    this.dataCondition$ = this.store.pipe(select(getDiscoverDataConditionLoadData));
+    this.foods$ = this.store.pipe(select(getDiscoverListAllFoods));
+    this.paginator$ = this.store.pipe(select(getDiscoverListPaginator));
+    this.dataCondition$ = this.store.pipe(select(getDiscoverListDataConditionLoadData));
 
     this.dataCondition$
       .pipe(
         takeUntil(this.destroyed$),
-        filter((loadData) => !!loadData),
-        tap((loadData) => {
+        filter((paginator) => !!paginator),
+        tap((paginator) => {
           this.infiniteScroll.complete();
-          this.store.dispatch(discoverSetPaginatorAction({ payload: loadData }));
+          this.store.dispatch(discoverListSetPaginatorAction({ payload: { paginator } }));
         })
       )
       .subscribe();
 
-    this.store.dispatch(discoverDownloadFoodAction({ payload: 1 }));
+    this.store.dispatch(discoverListDownloadFoodAction({ payload: { pageNo: 1 } }));
   }
 
   ngOnDestroy() {
@@ -60,7 +60,7 @@ export class FoodListComponent implements OnInit, OnDestroy {
         tap((paginator) => {
           const nextPage = paginator.currentPage + 1;
           if (paginator.currentPage === paginator.totalPages) this.infiniteScroll.disabled = true;
-          this.store.dispatch(discoverDownloadFoodAction({ payload: nextPage }));
+          this.store.dispatch(discoverListDownloadFoodAction({ payload: { pageNo: nextPage } }));
         })
       )
       .subscribe();
@@ -70,7 +70,7 @@ export class FoodListComponent implements OnInit, OnDestroy {
     const modal$ = this.modalCtrl.create({
       component: CommentsModalComponent,
       componentProps: { food },
-      swipeToClose: true
+      swipeToClose: true,
     });
     from(modal$)
       .pipe(

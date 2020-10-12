@@ -16,13 +16,15 @@ export class RegisterCardComponent implements OnInit {
 
   isLogging$: Observable<boolean>;
 
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit() {}
 
   singUp(credetials: FormSingUpModel) {
-    this.store.dispatch(authSingUpAction({
-      payload: credetials
-    }));
+    this.store.dispatch(
+      authSingUpAction({
+        payload: { formModel: credetials },
+      })
+    );
   }
 }

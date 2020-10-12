@@ -28,29 +28,29 @@ const initialState: AuthState = {
 
 export const authReducer = createReducer(
   initialState,
-  on(authActions.authSingInAction, (state, { payload }) =>
+  on(authActions.authSingInAction, (state) =>
     _.assign({}, state, {
       isLogging: true,
       isLoginSuccess: false,
       loginErrors: null,
       userData: null,
-    })
+    } as AuthState)
   ),
   on(authActions.authSingInSuccessAction, (state, { payload }) =>
     _.assign({}, state, {
       isLogging: false,
       isLoginSuccess: true,
       loginErrors: null,
-      userData: payload.user,
-    })
+      userData: payload.authData.user,
+    } as AuthState)
   ),
   on(authActions.authSingInFailAction, (state, { payload }) =>
     _.assign({}, state, {
       isLogging: false,
       isLoginSuccess: false,
-      loginErrors: payload,
+      loginErrors: payload.httpError,
       userData: null,
-    })
+    } as AuthState)
   ),
 
   on(authActions.authLoginAction, (state) => {
@@ -59,7 +59,7 @@ export const authReducer = createReducer(
       isLoginSuccess: false,
       loginErrors: null,
       userData: null,
-    });
+    } as AuthState);
   }),
   on(authActions.authLoginSuccessAction, (state, { payload }) => {
     return _.assign({}, state, {
@@ -67,7 +67,7 @@ export const authReducer = createReducer(
       isLoginSuccess: true,
       loginErrors: null,
       userData: payload.user,
-    });
+    } as AuthState);
   }),
   on(authActions.authLoginFailAction, (state) => {
     return _.assign({}, state, {
@@ -75,26 +75,26 @@ export const authReducer = createReducer(
       isLoginSuccess: false,
       loginErrors: null,
       userData: null,
-    });
+    } as AuthState);
   }),
 
   on(authActions.authSingUpAction, (state) => {
     return _.assign({}, state, {
       isRegistration: true,
-    });
+    } as AuthState);
   }),
   on(authActions.authSingUpSuccessAction, (state) => {
     return _.assign({}, state, {
       isRegistration: false,
-    });
+    } as AuthState);
   }),
   on(authActions.authSingUpFailAction, (state, { payload }) => {
     return _.assign({}, state, {
       isRegistration: false,
-      registerErrors: payload,
-    });
+      registerErrors: payload.httpError,
+    } as AuthState);
   }),
   on(authActions.authUpdateUser, (state, { payload }) => {
-    return _.assign({}, state, { userData: payload });
+    return _.assign({}, state, { userData: payload.authUser } as AuthState);
   })
 );

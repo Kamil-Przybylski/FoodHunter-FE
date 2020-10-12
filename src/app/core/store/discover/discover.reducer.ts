@@ -1,19 +1,13 @@
-import { HttpPaginatorMeta } from '@core/models/custom-http.models';
-import { createFeatureSelector, createReducer, on } from '@ngrx/store';
-import * as _ from 'lodash';
-import { discoverSetPaginatorAction } from './discover.actions';
+import { ActionReducer, combineReducers, createFeatureSelector } from '@ngrx/store';
+import { PayloadAction } from '..';
+import { discoverListReducer, DiscoverListState } from './discover-list/discover-list.reducer';
 
-export interface DiscoverState {
-  paginator: HttpPaginatorMeta;
+export interface DiscoverModuleState {
+  discoverList: DiscoverListState;
 }
 
-const discoverInitialState: DiscoverState = {
-  paginator: { currentPage: 1 } as HttpPaginatorMeta,
-};
+export const discoverModuleReducer: ActionReducer<DiscoverModuleState, PayloadAction> = combineReducers({
+  discoverList: discoverListReducer,
+});
 
-export const discoverReducer = createReducer(
-  discoverInitialState,
-  on(discoverSetPaginatorAction, (state, { payload }) => _.assign({}, state, { paginator: payload }))
-);
-
-export const getDiscoverModuleState = createFeatureSelector<DiscoverState>('discover');
+export const getDiscoverModuleState = createFeatureSelector<DiscoverModuleState>('discover');

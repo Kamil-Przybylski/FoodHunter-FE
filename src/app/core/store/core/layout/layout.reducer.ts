@@ -13,6 +13,6 @@ const initialState: LayoutState = {
 export const layoutReducer = createReducer(
   initialState,
   on(layoutRouterLoginAction, (state, { payload }) =>
-    _.assign({}, state, { routerLoginUrl: payload } as LayoutState)
+    _.assign({}, state, { routerLoginUrl: payload.url } as LayoutState)
   )
 );

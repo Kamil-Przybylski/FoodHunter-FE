@@ -22,7 +22,7 @@ export const accountUserSaveSuccessAction = createAction(
 );
 export const accountUserSaveFailAction = createAction(
   '[Account User] Save Fail Action',
-  props<{ payload: HttpErrorRes }>()
+  props<{ payload: {httpError: HttpErrorRes} }>()
 );
 
 export const accountUserClearDraftAction = createAction(

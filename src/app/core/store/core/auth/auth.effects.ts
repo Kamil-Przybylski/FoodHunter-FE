@@ -30,16 +30,18 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(authSingInAction),
       map((action) => action.payload),
-      switchMap((credentials) =>
-        this.authService.singIn(credentials).pipe(
-          map((res) => authSingInSuccessAction({ payload: res })),
+      switchMap(({ formModel }) =>
+        this.authService.singIn(formModel).pipe(
+          map((res) => authSingInSuccessAction({ payload: { authData: res } })),
           catchError((err: HttpErrorResDto) =>
             of(
               authSingInFailAction({
                 payload: {
-                  error: err.error,
-                  message: err.message,
-                  statusCode: err.statusCode,
+                  httpError: {
+                    error: err.error,
+                    message: err.message,
+                    statusCode: err.statusCode,
+                  },
                 },
               })
             )
@@ -52,8 +54,9 @@ export class AuthEffects {
   singInSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(authSingInSuccessAction),
-      map(({ payload }) => {
-        this.authService.setToken(payload.accessToken);
+      map((action) => action.payload),
+      map(({ authData }) => {
+        this.authService.setToken(authData.accessToken);
         return authSingInRedirectAction();
       })
     )
@@ -76,11 +79,12 @@ export class AuthEffects {
   login$ = createEffect(() =>
     this.actions$.pipe(
       ofType(authLoginAction),
-      switchMap(({ payload }) =>
+      map((action) => action.payload),
+      switchMap(({ url }) =>
         this.authService.login().pipe(
           map((res) => {
             return authLoginSuccessAction({
-              payload: { user: res, url: payload },
+              payload: { user: res, url },
             });
           }),
           catchError(() => of(authLoginFailAction()))
@@ -112,16 +116,18 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(authSingUpAction),
       map((action) => action.payload),
-      switchMap((credentials) => {
-        return this.authService.singUp(credentials).pipe(
+      switchMap(({ formModel }) => {
+        return this.authService.singUp(formModel).pipe(
           map(() => authSingUpSuccessAction()),
           catchError((err: HttpErrorResDto) =>
             of(
               authSingUpFailAction({
                 payload: {
-                  error: err.error,
-                  message: err.message,
-                  statusCode: err.statusCode,
+                  httpError: {
+                    error: err.error,
+                    message: err.message,
+                    statusCode: err.statusCode,
+                  },
                 },
               })
             )

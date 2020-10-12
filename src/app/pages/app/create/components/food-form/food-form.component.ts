@@ -7,8 +7,8 @@ import { Observable } from 'rxjs';
 import { HttpErrorResDto } from '@core/models/custom-http.models';
 import { FormErrorUtil } from '@core/utils/form-error.util';
 import { FoodFormCreateModel, FoodFormCreateFields } from '@core/models/food.models';
-import { getFoodConditionIsSending, getFoodConditionSendErrors } from '@core/store/food/food.selectors';
-import { FoodDraftState } from '@core/store/food/food.reducer';
+import { getFoodCreateConditionIsSending, getFoodCreateConditionSendErrors } from '@core/store/food/food-create/food-create.selectors';
+import { FoodDraftState } from '@core/store/food/food-create/food-create.reducer';
 import { FoodType } from '@core/models/food-types.models';
 
 @Component({
@@ -33,8 +33,8 @@ export class FoodFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.isSending$ = this.store.pipe(select(getFoodConditionIsSending));
-    this.hasErrors$ = this.store.pipe(select(getFoodConditionSendErrors));
+    this.isSending$ = this.store.pipe(select(getFoodCreateConditionIsSending));
+    this.hasErrors$ = this.store.pipe(select(getFoodCreateConditionSendErrors));
 
     this.createForm();
   }

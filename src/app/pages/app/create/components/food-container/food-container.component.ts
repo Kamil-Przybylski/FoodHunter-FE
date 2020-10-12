@@ -1,28 +1,28 @@
-import { FoodDraftState } from './../../../../../core/store/food/food.reducer';
+import { FoodDraftState } from '@core/store/food/food-create/food-create.reducer';
 import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '@core/store';
 import { FoodFormCreateModel } from '@core/models/food.models';
 import {
-  foodCreateAction,
-  foodDraftMapAction,
-  foodDraftCameraAction,
-  foodDraftFoodAction,
-  foodDraftTrueSubmitAction,
+  foodCreateSaveAction,
+  foodCreateDraftMapAction,
+  foodCreateDraftCameraAction,
+  foodCreateDraftFoodAction,
+  foodCreateDraftTrueSubmitAction,
   foodTypesDownloadAction,
   foodTagsDownloadAction,
-} from '@core/store/food/food.actions';
+} from '@core/store/food/food-create/food-create.actions';
 import {
-  getFoodConditionIsSending,
-  getFoodIsMapValid,
-  getFoodIsCameraValid,
-  getFoodIsFormValid,
-  getFoodState,
-  getFoodIsSubmitted,
-  getFoodAllFoodTypes,
-  getFoodAllFoodTags,
-} from '@core/store/food/food.selectors';
+  getFoodCreateConditionIsSending,
+  getFoodCreateIsMapValid,
+  getFoodCreateIsCameraValid,
+  getFoodCreateIsFormValid,
+  getFoodCreateState,
+  getFoodCreateCreateIsSubmitted,
+  getFoodCreateAllFoodTypes,
+  getFoodCreateAllFoodTags,
+} from '@core/store/food/food-create/food-create.selectors';
 import { Plugins, Capacitor } from '@capacitor/core';
 import { AlertController } from '@ionic/angular';
 import { RestaurantFormModel } from '@core/models/restaurant.models';
@@ -54,15 +54,15 @@ export class FoodContainerComponent implements OnInit {
   constructor(private store: Store<AppState>, private alertCtr: AlertController, private ngZone: NgZone) {}
 
   ngOnInit() {
-    this.isMapCorrect$ = this.store.pipe(select(getFoodIsMapValid));
-    this.isCameraCorrect$ = this.store.pipe(select(getFoodIsCameraValid));
-    this.isFormCorrect$ = this.store.pipe(select(getFoodIsFormValid));
+    this.isMapCorrect$ = this.store.pipe(select(getFoodCreateIsMapValid));
+    this.isCameraCorrect$ = this.store.pipe(select(getFoodCreateIsCameraValid));
+    this.isFormCorrect$ = this.store.pipe(select(getFoodCreateIsFormValid));
 
-    this.foodTypes$ = this.store.pipe(select(getFoodAllFoodTypes));
-    this.foodTags$ = this.store.pipe(select(getFoodAllFoodTags));
+    this.foodTypes$ = this.store.pipe(select(getFoodCreateAllFoodTypes));
+    this.foodTags$ = this.store.pipe(select(getFoodCreateAllFoodTags));
 
-    this.isSubmitted$ = this.store.pipe(select(getFoodIsSubmitted));
-    this.isSending$ = this.store.pipe(select(getFoodConditionIsSending));
+    this.isSubmitted$ = this.store.pipe(select(getFoodCreateCreateIsSubmitted));
+    this.isSending$ = this.store.pipe(select(getFoodCreateConditionIsSending));
 
     this.setCurrentLocation();
     this.downloadData();
@@ -73,15 +73,15 @@ export class FoodContainerComponent implements OnInit {
       this.ngZone.run(() => {
         if (formNo === 1) {
           this.store.dispatch(
-            foodDraftMapAction({
-              payload: { form: data as RestaurantFormModel, isValid: true },
+            foodCreateDraftMapAction({
+              payload: { mapDraft: { form: data as RestaurantFormModel, isValid: true } },
             })
           );
           this.matTabGroup.selectedIndex = 1;
         } else if (formNo === 2) {
           this.store.dispatch(
-            foodDraftCameraAction({
-              payload: { form: data as string, isValid: true },
+            foodCreateDraftCameraAction({
+              payload: { cameraDraft: { form: data as string, isValid: true } },
             })
           );
           this.matTabGroup.selectedIndex = 2;
@@ -126,24 +126,24 @@ export class FoodContainerComponent implements OnInit {
 
   save(data: FoodDraftState) {
     this.store.dispatch(
-      foodDraftFoodAction({
-        payload: { form: data.form, isValid: data.isValid },
+      foodCreateDraftFoodAction({
+        payload: { foodDraft: { form: data.form, isValid: data.isValid } },
       })
     );
 
     this.store
-      .select(getFoodState)
+      .select(getFoodCreateState)
       .pipe(
         take(1),
-        tap((state) => {
-          if (state.mapDraft.isValid && state.cameraDraft.isValid && state.foodDraft.isValid) {
+        tap((foodState) => {
+          if (foodState.mapDraft.isValid && foodState.cameraDraft.isValid && foodState.foodDraft.isValid) {
             this.store.dispatch(
-              foodCreateAction({
-                payload: state,
+              foodCreateSaveAction({
+                payload: { foodState },
               })
             );
           } else {
-            this.store.dispatch(foodDraftTrueSubmitAction());
+            this.store.dispatch(foodCreateDraftTrueSubmitAction());
           }
         })
       )
