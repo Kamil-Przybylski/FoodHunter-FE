@@ -15,7 +15,7 @@ import { AuthFormSingInFields, AuthFormSingInModel } from '@core/models/auth.mod
   styleUrls: ['./login-form.component.scss'],
 })
 export class LoginFormComponent implements OnInit {
-  @ViewChild('formRef', {static: true}) formRef: NgForm;
+  @ViewChild('formRef') formRef: NgForm;
   @Output() singIn = new EventEmitter<AuthFormSingInModel>();
 
   form: FormGroupTypeSafe<AuthFormSingInModel>;

@@ -18,7 +18,7 @@ import { FoodType } from '@core/models/food-types.models';
 })
 export class FoodFormComponent implements OnInit {
   @Input() foodTypes$: Observable<FoodType[]>;
-  @ViewChild('formRef', {static: true}) formRef: NgForm;
+  @ViewChild('formRef') formRef: NgForm;
   @Output() save = new EventEmitter<FoodDraftState>();
 
   form: FormGroupTypeSafe<FoodFormCreateModel>;

@@ -39,7 +39,7 @@ export interface FormSingUpModel {
   styleUrls: ['./register-form.component.scss'],
 })
 export class RegisterFormComponent implements OnInit {
-  @ViewChild('formRef', { static: true }) formRef: NgForm;
+  @ViewChild('formRef') formRef: NgForm;
   @Output() singUp = new EventEmitter<FormSingUpModel>();
 
   form: FormGroupTypeSafe<FormSingUpModel>;

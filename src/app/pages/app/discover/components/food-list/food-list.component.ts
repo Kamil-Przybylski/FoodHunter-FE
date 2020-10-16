@@ -20,7 +20,7 @@ import { CommentsModalComponent } from '@shared/components/comments-modal/commen
   styleUrls: ['./food-list.component.scss'],
 })
 export class FoodListComponent implements OnInit, OnDestroy {
-  @ViewChild(IonInfiniteScroll, { static: true }) infiniteScroll: IonInfiniteScroll;
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
   foods$: Observable<Food[]>;
   paginator$: Observable<HttpPaginatorMeta>;

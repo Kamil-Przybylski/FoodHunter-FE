@@ -36,13 +36,13 @@ export const getFoodCreateCreateIsSubmitted = createSelector(
 
 export const getFoodCreateIsMapValid = createSelector(
   getFoodCreateState,
-  state => state.mapDraft && state.mapDraft.isValid
+  state => state?.mapDraft?.isValid
 );
 export const getFoodCreateIsCameraValid = createSelector(
   getFoodCreateState,
-  state => state.cameraDraft && state.cameraDraft.isValid
+  state => state?.cameraDraft?.isValid
 );
 export const getFoodCreateIsFormValid = createSelector(
   getFoodCreateState,
-  state => state.foodDraft && state.foodDraft.isValid
+  state => state?.foodDraft?.isValid
 );

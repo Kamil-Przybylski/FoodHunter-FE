@@ -14,10 +14,13 @@ export class FoodPhotoComponent implements OnInit {
   ngOnInit() {}
 
   imagePick(photoUrl: string) {
+    console.log(666.1);
     this.photoData = photoUrl;
   }
 
   checkImage() {
+    console.log(666.2);
+
     if (!this.photoData) return;
     this.selectPhoto.emit(this.photoData);
   }

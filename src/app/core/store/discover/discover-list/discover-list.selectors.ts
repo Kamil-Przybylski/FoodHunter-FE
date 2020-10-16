@@ -10,7 +10,7 @@ export const getDiscoverListState = createSelector(getDiscoverModuleState, (disc
 
 export const getDiscoverListDataConditionLoadData = createSelector(
   getDataCondition(EntitiesEnum.FOOD, 0),
-  (state) => state && (state.loadData as HttpPaginatorMeta)
+  (state) => (state?.loadData as HttpPaginatorMeta)
 );
 
 export const getDiscoverListPaginator = createSelector(getDiscoverListState, (discoverState) => discoverState.paginator);

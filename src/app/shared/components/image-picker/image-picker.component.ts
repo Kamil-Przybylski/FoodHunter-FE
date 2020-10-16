@@ -28,6 +28,8 @@ export class ImagePickerComponent implements OnInit {
       this.filePickerRef.nativeElement.click();
       return;
     }
+    console.log(666.3);
+
     Plugins.Camera.getPhoto({
       quality: 95,
       source: CameraSource.Prompt,
@@ -37,13 +39,16 @@ export class ImagePickerComponent implements OnInit {
       resultType: CameraResultType.DataUrl,
     })
       .then((image) => {
+        console.log(666.4);
+
         this.selectedImage = image.dataUrl;
         this.imagePick.emit(image.dataUrl);
       })
       .catch((error) => {
-        console.log(error);
+        console.log(666.5);
+
         if (this.usePicker) {
-          this.filePickerRef.nativeElement.click();
+          // this.filePickerRef.nativeElement.click();
         }
         return false;
       });
@@ -54,8 +59,12 @@ export class ImagePickerComponent implements OnInit {
     if (!pickedFile) {
       return;
     }
+    console.log(666.6);
+
     const fr = new FileReader();
     fr.onload = () => {
+      console.log(666.7);
+
       const dataUrl = fr.result.toString();
       this.selectedImage = dataUrl;
       this.imagePick.emit(dataUrl);

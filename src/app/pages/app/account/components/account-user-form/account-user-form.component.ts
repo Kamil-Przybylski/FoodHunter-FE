@@ -18,7 +18,7 @@ import { debounceTime, filter, startWith, take, takeUntil, tap } from 'rxjs/oper
   styleUrls: ['./account-user-form.component.scss'],
 })
 export class AccountUserFormComponent implements OnInit, OnDestroy {
-  @ViewChild('formRef', { static: true }) formRef: NgForm;
+  @ViewChild('formRef') formRef: NgForm;
   @Output() submitUser = new EventEmitter<AuthFormUserModel>();
 
   form: FormGroupTypeSafe<AuthFormUserModel>;

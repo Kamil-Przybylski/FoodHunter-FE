@@ -38,7 +38,12 @@ export interface AuthData {
 }
 export class AuthDataDtoModel implements AuthData, DtoWrapper<AuthData> {
   @Expose() @IsString() accessToken: string;
-  @Expose() @Type(() => AuthUserDtoModel) @IsNotEmptyObject() @ValidateNested() user: AuthUser;
+
+  @Expose() 
+  @Type(() => AuthUserDtoModel) 
+  @IsNotEmptyObject() 
+  @ValidateNested() 
+  user: AuthUser;
 
   static getReqSignInDto(email: string, password: string) {
     return { email, password };

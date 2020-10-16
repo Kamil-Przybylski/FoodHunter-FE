@@ -1,4 +1,3 @@
-import { FoodCreateState } from '@core/store/food/food-create/food-create.reducer';
 import { HttpUtil } from '@core/utils/http.util';
 import { Expose, Transform, Type } from 'class-transformer';
 import { IsBoolean, IsNotEmptyObject, IsNumber, IsString, ValidateNested } from 'class-validator';
@@ -36,9 +35,23 @@ export class FoodDtoModel implements Food, DtoWrapper<Food> {
   @Expose() @IsNumber() foodTypeId: number;
   @Expose() @IsString() createDate: string;
 
-  @Expose() @Type(() => UserDtoModel) @IsNotEmptyObject() @ValidateNested() user: User;
-  @Expose() @Type(() => RestaurantDtoModel) @IsNotEmptyObject() @ValidateNested() restaurant: Restaurant;
-  @Expose() @Type(() => ShortCommentDtoModel) @IsNotEmptyObject() @ValidateNested() shortComment: ShortComment;
+  @Expose() 
+  @Type(() => UserDtoModel) 
+  @IsNotEmptyObject() 
+  @ValidateNested() 
+  user: User;
+
+  @Expose() 
+  @Type(() => RestaurantDtoModel) 
+  @IsNotEmptyObject() 
+  @ValidateNested() 
+  restaurant: Restaurant;
+
+  @Expose() 
+  @Type(() => ShortCommentDtoModel) 
+  @IsNotEmptyObject() 
+  @ValidateNested() 
+  shortComment: ShortComment;
 
   static createTypesString(types: string[]): string {
     return types.join('$$$');
