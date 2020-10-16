@@ -4,6 +4,10 @@
     "outDir": "./out-tsc/app",
     "types": ["googlemaps"]
   },
+  "files": [
+    "src/main.ts",
+    "src/polyfills.ts"
+  ],
   "paths": {
     "@core/*": ["src/app/core/*"],
     "@store/*": ["src/app/core/store/*"],
@@ -11,10 +15,6 @@
     "@shared/*": ["src/app/shared/*"],
   },
   "include": [
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "src/test.ts",
-    "src/**/*.spec.ts"
+    "src/**/*.d.ts"
   ]
 }

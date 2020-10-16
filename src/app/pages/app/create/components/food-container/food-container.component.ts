@@ -37,7 +37,7 @@ import { FoodTag } from '@core/models/food-tags.models';
   styleUrls: ['./food-container.component.scss'],
 })
 export class FoodContainerComponent implements OnInit {
-  @ViewChild(MatTabGroup, { static: false }) matTabGroup: MatTabGroup;
+  @ViewChild(MatTabGroup) matTabGroup: MatTabGroup;
 
   isSending$: Observable<boolean>;
   isSubmitted$: Observable<boolean>;

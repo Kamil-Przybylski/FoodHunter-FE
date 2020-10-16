@@ -29,9 +29,9 @@ export class FoodMapComponent implements OnInit, OnDestroy {
 
   @Output() selectPlace = new EventEmitter<RestaurantFormModel>();
 
-  @ViewChild('search', { static: false }) public searchElementRef: ElementRef;
-  @ViewChild(AgmMap, { static: false }) public map: AgmMap;
-  @ViewChild(AgmInfoWindow, { static: false }) public infoWindow: AgmInfoWindow;
+  @ViewChild('search') public searchElementRef: ElementRef;
+  @ViewChild(AgmMap) public map: AgmMap;
+  @ViewChild(AgmInfoWindow) public infoWindow: AgmInfoWindow;
 
   zoom: number = 17;
   openMarker = false;
