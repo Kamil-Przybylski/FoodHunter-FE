@@ -20,18 +20,14 @@ export class AuthImagePipePipe implements PipeTransform {
     // const token = this.authService.getToken();
     // const headers = new HttpHeaders({['Authorization']: `Bearer ${token}`});
 
-    // console.log(666.1, src, token, headers);
     // try {
     //   const imageBlob = await this.http.get(src, {headers, responseType: 'blob'}).toPromise();
     //   const reader = new FileReader();
-    //   console.log(666.2, src);
     //   return new Promise((resolve, reject) => {
-    //     console.log(666.3, reader.result);
     //     reader.onloadend = () => resolve(reader.result as string);
     //     reader.readAsDataURL(imageBlob);
     //   });
     // } catch {
-    //   console.log(666.4);
     //   return 'assets/fallback.png';
     // }
   }

@@ -9,7 +9,7 @@ import {
   Input,
   OnDestroy,
 } from '@angular/core';
-import { MapsAPILoader, MouseEvent, AgmMap, AgmInfoWindow } from '@agm/core';
+import { MapsAPILoader, AgmMap, AgmInfoWindow } from '@agm/core';
 import * as _ from 'lodash';
 import { FormControl } from '@angular/forms';
 import { takeUntil, tap } from 'rxjs/operators';
@@ -23,7 +23,6 @@ import { Subject } from 'rxjs';
   styleUrls: ['./food-map.component.scss'],
 })
 export class FoodMapComponent implements OnInit, OnDestroy {
-  
   @Input() latitude: number;
   @Input() longitude: number;
 
@@ -43,13 +42,11 @@ export class FoodMapComponent implements OnInit, OnDestroy {
   isPlaceLoading = true;
 
   private placesService: google.maps.places.PlacesService;
+  private mapClickListener: google.maps.MapsEventListener;
 
   destroyed$: Subject<boolean> = new Subject<boolean>();
 
-  constructor(
-    private mapsAPILoader: MapsAPILoader,
-    private ngZone: NgZone,
-  ) {}
+  constructor(private mapsAPILoader: MapsAPILoader, private ngZone: NgZone) {}
 
   ngOnInit() {
     this.prepareMap();
@@ -58,22 +55,19 @@ export class FoodMapComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.destroyed$.next(true);
+    if (this.mapClickListener) {
+      this.mapClickListener.remove();
+    }
   }
 
   private prepareMap() {
     this.mapsAPILoader.load().then(() => {
+      this.placesService = new google.maps.places.PlacesService(document.createElement('div'));
 
-      this.placesService = new google.maps.places.PlacesService(
-        document.createElement('div')
-      );
-
-      const autocomplete = new google.maps.places.Autocomplete(
-        this.searchElementRef.nativeElement,
-        {
-          componentRestrictions: { country: 'pl' },
-          types: ['establishment'],
-        }
-      );
+      const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+        componentRestrictions: { country: 'pl' },
+        types: ['establishment'],
+      });
 
       autocomplete.addListener('place_changed', () => {
         this.ngZone.run(() => {
@@ -96,7 +90,7 @@ export class FoodMapComponent implements OnInit, OnDestroy {
     this.ngZone.run(() => {
       this.openMarker = true;
       this.isChoice = false;
-  
+
       this.latitude = lat;
       this.longitude = lng;
       this.infoWindow.open();
@@ -113,10 +107,7 @@ export class FoodMapComponent implements OnInit, OnDestroy {
       },
       (results, status) => {
         if (status === 'OK' && results[0]) {
-          this.options = _.filter(
-            results,
-            (resoult) => _.includes(resoult.types, 'food') && !!resoult.place_id
-          );
+          this.options = _.filter(results, (resoult) => _.includes(resoult.types, 'food') && !!resoult.place_id);
         }
       }
     );
@@ -125,11 +116,11 @@ export class FoodMapComponent implements OnInit, OnDestroy {
   private getPlaceById(placeId: string) {
     this.ngZone.run(() => {
       this.isPlaceLoading = true;
-  
+
       this.placesService.getDetails({ placeId: placeId }, (result, status) => {
         if (status === 'OK') {
           this.selectedPlace = result;
-          this.isPlaceLoading = false; 
+          this.isPlaceLoading = false;
         }
       });
     });
@@ -151,10 +142,17 @@ export class FoodMapComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  findPlace(event: MouseEvent) {
-    if (!event.placeId) return;
+  // https://github.com/SebastianM/angular-google-maps/issues/1845#issuecomment-672051511
+  mapReadyHandler(map: google.maps.Map): void {
+    this.mapClickListener = map.addListener('click', (e: google.maps.IconMouseEvent) => {
+      this.ngZone.run(() => this.findPlace(e));
+    });
+  }
+
+  findPlace(event: google.maps.IconMouseEvent) {
+    if (!event.placeId && event.latLng.lat() && event.latLng.lng()) return;
     this.getPlaceById(event.placeId);
-    this.setMarker(event.coords.lat, event.coords.lng);
+    this.setMarker(event.latLng.lat(), event.latLng.lng());
   }
 
   isInfoWindowOpen() {

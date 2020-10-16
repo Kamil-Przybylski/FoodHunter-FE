@@ -41,10 +41,6 @@ export class ImagePickerComponent implements OnInit {
         this.imagePick.emit(image.dataUrl);
       })
       .catch((error) => {
-        console.log(error);
-        if (this.usePicker) {
-          this.filePickerRef.nativeElement.click();
-        }
         return false;
       });
   }
@@ -54,6 +50,7 @@ export class ImagePickerComponent implements OnInit {
     if (!pickedFile) {
       return;
     }
+
     const fr = new FileReader();
     fr.onload = () => {
       const dataUrl = fr.result.toString();

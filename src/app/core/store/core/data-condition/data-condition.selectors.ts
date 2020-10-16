@@ -10,5 +10,5 @@ export const getDataConditionState = createSelector(
 
 export const getDataCondition = <T, P>(key: EntitiesEnum, entityId: number) => createSelector(
   getDataConditionState,
-  state => state && state[key] && state[key][entityId] as HttpState<T, P>
+  state => state?.[key]?.[entityId] as HttpState<T, P>
 );

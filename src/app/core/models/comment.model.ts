@@ -17,7 +17,11 @@ export class CommentDtoModel implements Comments, DtoWrapper<Comments> {
   @Expose() @IsString() createDate: string;
   @Expose() @IsNumber() foodId: number;
 
-  @Expose() @Type(() => UserDtoModel) @IsNotEmptyObject() @ValidateNested() user: User;
+  @Expose()
+  @Type(() => UserDtoModel)
+  @IsNotEmptyObject()
+  @ValidateNested()
+  user: User;
 
   static getReqFoodDto(foodId: number, comment: string) {
     return { foodId, comment };

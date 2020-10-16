@@ -27,7 +27,7 @@
       </ng-template>
       <div class="h-100">
         <app-food-map
-          *ngIf="geolocation && geolocation.lat && geolocation.lng"
+          *ngIf="geolocation?.lat && geolocation?.lng"
           (selectPlace)="setDraft(1, $event)"
           [latitude]="geolocation?.lat"
           [longitude]="geolocation?.lng"

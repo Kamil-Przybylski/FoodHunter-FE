@@ -3,8 +3,9 @@
     <app-food-list-item [food]="food" (showComments)="showComments($event)" class="w-100"></app-food-list-item>
   </ion-list>
 
-  <ion-infinite-scroll #ionScroll threshold="100px" (ionInfinite)="loadNextData($event)">
+  <ion-infinite-scroll #ionScroll threshold="100px" (ionInfinite)="loadNextData()">
     <ion-infinite-scroll-content loadingSpinner="bubbles">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>
+ 
