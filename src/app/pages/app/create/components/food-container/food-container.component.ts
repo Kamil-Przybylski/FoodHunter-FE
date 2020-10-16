@@ -139,7 +139,13 @@ export class FoodContainerComponent implements OnInit {
           if (foodState.mapDraft.isValid && foodState.cameraDraft.isValid && foodState.foodDraft.isValid) {
             this.store.dispatch(
               foodCreateSaveAction({
-                payload: { foodState },
+                payload: {
+                  foodForm: {
+                    food: foodState.foodDraft.form,
+                    photo: foodState.cameraDraft.form,
+                    restaurant: foodState.mapDraft.form,
+                  },
+                },
               })
             );
           } else {

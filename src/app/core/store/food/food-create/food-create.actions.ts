@@ -1,12 +1,13 @@
 import { createAction, props } from '@ngrx/store';
 import { MapDraftState, CameraDraftState, FoodDraftState, FoodCreateState } from '@core/store/food/food-create/food-create.reducer';
+import { FoodPhotoRestaurantModel } from '@core/models/food.models';
 
 export const foodTypesDownloadAction = createAction('[Food] Download Food Types Data Action');
 export const foodTagsDownloadAction = createAction('[Food] Download Food Tags Data Action');
 
 export const foodCreateSaveAction = createAction(
   '[Food Create] Create Food Action',
-  props<{ payload: { foodState: FoodCreateState } }>()
+  props<{ payload: { foodForm: FoodPhotoRestaurantModel } }>()
 );
 
 export const foodCreateDraftMapAction = createAction(

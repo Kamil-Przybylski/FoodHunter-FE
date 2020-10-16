@@ -3,7 +3,7 @@ import { IsBoolean, IsNotEmptyObject, IsNumber, IsString, ValidateNested } from 
 import { DtoWrapper } from './custom-http.models';
 import { User, UserDtoModel } from './user.models';
 
-export interface IComment {
+export interface Comments {
   id: number;
   comment: string;
   createDate: string;
@@ -11,7 +11,7 @@ export interface IComment {
 
   user: User;
 }
-export class CommentDtoModel implements IComment, DtoWrapper<IComment> {
+export class CommentDtoModel implements Comments, DtoWrapper<Comments> {
   @Expose() @IsNumber() id: number;
   @Expose() @IsString() comment: string;
   @Expose() @IsString() createDate: string;

@@ -41,6 +41,8 @@ export class HttpDtoService {
         switchMap((errors) => errors),
         map((errors) => ({ res: r, errors: errors }))
       );
+    } else if (!r) {
+      return of({ res: r, errors: [] });
     } else {
       return from(validate(r)).pipe(map((e) => ({ res: r, errors: e })));
     }

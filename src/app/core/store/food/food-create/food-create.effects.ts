@@ -40,11 +40,11 @@ export class FoodEffects {
     this.actions$.pipe(
       ofType(foodCreateSaveAction),
       map((action) => action.payload),
-      map(({ foodState }) =>
+      map(({ foodForm }) =>
         saveAction()({
           key: EntitiesEnum.FOOD,
           dataId: 0,
-          requestObservable: this.foodService.createFood(foodState),
+          requestObservable: this.foodService.createFood(foodForm),
         })
       )
     )

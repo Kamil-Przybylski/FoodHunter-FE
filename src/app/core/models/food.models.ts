@@ -4,7 +4,7 @@ import { Expose, Transform, Type } from 'class-transformer';
 import { IsBoolean, IsNotEmptyObject, IsNumber, IsString, ValidateNested } from 'class-validator';
 import { ShortComment, ShortCommentDtoModel } from './comment.model';
 import { DtoWrapper } from './custom-http.models';
-import { Restaurant, RestaurantDtoModel } from './restaurant.models';
+import { Restaurant, RestaurantDtoModel, RestaurantFormModel } from './restaurant.models';
 import { User, UserDtoModel } from './user.models';
 
 export interface Food {
@@ -44,9 +44,9 @@ export class FoodDtoModel implements Food, DtoWrapper<Food> {
     return types.join('$$$');
   }
 
-  static getReqFoodDto(state: FoodCreateState, file: File) {
-    const food = state.foodDraft.form;
-    const restaurant = state.mapDraft.form;
+  static getReqFoodDto(foodForm: FoodPhotoRestaurantModel, file: File) {
+    const food = foodForm.food;
+    const restaurant = foodForm.restaurant;
 
     return {
       name: food.name,
@@ -92,4 +92,10 @@ export interface FoodFormCreateModel {
   [FoodFormCreateFields.IS_PRIVATE]: boolean;
   [FoodFormCreateFields.IS_PLANNED]: boolean;
   [FoodFormCreateFields.FOOD_TYPE_ID]: number;
+}
+
+export interface FoodPhotoRestaurantModel {
+  restaurant: RestaurantFormModel;
+  photo: string;
+  food: FoodFormCreateModel;
 }

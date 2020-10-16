@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { AppState } from '@core/store';
 import { authLoginAction } from '@core/store/core/auth/auth.actions';
 import { layoutRouterLoginAction } from '@core/store/core/layout/layout.actions';
-import { TokenEnum } from 'src/config';
 import { AuthService } from '@core/services/auth.service';
 
 @Injectable()

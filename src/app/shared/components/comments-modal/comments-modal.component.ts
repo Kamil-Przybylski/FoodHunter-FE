@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { IComment } from '@core/models/comment.model';
+import { Comments } from '@core/models/comment.model';
 import { Food } from '@core/models/food.models';
 import { AppState } from '@core/store';
 import { commentDownloadFoodCommentsAction, commentSaveFoodCommentAction } from '@core/store/comment/comment.actions';
@@ -18,7 +18,7 @@ export class CommentsModalComponent implements OnInit {
 
   commentFormControl = new FormControl('', [Validators.required]);
 
-  comments$: Observable<IComment[]>;
+  comments$: Observable<Comments[]>;
 
   constructor(private store: Store<AppState>) {}
 
