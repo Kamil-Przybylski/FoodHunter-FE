@@ -28,6 +28,7 @@ export class ImagePickerComponent implements OnInit {
       this.filePickerRef.nativeElement.click();
       return;
     }
+
     Plugins.Camera.getPhoto({
       quality: 95,
       source: CameraSource.Prompt,
@@ -37,6 +38,8 @@ export class ImagePickerComponent implements OnInit {
       resultType: CameraResultType.DataUrl,
     })
       .then((image) => {
+        console.log(666.4);
+
         this.selectedImage = image.dataUrl;
         this.imagePick.emit(image.dataUrl);
       })
