@@ -12,9 +12,13 @@ export const accountUserUpdatePhotoDraftAction = createAction(
   props<{ payload: {photoPath: string} }>()
 );
 
-export const accountUserSaveAction = createAction(
-  '[Account User] Save Action',
+export const accountUserSaveInfoAction = createAction(
+  '[Account User] Save User Info Action',
   props<{ payload: {data: AuthFormUserModel} }>()
+);
+export const accountUserSavePhotoAction = createAction(
+  '[Account User] Save User Photo Action',
+  props<{ payload: {photo: string, user: AuthUser} }>()
 );
 export const accountUserSaveSuccessAction = createAction(
   '[Account User] Save Success Action',

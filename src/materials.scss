@@ -10,9 +10,23 @@
   font-size: 22px;
 }
 
+mat-tab-group.app-mat-tab-col-2 {
+  .mat-tab-label {
+    width: 50% !important;
+  }
+}
 mat-tab-group.app-mat-tab-col-3 {
   .mat-tab-label {
     width: 33.33% !important;
+  }
+}
+
+.app-matbut-icon {
+  * {
+    ion-icon {
+      width: $ion-icon-in-mat-button;
+      height: $ion-icon-in-mat-button;
+    }
   }
 }
 

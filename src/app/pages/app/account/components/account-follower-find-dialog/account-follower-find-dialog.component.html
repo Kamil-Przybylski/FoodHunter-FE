@@ -1,0 +1,3 @@
+<app-dialog-container class="h-100" tittle="Komentarze" description="Znajdź znajomych">
+  <app-account-follower-list [userShortList]="followerList$ | async" [isForAdd]="true" (addUser)="addUser($event)"></app-account-follower-list>
+</app-dialog-container>

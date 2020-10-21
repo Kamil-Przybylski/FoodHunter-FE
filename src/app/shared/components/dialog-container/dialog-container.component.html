@@ -5,7 +5,7 @@
         <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-avatar slot="start" class="ion-small-avatar ion-margin-start">
+    <ion-avatar *ngIf="avatarPath" slot="start" class="ion-small-avatar ion-margin-start">
       <img [src]="avatarPath" />
     </ion-avatar>
     <ion-title size="medium">{{ tittle }}</ion-title>

@@ -43,15 +43,6 @@ export class AccountUserFormComponent implements OnInit, OnDestroy {
       .subscribe();
 
     this.photoDraft$ = this.store.pipe(select(getAccountUserPhotoDraft));
-
-    // this.form.valueSafeChanges
-    //   .pipe(
-    //     startWith(this.form.value),
-    //     takeUntil(this.destroyed$),
-    //     debounceTime(200),
-    //     tap((val) => this.store.dispatch(accountUserUpdateInfoDraftAction({ payload: { formVal: val } })))
-    //   )
-    //   .subscribe();
   }
 
   ngOnDestroy() {
@@ -63,7 +54,6 @@ export class AccountUserFormComponent implements OnInit, OnDestroy {
       [this.formFields.ID]: new FormControl(user.id, Validators.required),
       [this.formFields.USERNAME]: new FormControl(user.username, Validators.required),
       [this.formFields.EMAIL]: new FormControl(user.email, Validators.required),
-      [this.formFields.BIRTH_DATE]: new FormControl(user.birthDate),
       [this.formFields.PHOTO_PATH]: new FormControl(user.photoPath),
       [this.formFields.ABOUT]: new FormControl(user.about),
     });

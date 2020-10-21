@@ -1,7 +1,41 @@
-<ion-grid>
+<ion-grid *ngIf="user$ | async as user">
   <ion-row>
     <ion-col size="12">
-      <app-account-user></app-account-user>
+      <div class="w-100 ion-text-end" style="position: absolute">
+        <button mat-icon-button class="app-matbut-icon" color="primary" (click)="editProfile(user)">
+          <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+        </button>
+      </div>
+      <app-account-user
+        [user]="user"
+        (avatarClick)="takePhoto()"
+      ></app-account-user>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <mat-divider></mat-divider>
+      <mat-tab-group [selectedIndex]="0" class="app-mat-tab-col-2">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div class="d-flex flex-column flex-x-center">
+              <ion-icon class="app_mat-stepper-icon ion-no-margin" slot="icon-only" name="images-outline"></ion-icon>
+              <h6 class="ion-no-margin">Posty</h6>
+            </div>
+          </ng-template>
+          <div>posty container</div>
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div class="d-flex flex-column flex-x-center">
+              <ion-icon class="app_mat-stepper-icon ion-no-margin" slot="icon-only" name="happy-outline"></ion-icon>
+              <h6 class="ion-no-margin">Znajomi</h6>
+            </div>
+          </ng-template>
+          <app-account-followers [userId]="user.id"></app-account-followers>
+        </mat-tab>
+      </mat-tab-group>
     </ion-col>
   </ion-row>
 </ion-grid>

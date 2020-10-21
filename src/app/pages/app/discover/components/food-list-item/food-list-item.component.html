@@ -3,12 +3,12 @@
     <ion-col size="12" class="d-flex">
       <div class="ion-padding-end">
         <ion-avatar class="ion-small-avatar">
-          <img [src]="food.user.photoPath" />
+          <img [src]="food.userShort.photoPath" />
         </ion-avatar>
       </div>
       <div>
         <p class="m-0">
-          <small>{{ food.user.username }}</small>
+          <small>{{ food.userShort.username }}</small>
         </p>
         <h6 class="m-0">{{ food.name }}</h6>
       </div>
@@ -40,7 +40,11 @@
     </ion-col>
 
     <ion-col class="mpy-0" size="12">
-      <ion-text class="" color="dark">
+      <ion-text color="dark">
+        <small>
+          <b>{{ food.restaurant.name }}</b>
+        </small>
+        <br />
         <small>
           {{ food.restaurant.formattedAddress }}
         </small>

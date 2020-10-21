@@ -1,0 +1,6 @@
+<button mat-button (click)="openFindDialog()">Szukaj</button>
+<app-account-follower-list
+  [userShortList]="followerList$ | async"
+  [isForRemove]="true"
+  (removeUser)="removeUser($event)"
+></app-account-follower-list>

@@ -4,7 +4,7 @@ import { IsBoolean, IsNotEmptyObject, IsNumber, IsString, ValidateNested } from 
 import { ShortComment, ShortCommentDtoModel } from './comment.model';
 import { DtoWrapper } from './custom-http.models';
 import { Restaurant, RestaurantDtoModel, RestaurantFormModel } from './restaurant.models';
-import { User, UserDtoModel } from './user.models';
+import { UserShort, UserShortDtoModel } from './user.models';
 
 export interface Food {
   id: number;
@@ -18,7 +18,7 @@ export interface Food {
   foodTypeId: number;
   createDate: string;
 
-  user: User;
+  userShort: UserShort;
   restaurant: Restaurant;
   shortComment: ShortComment;
 }
@@ -35,22 +35,22 @@ export class FoodDtoModel implements Food, DtoWrapper<Food> {
   @Expose() @IsNumber() foodTypeId: number;
   @Expose() @IsString() createDate: string;
 
-  @Expose() 
-  @Type(() => UserDtoModel) 
-  @IsNotEmptyObject() 
-  @ValidateNested() 
-  user: User;
+  @Expose()
+  @Type(() => UserShortDtoModel)
+  @IsNotEmptyObject()
+  @ValidateNested()
+  userShort: UserShort;
 
-  @Expose() 
-  @Type(() => RestaurantDtoModel) 
-  @IsNotEmptyObject() 
-  @ValidateNested() 
+  @Expose()
+  @Type(() => RestaurantDtoModel)
+  @IsNotEmptyObject()
+  @ValidateNested()
   restaurant: Restaurant;
 
-  @Expose() 
-  @Type(() => ShortCommentDtoModel) 
-  @IsNotEmptyObject() 
-  @ValidateNested() 
+  @Expose()
+  @Type(() => ShortCommentDtoModel)
+  @IsNotEmptyObject()
+  @ValidateNested()
   shortComment: ShortComment;
 
   static createTypesString(types: string[]): string {

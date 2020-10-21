@@ -1,0 +1,22 @@
+<ion-list>
+  <ion-item *ngFor="let userShort of userShortList">
+    <ion-avatar slot="start">
+      <img [src]="userShort.photoPath" />
+    </ion-avatar>
+    <ion-label>
+      <h2>{{ userShort.username }}</h2>
+    </ion-label>
+    <button mat-icon-button *ngIf="isForAdd" class="app-matbut-icon" color="primary" (click)="addEmmit(userShort)">
+      <ion-icon slot="icon-only" name="person-add-outline"></ion-icon>
+    </button>
+    <button
+      mat-icon-button
+      *ngIf="isForRemove"
+      class="app-matbut-icon"
+      color="primary"
+      (click)="removeEmmit(userShort)"
+    >
+      <ion-icon slot="icon-only" name="person-remove-outline"></ion-icon>
+    </button>
+  </ion-item>
+</ion-list>

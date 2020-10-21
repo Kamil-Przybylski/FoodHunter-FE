@@ -1,7 +1,7 @@
 import { Expose, Type } from 'class-transformer';
 import { IsBoolean, IsNotEmptyObject, IsNumber, IsString, ValidateNested } from 'class-validator';
 import { DtoWrapper } from './custom-http.models';
-import { User, UserDtoModel } from './user.models';
+import { UserShort, UserShortDtoModel } from './user.models';
 
 export interface Comments {
   id: number;
@@ -9,7 +9,7 @@ export interface Comments {
   createDate: string;
   foodId: number;
 
-  user: User;
+  userShort: UserShort;
 }
 export class CommentDtoModel implements Comments, DtoWrapper<Comments> {
   @Expose() @IsNumber() id: number;
@@ -18,10 +18,10 @@ export class CommentDtoModel implements Comments, DtoWrapper<Comments> {
   @Expose() @IsNumber() foodId: number;
 
   @Expose()
-  @Type(() => UserDtoModel)
+  @Type(() => UserShortDtoModel)
   @IsNotEmptyObject()
   @ValidateNested()
-  user: User;
+  userShort: UserShort;
 
   static getReqFoodDto(foodId: number, comment: string) {
     return { foodId, comment };

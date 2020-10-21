@@ -1,5 +1,11 @@
 <ion-header>
-  <app-toolbar title="Użytkownik"></app-toolbar>
+  <app-toolbar title="Użytkownik">
+    <ion-buttons slot="secondary">
+      <ion-button (click)="logout()">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </app-toolbar>
 </ion-header>
 
 <ion-content>

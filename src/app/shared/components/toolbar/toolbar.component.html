@@ -1,8 +1,4 @@
 <ion-toolbar>
   <ion-title>{{ title }}</ion-title>
-  <ion-buttons slot="secondary">
-    <ion-button (click)="logout()">
-      <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
-    </ion-button>
-  </ion-buttons>
+  <ng-content></ng-content>
 </ion-toolbar>

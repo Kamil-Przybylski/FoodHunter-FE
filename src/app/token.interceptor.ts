@@ -7,7 +7,6 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { TokenEnum } from 'src/config';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {

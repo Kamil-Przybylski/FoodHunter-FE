@@ -7,9 +7,9 @@ import {
 } from '@core/store/core/auth/auth.selectors';
 import { take, map, filter, share } from 'rxjs/operators';
 import { FormSingUpModel } from 'src/app/pages/register/register-form/register-form.component';
-import { TokenEnum } from 'src/config';
 import { AuthData, AuthDataDtoModel, AuthFormSingInModel, AuthUser, AuthUserDtoModel } from '@core/models/auth.models';
 import { HttpDtoService } from '@core/utils/http-dto-service';
+import { TokenEnum } from '@core/enums/common.enums';
 
 @Injectable({
   providedIn: 'root',

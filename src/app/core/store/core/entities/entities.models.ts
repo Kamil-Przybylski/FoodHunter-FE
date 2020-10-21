@@ -1,6 +1,6 @@
 import { EntityState } from '@ngrx/entity';
 import { ActionReducer } from '@ngrx/store';
-import { User } from '@core/models/user.models';
+import { User, UserShort } from '@core/models/user.models';
 import { Food } from '@core/models/food.models';
 import { FoodTag } from '@core/models/food-tags.models';
 import { FoodType } from '@core/models/food-types.models';
@@ -14,6 +14,7 @@ export enum EntitiesEnum {
   COMMENT = 'comment',
   // RESTAURANT = 'restaurantEntities',
   // CATALOG = 'catalogEntities',
+  USER_SHORT = 'userShortEntities',
   USER = 'userEntities',
 }
 
@@ -24,6 +25,7 @@ export interface EntitiesStateComponents {
 
   [EntitiesEnum.COMMENT]: Comments;
 
+  [EntitiesEnum.USER_SHORT]: UserShort;
   [EntitiesEnum.USER]: User;
 }
 

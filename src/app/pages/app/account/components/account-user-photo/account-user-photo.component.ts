@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Component, Input, OnInit } from '@angular/core';
+import { AuthUser } from '@core/models/auth.models';
+import { AppState } from '@core/store';
+import { accountUserSavePhotoAction } from '@core/store/account/account-user/account-user.actions';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-account-user-photo',
@@ -7,9 +10,10 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./account-user-photo.component.scss'],
 })
 export class AccountUserPhotoComponent implements OnInit {
+  @Input() user: AuthUser;
   photoData: string;
 
-  constructor(private modalCtrl: ModalController) {}
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit() {}
 
@@ -19,6 +23,6 @@ export class AccountUserPhotoComponent implements OnInit {
 
   checkImage() {
     if (!this.photoData) return;
-    this.modalCtrl.dismiss({ photoData: this.photoData });
+    else this.store.dispatch(accountUserSavePhotoAction({ payload: { photo: this.photoData, user: this.user } }));
   }
 }

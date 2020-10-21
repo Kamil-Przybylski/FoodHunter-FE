@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ToastController } from '@ionic/angular';
-
-enum MessageEnum {
-  SUCCESS = 'Operacja zakończona pomyślnie!',
-  FAIL = 'Wystąpił błąd.'
-}
+import { MessageEnum } from 'src/config';
 
 @Injectable({
   providedIn: 'root'

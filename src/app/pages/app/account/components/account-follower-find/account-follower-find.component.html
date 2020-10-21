@@ -1,0 +1,10 @@
+  <ion-list>
+    <ion-item *ngFor="let follower of followerList$ | async">
+      <ion-avatar slot="start">
+        <img [src]="follower.photoPath" />
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ follower.username }}</h2>
+      </ion-label>
+    </ion-item>
+  </ion-list>

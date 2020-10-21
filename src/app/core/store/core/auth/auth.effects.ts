@@ -23,6 +23,7 @@ import { Router } from '@angular/router';
 import { NotifierService } from '@shared/services/notifier.service';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '@core/store';
+import { MessageEnum } from 'src/config';
 
 @Injectable()
 export class AuthEffects {
@@ -142,9 +143,7 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(authSingUpSuccessAction),
         tap(() =>
-          this.notifierService.snackBarSuccess(
-            'Konto zostało założone! \nZa 2s zostaniesz przeniesiony do logowania...'
-          )
+          this.notifierService.snackBarSuccess(MessageEnum.SIGN_UP_SUCCESS)
         ),
         debounceTime(2000),
         tap(() => this.router.navigateByUrl(AppRoutesEnum.LOGIN))
