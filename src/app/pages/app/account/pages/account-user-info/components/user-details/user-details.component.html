@@ -1,0 +1,31 @@
+<div class="w-100">
+  <div class="w-100 d-flex">
+    <div class="app-avatar app-avatar-lg ion-padding-end">
+      <ion-avatar (click)="avatarClickEmmit()">
+        <img *ngIf="user.photoPath" [src]="user.photoPath" />
+      </ion-avatar>
+    </div>
+
+    <div class="ion-padding-start d-flex ion-align-items-center" style="flex: 1">
+      <div class="w-100">
+        <h6 class="mt-0">{{ user.username }}</h6>
+        <div class="d-flex">
+          <div class="w-100">Posty:</div>
+          <div>{{ user.foodsCount }}</div>
+        </div>
+        <div class="d-flex">
+          <div class="w-100">Obserwujący:</div>
+          <div>{{ user.followersCount }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ion-padding-top ion-text-center">
+    <ion-text color="dark">
+      {{ user.about }}
+    </ion-text>
+  </div>
+
+  <ion-item-divider></ion-item-divider>
+</div>

@@ -2,7 +2,7 @@
   <ion-row>
     <ion-col size="12" class="d-flex">
       <div class="ion-padding-end">
-        <ion-avatar class="ion-small-avatar">
+        <ion-avatar class="ion-small-avatar" (click)="avatarClickEmit(food.userShort)">
           <img [src]="food.userShort.photoPath" />
         </ion-avatar>
       </div>

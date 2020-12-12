@@ -8,13 +8,13 @@ export type FormGroupControlsOf<T> = {
 
 export abstract class FormGroupTypeSafe<T> extends FormGroup {
   // give the value a custom type s
-  value: T;
-  valueSafeChanges: Observable<T>;
-  
+  value!: T;
+  valueSafeChanges!: Observable<T>;
+
   // create helper methods to achieve this syntax eg: this.form.getSafe(x => x.heroName).patchValue('Himan')
   public abstract getSafe(propertyFunction: (typeVal: T) => any): AbstractControl;
   public abstract setControlSafe(propertyFunction: (typeVal: T) => any, control: AbstractControl): void;
-  
+
   // If you need more function implement declare them here but implement them on FormBuilderTypeSafe.group instantiation.
   public abstract clearFormArray(formArray: FormArray): void;
   public abstract getSafeRawValue(): T;
@@ -23,7 +23,7 @@ export abstract class FormGroupTypeSafe<T> extends FormGroup {
 }
 
 export class FormControlTypeSafe<T> extends FormControl {
-  value: T;
+  value!: T;
 }
 
 @Injectable({
@@ -41,18 +41,15 @@ export class FormBuilderTypeSafe extends FormBuilder {
     // instantiate group from angular type
     const gr = super.group(controlsConfig, extra) as FormGroupTypeSafe<T>;
 
-    const getPropertyName = (propertyFunction: (T) => any): string => {
+    const getPropertyName = (propertyFunction: (arg: T) => any): string => {
       // https://github.com/dsherret/ts-nameof - helped me with the code below, THANX!!!!
       // propertyFunction.toString() sample value:
       //  function(x) { return x.hero.address.postcode;}
       // we need the 'hero.address.postcode'
       // for gr.get('hero.address.postcode') function
-      const properties = propertyFunction
-        .toString()
-        .match(/(?![. ])(([a-z0-9_]+)(?=[};.])|(([a-z0-9_]+)$))/gi)
-        .splice(1);
+      const properties = propertyFunction.toString().match(/(?![. ])(([a-z0-9_]+)(?=[};.])|(([a-z0-9_]+)$))/gi)?.splice(1);
 
-      const r = properties.join('.');
+      const r = properties?.join('.') || '';
       return r;
     };
 

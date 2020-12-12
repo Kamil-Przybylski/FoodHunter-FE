@@ -3,14 +3,16 @@ import { FormControl, NgForm, Validators } from '@angular/forms';
 import { AuthFormUserFields, AuthFormUserModel, AuthUser } from '@core/models/auth.models';
 import { HttpErrorResDto } from '@core/models/custom-http.models';
 import { AppState } from '@core/store';
-import { accountUserClearDraftAction, accountUserUpdateInfoDraftAction } from '@core/store/account/account-user/account-user.actions';
-import { getAccountUserAuthUser, getAccountUserPhotoDraft } from '@core/store/account/account-user/account-user.selectors';
+import {
+  getAccountUserAuthUser,
+  getAccountUserPhotoDraft,
+} from '@core/store/account/account-user/account-user.selectors';
 import { FormBuilderTypeSafe, FormGroupTypeSafe } from '@core/utils/form-builder-type-safe';
 import { FormErrorUtil } from '@core/utils/form-error.util';
 import { select, Store } from '@ngrx/store';
 import * as _ from 'lodash';
 import { Observable, Subject } from 'rxjs';
-import { debounceTime, filter, startWith, take, takeUntil, tap } from 'rxjs/operators';
+import { take, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-account-user-form',
@@ -18,16 +20,15 @@ import { debounceTime, filter, startWith, take, takeUntil, tap } from 'rxjs/oper
   styleUrls: ['./account-user-form.component.scss'],
 })
 export class AccountUserFormComponent implements OnInit, OnDestroy {
-  @ViewChild('formRef') formRef: NgForm;
+  @ViewChild('formRef') formRef!: NgForm;
   @Output() submitUser = new EventEmitter<AuthFormUserModel>();
 
-  form: FormGroupTypeSafe<AuthFormUserModel>;
+  form!: FormGroupTypeSafe<AuthFormUserModel>;
   formFields = AuthFormUserFields;
 
-  user$: Observable<AuthUser>;
-  photoDraft$: Observable<string>;
+  user$!: Observable<AuthUser>;
 
-  loginErrors$: Observable<HttpErrorResDto>;
+  loginErrors$!: Observable<HttpErrorResDto>;
 
   destroyed$: Subject<boolean> = new Subject<boolean>();
 
@@ -41,8 +42,6 @@ export class AccountUserFormComponent implements OnInit, OnDestroy {
         tap((user) => this.createForm(user))
       )
       .subscribe();
-
-    this.photoDraft$ = this.store.pipe(select(getAccountUserPhotoDraft));
   }
 
   ngOnDestroy() {
@@ -66,13 +65,7 @@ export class AccountUserFormComponent implements OnInit, OnDestroy {
   submitUserEmmit() {
     if (this.form.valid) {
       const val = _.cloneDeep(this.form.value);
-      this.photoDraft$.pipe(
-        take(1),
-        tap(photo => {
-          val.photoPath = photo;
-          this.submitUser.emit(val);
-        })
-      ).subscribe();
+      this.submitUser.emit(val);
     } else {
       FormErrorUtil.setAllTouched(this.form);
     }

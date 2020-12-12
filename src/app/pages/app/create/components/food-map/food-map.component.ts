@@ -13,9 +13,9 @@ import { MapsAPILoader, AgmMap, AgmInfoWindow } from '@agm/core';
 import * as _ from 'lodash';
 import { FormControl } from '@angular/forms';
 import { takeUntil, tap } from 'rxjs/operators';
-import { ActionSheetController, AlertController } from '@ionic/angular';
 import { RestaurantFormModel, RestaurantFormFields } from '@core/models/restaurant.models';
 import { Subject } from 'rxjs';
+import { has, hasIn, propertyOf } from 'lodash';
 
 @Component({
   selector: 'app-food-map',
@@ -23,26 +23,26 @@ import { Subject } from 'rxjs';
   styleUrls: ['./food-map.component.scss'],
 })
 export class FoodMapComponent implements OnInit, OnDestroy {
-  @Input() latitude: number;
-  @Input() longitude: number;
+  @Input() latitude!: number;
+  @Input() longitude!: number;
 
   @Output() selectPlace = new EventEmitter<RestaurantFormModel>();
 
-  @ViewChild('search') public searchElementRef: ElementRef;
-  @ViewChild(AgmMap) public map: AgmMap;
-  @ViewChild(AgmInfoWindow) public infoWindow: AgmInfoWindow;
+  @ViewChild('search') public searchElementRef!: ElementRef;
+  @ViewChild(AgmMap) public map!: AgmMap;
+  @ViewChild(AgmInfoWindow) public infoWindow!: AgmInfoWindow;
 
   zoom: number = 17;
   openMarker = false;
 
   selectControl = new FormControl('');
-  options: google.maps.places.PlaceResult[];
-  selectedPlace: google.maps.places.PlaceResult;
+  options!: google.maps.places.PlaceResult[];
+  selectedPlace!: google.maps.places.PlaceResult;
   isChoice = false;
   isPlaceLoading = true;
 
-  private placesService: google.maps.places.PlacesService;
-  private mapClickListener: google.maps.MapsEventListener;
+  private placesService!: google.maps.places.PlacesService;
+  private mapClickListener!: google.maps.MapsEventListener;
 
   destroyed$: Subject<boolean> = new Subject<boolean>();
 
@@ -113,11 +113,11 @@ export class FoodMapComponent implements OnInit, OnDestroy {
     );
   }
 
-  private getPlaceById(placeId: string) {
+  private getPlaceById(placeId: string | undefined) {
     this.ngZone.run(() => {
       this.isPlaceLoading = true;
 
-      this.placesService.getDetails({ placeId: placeId }, (result, status) => {
+      this.placesService.getDetails({ placeId: placeId || '' }, (result, status) => {
         if (status === 'OK') {
           this.selectedPlace = result;
           this.isPlaceLoading = false;
@@ -132,9 +132,10 @@ export class FoodMapComponent implements OnInit, OnDestroy {
         takeUntil(this.destroyed$),
         tap((val: google.maps.places.PlaceResult) => {
           if (!val.place_id) return;
-          const lat = val.geometry.location.lat();
-          const lng = val.geometry.location.lng();
+          const lat = val.geometry?.location.lat();
+          const lng = val.geometry?.location.lng();
 
+          if (!lat || !lng) return;
           this.getPlaceById(val.place_id);
           this.setMarker(lat, lng);
         })
@@ -144,7 +145,9 @@ export class FoodMapComponent implements OnInit, OnDestroy {
 
   // https://github.com/SebastianM/angular-google-maps/issues/1845#issuecomment-672051511
   mapReadyHandler(map: google.maps.Map): void {
-    this.mapClickListener = map.addListener('click', (e: google.maps.IconMouseEvent) => {
+    map.addListener('click', (e) => {});
+    this.mapClickListener = map.addListener('click', e => {
+      if (!('placeId' in e)) return;
       this.ngZone.run(() => this.findPlace(e));
     });
   }

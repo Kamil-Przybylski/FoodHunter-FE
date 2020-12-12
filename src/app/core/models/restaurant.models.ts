@@ -12,13 +12,13 @@ export interface Restaurant {
   website: string;
 }
 export class RestaurantDtoModel implements Restaurant, DtoWrapper<Restaurant> {
-  @Expose() @IsString() id: string;
-  @Expose() @IsString() formattedAddress: string;
-  @Expose() @IsString() name: string;
-  @Expose() @IsNumber() rating: number;
-  @Expose() @IsString({each: true}) types: string[];
-  @Expose() @IsString() url: string;
-  @Expose() @IsString() website: string;
+  @Expose() @IsString() id!: string;
+  @Expose() @IsString() formattedAddress!: string;
+  @Expose() @IsString() name!: string;
+  @Expose() @IsNumber() rating!: number;
+  @Expose() @IsString({each: true}) types!: string[];
+  @Expose() @IsString() url!: string;
+  @Expose() @IsString() website!: string;
 }
 
 // FORMS
@@ -36,9 +36,9 @@ export enum RestaurantFormFields {
 export interface RestaurantFormModel {
   [RestaurantFormFields.ID]: string;
   [RestaurantFormFields.NAME]: string;
-  [RestaurantFormFields.FORMATTED_ADDRESS]: string;
-  [RestaurantFormFields.RATING]: number;
-  [RestaurantFormFields.URL]: string;
-  [RestaurantFormFields.WEBSITE]: string;
-  [RestaurantFormFields.TYPES]: string[];
+  [RestaurantFormFields.FORMATTED_ADDRESS]: string | undefined;
+  [RestaurantFormFields.RATING]: number | undefined;
+  [RestaurantFormFields.URL]: string | undefined;
+  [RestaurantFormFields.WEBSITE]: string | undefined;
+  [RestaurantFormFields.TYPES]: string[] | undefined;
 }

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UserShort } from '@core/models/user.models';
 import { AppState } from '@core/store';
-import { getAccountUserFollowersList } from '@core/store/account/account-followers/account-followers.actions.selectors';
+import { getFollowersUserList } from '@core/store/account/account-followers/account-followers.selectors';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
@@ -11,15 +11,13 @@ import { Observable } from 'rxjs';
   styleUrls: ['./account-follower-find.component.scss'],
 })
 export class AccountFollowerFindComponent implements OnInit {
-  @Input() userId: number;
+  @Input() userId!: number;
 
-  followerList$: Observable<UserShort[]>;
+  followerList$!: Observable<UserShort[]>;
 
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit() {
-    this.followerList$ = this.store.pipe(select(getAccountUserFollowersList(this.userId)));
-
+    this.followerList$ = this.store.pipe(select(getFollowersUserList(this.userId)));
   }
-
 }

@@ -1,0 +1,11 @@
+<app-dialog-container class="h-100" tittle="Awatar" description="Wybierz zdjęcie" [avatarPath]="user.photoPath">
+  <div class="app-center h-100 w-100">
+    <app-image-picker class="w-100" (imagePick)="imagePick($event)"></app-image-picker>
+    <div class="w-100 ion-margin-top app-center">
+      <button mat-flat-button color="accent" class="app-icon-button" *ngIf="!!photoData" (click)="checkImage()">
+        <ion-icon class="ion-margin" name="arrow-redo-outline"></ion-icon>
+        Zaakceptuj zdjęcie
+      </button>
+    </div>
+  </div>
+</app-dialog-container>

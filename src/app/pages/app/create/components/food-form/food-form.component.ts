@@ -7,7 +7,10 @@ import { Observable } from 'rxjs';
 import { HttpErrorResDto } from '@core/models/custom-http.models';
 import { FormErrorUtil } from '@core/utils/form-error.util';
 import { FoodFormCreateModel, FoodFormCreateFields } from '@core/models/food.models';
-import { getFoodCreateConditionIsSending, getFoodCreateConditionSendErrors } from '@core/store/food/food-create/food-create.selectors';
+import {
+  getFoodCreateConditionIsSending,
+  getFoodCreateConditionSendErrors,
+} from '@core/store/food/food-create/food-create.selectors';
 import { FoodDraftState } from '@core/store/food/food-create/food-create.reducer';
 import { FoodType } from '@core/models/food-types.models';
 
@@ -17,20 +20,17 @@ import { FoodType } from '@core/models/food-types.models';
   styleUrls: ['./food-form.component.scss'],
 })
 export class FoodFormComponent implements OnInit {
-  @Input() foodTypes$: Observable<FoodType[]>;
-  @ViewChild('formRef') formRef: NgForm;
+  @Input() foodTypes$!: Observable<FoodType[]>;
+  @ViewChild('formRef') formRef!: NgForm;
   @Output() save = new EventEmitter<FoodDraftState>();
 
-  form: FormGroupTypeSafe<FoodFormCreateModel>;
+  form!: FormGroupTypeSafe<FoodFormCreateModel>;
   formFields = FoodFormCreateFields;
 
-  isSending$: Observable<boolean>;
-  hasErrors$: Observable<HttpErrorResDto>;
+  isSending$!: Observable<boolean>;
+  hasErrors$!: Observable<HttpErrorResDto | null>;
 
-  constructor(
-    private store: Store<AppState>,
-    private fb: FormBuilderTypeSafe,
-  ) { }
+  constructor(private store: Store<AppState>, private fb: FormBuilderTypeSafe) {}
 
   ngOnInit() {
     this.isSending$ = this.store.pipe(select(getFoodCreateConditionIsSending));
@@ -59,11 +59,10 @@ export class FoodFormComponent implements OnInit {
     if (this.form.valid) {
       this.save.emit({
         form: this.form.value,
-        isValid: this.form.valid
+        isValid: this.form.valid,
       });
     } else {
       FormErrorUtil.setAllTouched(this.form);
     }
   }
-
 }

@@ -1,0 +1,11 @@
+<app-dialog-container
+  class="h-100"
+  tittle="Użytkownik"
+  description="Edytuj dane użytkownika"
+  [avatarPath]="user.photoPath"
+>
+  <div class="ion-padding">
+    <app-user-edit-form #form (submitUser)="submitUser($event)"></app-user-edit-form>
+    <button mat-button (click)="form.submitForm()">Zapisz</button>
+  </div>
+</app-dialog-container>

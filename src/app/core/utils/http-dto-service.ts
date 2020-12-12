@@ -33,6 +33,8 @@ export class HttpDtoService {
 
   private validateClass<C>(r: C): Observable<{ res: C; errors: ValidationError[] }> {
     if (_.isArray(r)) {
+      if (r.length === 0) return of({ res: r, errors: [] });
+      
       const errors$: Promise<ValidationError[]>[] = [];
       _.forEach(r, (item) => errors$.push(validate(item)));
 
@@ -50,9 +52,15 @@ export class HttpDtoService {
 
   private mapper<R, C extends DtoWrapper<R>>(request$: Observable<unknown>, model: ClassType<C>): Observable<R> {
     return request$.pipe(
-      map((r) => plainToClass<C, unknown>(model, r, plainToClassOptions)),
-      switchMap((r) => this.validateClass<C>(r)),
-      map((r) => this.checkErrorsAndReturnPlain<R, C>(r))
+      map((r) => {
+        return plainToClass<C, unknown>(model, r, plainToClassOptions);
+      }),
+      switchMap((r) => {
+        return this.validateClass<C>(r);
+      }),
+      map((r) => {
+        return this.checkErrorsAndReturnPlain<R, C>(r);
+      })
     );
   }
 
@@ -112,6 +120,22 @@ export class HttpDtoService {
   ): Observable<R> {
     const http$ = this.httpClient
       .patch<unknown>(`${this.baseAuthApiUrl}/${url}`, payload, options || {})
+      .pipe(map((r) => mapFn(r)));
+    return this.mapper<R, C>(http$, model);
+  }
+
+  delete<R, C extends DtoWrapper<R>>(model: ClassType<C>, url: string, options?: HttpOptions): Observable<R> {
+    const http$ = this.httpClient.delete<unknown>(`${this.baseAuthApiUrl}/${url}`, options || {});
+    return this.mapper<R, C>(http$, model);
+  }
+  deleteMap<R, C extends DtoWrapper<R>>(
+    model: ClassType<C>,
+    url: string,
+    mapFn: (r: any) => any,
+    options?: HttpOptions
+  ): Observable<R> {
+    const http$ = this.httpClient
+      .delete<unknown>(`${this.baseAuthApiUrl}/${url}`, options || {})
       .pipe(map((r) => mapFn(r)));
     return this.mapper<R, C>(http$, model);
   }

@@ -13,7 +13,7 @@ interface AdaptersType {
 }
 
 const getAdapters = (): AdaptersType => {
-  const adapterFactory = {};
+  const adapterFactory = {} as any;
   _.forEach(EntitiesEnum, (key) => {
     adapterFactory[key] = createEntityAdapter();
   });
@@ -34,7 +34,7 @@ const creaateEntitiesReducer = (type: EntitiesEnum) => {
       else return state;
     }),
     on(entitiesActions.addAllAction(), (state, { key, entities }) => {
-      if (key === type) return adapter.addAll(entities, state);
+      if (key === type) return adapter.setAll(entities, state);
       else return state;
     }),
     on(entitiesActions.removeOneAction(), (state, { key, id }) => {

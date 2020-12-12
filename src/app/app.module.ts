@@ -27,7 +27,7 @@ import { DataConditionEffects } from '@core/store/core/data-condition/data-condi
 import { DiscoverListEffects } from '@core/store/discover/discover-list/discover-list.effects';
 import { CommentEffects } from '@core/store/comment/comment.effects';
 import { AccountUserEffects } from '@core/store/account/account-user/account-user.effects';
-import { AccountFollowersEffects } from '@core/store/account/account-followers/account-followers.actions.effects';
+import { AccountFollowersEffects } from '@core/store/account/account-followers/account-followers.effects';
 
 const REDUCER_TOKEN = new InjectionToken<ActionReducerMap<AppState>>('root reducer');
 

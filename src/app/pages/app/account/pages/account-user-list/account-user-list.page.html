@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button
+        [routerLink]="['/', AppRoutesEnum.APP, AppRoutesEnum.TABS, AppRoutesEnum.ACCOUNT, AppRoutesEnum.START]"
+      >
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Znajdź użytkownika</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-user-list
+    [userShortList]="userList$ | async"
+    [isForAddFriend]="true"
+    (addUser)="addUser($event)"
+    (avatarClick)="openProfile($event)"
+  ></app-user-list>
+</ion-content>

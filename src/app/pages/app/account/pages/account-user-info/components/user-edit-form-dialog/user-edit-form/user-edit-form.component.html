@@ -1,0 +1,34 @@
+<app-form-errors
+  [error]="loginErrors$ | async"
+  [isFormSubmitted]="formRef.submitted"
+  [isFormValid]="!formRef.invalid"
+></app-form-errors>
+
+<form [formGroup]="form" #formRef="ngForm" (ngSubmit)="submitUserEmmit()" class="h-100 w-100" autocomplete="off">
+  <mat-form-field class="w-100">
+    <mat-label>Użytkownik</mat-label>
+    <input
+      matInput
+      type="text"
+      [formControlName]="formFields.USERNAME"
+      placeholder="Podaj nazwę użytkownika..."
+      readonly
+    />
+  </mat-form-field>
+
+  <mat-form-field class="w-100">
+    <mat-label>Email</mat-label>
+    <input matInput type="text" [formControlName]="formFields.EMAIL" placeholder="Podaj Email..." readonly />
+  </mat-form-field>
+
+  <mat-form-field class="w-100">
+    <mat-label>O mnie</mat-label>
+    <textarea
+      matInput
+      type="textarea"
+      maxlength="255"
+      [formControlName]="formFields.ABOUT"
+      placeholder="Napisz coś o sobie..."
+    ></textarea>
+  </mat-form-field>
+</form>

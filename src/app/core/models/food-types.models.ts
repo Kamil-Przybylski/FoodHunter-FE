@@ -10,7 +10,7 @@ export interface FoodType {
 }
 
 export class FoodTypeDtoModel implements FoodType, DtoWrapper<FoodType> {
-  @Expose() @IsNumber() id: number;
-  @Expose() @IsString() name: string;
-  @Expose() @IsStringOrNull() description: string;
+  @Expose() @IsNumber() id!: number;
+  @Expose() @IsString() name!: string;
+  @Expose() @IsStringOrNull() description!: string;
 }

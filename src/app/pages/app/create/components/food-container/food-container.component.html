@@ -29,8 +29,8 @@
         <app-food-map
           *ngIf="geolocation?.lat && geolocation?.lng"
           (selectPlace)="setDraft(1, $event)"
-          [latitude]="geolocation?.lat"
-          [longitude]="geolocation?.lng"
+          [latitude]="geolocation.lat"
+          [longitude]="geolocation.lng"
         ></app-food-map>
       </div>
     </mat-tab>

@@ -19,11 +19,12 @@ import { AccountUserPhotoComponent } from '../account-user-photo/account-user-ph
   styleUrls: ['./account-container.component.scss'],
 })
 export class AccountContainerComponent implements OnInit {
-  user$: Observable<AuthUser>;
-  photoDraft$: Observable<string>;
+  user$!: Observable<AuthUser>;
+  photoDraft$!: Observable<string | null>;
 
-  constructor(private store: Store<AppState>, private modalCtrl: ModalController) {}
-
+  constructor(private store: Store<AppState>, private modalCtrl: ModalController) {
+  }
+  
   ngOnInit() {
     this.user$ = this.store.pipe(select(getAccountUserAuthUser));
     this.photoDraft$ = this.store.pipe(select(getAccountUserPhotoDraft));

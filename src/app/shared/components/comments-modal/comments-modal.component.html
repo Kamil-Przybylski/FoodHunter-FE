@@ -18,7 +18,7 @@
       </button>
     </ion-item>
     <ion-item *ngFor="let comment of comments$ | async">
-      <ion-avatar slot="start">
+      <ion-avatar slot="start" (click)="openProfile(comment.userShort.id)">
         <img [src]="comment.userShort.photoPath" />
       </ion-avatar>
       <ion-label>

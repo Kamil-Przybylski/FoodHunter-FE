@@ -10,8 +10,8 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./account-user-photo.component.scss'],
 })
 export class AccountUserPhotoComponent implements OnInit {
-  @Input() user: AuthUser;
-  photoData: string;
+  @Input() user!: AuthUser;
+  photoData: string | null = null;
 
   constructor(private store: Store<AppState>) {}
 

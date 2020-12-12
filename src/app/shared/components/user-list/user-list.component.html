@@ -1,0 +1,38 @@
+<ng-container *ngIf="userShortList?.length; else emptyState">
+  <ion-list>
+    <ion-item *ngFor="let userShort of userShortList">
+      <ion-avatar slot="start" (click)="avatarClickEmit(userShort)">
+        <img [src]="userShort.photoPath" />
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ userShort.username }}</h2>
+      </ion-label>
+      <button
+        mat-icon-button
+        *ngIf="isForAddFriend"
+        class="app-matbut-icon"
+        color="primary"
+        (click)="addEmit(userShort)"
+      >
+        <ion-icon slot="icon-only" name="person-add-outline"></ion-icon>
+      </button>
+      <button
+        mat-icon-button
+        *ngIf="isForRemoveFriend"
+        class="app-matbut-icon"
+        color="primary"
+        (click)="removeEmit(userShort)"
+      >
+        <ion-icon slot="icon-only" name="person-remove-outline"></ion-icon>
+      </button>
+    </ion-item>
+  </ion-list>
+</ng-container>
+
+<ng-template #emptyState>
+  <app-empty-state
+    message="Nie masz jeszcze znajomych"
+    subMessage="Kliknij przycisk 'szukaj' i znajdź kogoś"
+    [loading]="false"
+  ></app-empty-state>
+</ng-template>

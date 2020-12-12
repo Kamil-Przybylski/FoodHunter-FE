@@ -37,16 +37,16 @@ import { FoodTag } from '@core/models/food-tags.models';
   styleUrls: ['./food-container.component.scss'],
 })
 export class FoodContainerComponent implements OnInit {
-  @ViewChild(MatTabGroup) matTabGroup: MatTabGroup;
+  @ViewChild(MatTabGroup) matTabGroup!: MatTabGroup;
 
-  isSending$: Observable<boolean>;
-  isSubmitted$: Observable<boolean>;
-  foodTypes$: Observable<FoodType[]>;
-  foodTags$: Observable<FoodTag[]>;
+  isSending$!: Observable<boolean>;
+  isSubmitted$!: Observable<boolean>;
+  foodTypes$!: Observable<FoodType[]>;
+  foodTags$!: Observable<FoodTag[]>;
 
-  isMapCorrect$: Observable<boolean>;
-  isCameraCorrect$: Observable<boolean>;
-  isFormCorrect$: Observable<boolean>;
+  isMapCorrect$!: Observable<boolean>;
+  isCameraCorrect$!: Observable<boolean>;
+  isFormCorrect$!: Observable<boolean>;
 
   defaultGeo = { lat: 52.231687, lng: 21.006199 };
   geolocation = { lat: 0, lng: 0 };
@@ -137,6 +137,7 @@ export class FoodContainerComponent implements OnInit {
         take(1),
         tap((foodState) => {
           if (foodState.mapDraft.isValid && foodState.cameraDraft.isValid && foodState.foodDraft.isValid) {
+            if (!(foodState.foodDraft.form && foodState.cameraDraft.form && foodState.mapDraft.form)) return;
             this.store.dispatch(
               foodCreateSaveAction({
                 payload: {

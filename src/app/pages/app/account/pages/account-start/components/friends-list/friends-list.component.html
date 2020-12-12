@@ -1,0 +1,16 @@
+<div class="d-flex ion-justify-content-between ion-align-items-center">
+  <h5 class="m-0">Moi znajomi</h5>
+  <button
+    mat-button
+    [routerLink]="['/', AppRoutesEnum.APP, AppRoutesEnum.TABS, AppRoutesEnum.ACCOUNT, AppRoutesEnum.LIST]"
+  >
+    Szukaj ludzi
+  </button>
+</div>
+
+<app-user-list
+  [userShortList]="followerList$ | async"
+  [isForRemoveFriend]="true"
+  (removeUser)="removeUser($event)"
+  (avatarClick)="openUserDetails($event)"
+></app-user-list>

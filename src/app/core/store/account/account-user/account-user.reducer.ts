@@ -8,8 +8,8 @@ import {
 } from './account-user.actions';
 
 export interface AccountUserState {
-  infoDraft: AuthFormUserModel;
-  avatarPhotoDraft: string;
+  infoDraft: AuthFormUserModel | null;
+  avatarPhotoDraft: string | null;
 }
 
 const initialState: AccountUserState = {

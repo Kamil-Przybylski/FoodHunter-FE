@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Food } from '@core/models/food.models';
+import { UserShort } from '@core/models/user.models';
 
 @Component({
   selector: 'app-food-list-item',
@@ -7,11 +8,12 @@ import { Food } from '@core/models/food.models';
   styleUrls: ['./food-list-item.component.scss'],
 })
 export class FoodListItemComponent implements OnInit {
-  @Input() food: Food;
+  @Input() food!: Food;
 
   @Output() showComments = new EventEmitter<Food>();
+  @Output() avatarClick = new EventEmitter<number>();
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {}
 
@@ -19,4 +21,7 @@ export class FoodListItemComponent implements OnInit {
     this.showComments.emit(this.food);
   }
 
+  avatarClickEmit(user: UserShort) {
+    this.avatarClick.emit(user.id);
+  }
 }

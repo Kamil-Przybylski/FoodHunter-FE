@@ -10,7 +10,7 @@ export interface FoodTag {
 }
 
 export class FoodTagDtoModel implements FoodTag, DtoWrapper<FoodTag> {
-  @Expose() @IsNumber() id: number;
-  @Expose() @IsString() name: string;
-  @Expose() @IsStringOrNull() description: string;
+  @Expose() @IsNumber() id!: number;
+  @Expose() @IsString() name!: string;
+  @Expose() @IsStringOrNull() description!: string;
 }

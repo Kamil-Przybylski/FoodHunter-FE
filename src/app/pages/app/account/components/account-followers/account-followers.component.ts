@@ -1,8 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UserShort } from '@core/models/user.models';
 import { AppState } from '@core/store';
-import { accountUserFollowersDownloadAction, accountUserFollowersRemoveFollowerAction } from '@core/store/account/account-followers/account-followers.actions';
-import { getAccountUserFollowersList } from '@core/store/account/account-followers/account-followers.actions.selectors';
+import {
+  accountUserFollowersShortDownloadAction,
+  accountUserFollowersRemoveFollowerAction,
+} from '@core/store/account/account-followers/account-followers.actions';
+import { getFollowersUserList } from '@core/store/account/account-followers/account-followers.selectors';
 import { ModalController } from '@ionic/angular';
 import { select, Store } from '@ngrx/store';
 import { from, Observable } from 'rxjs';
@@ -15,15 +18,15 @@ import { AccountFollowerFindDialogComponent } from '../account-follower-find-dia
   styleUrls: ['./account-followers.component.scss'],
 })
 export class AccountFollowersComponent implements OnInit {
-  @Input() userId: number;
+  @Input() userId!: number;
 
-  followerList$: Observable<UserShort[]>;
+  followerList$!: Observable<UserShort[]>;
 
   constructor(private store: Store<AppState>, private modalCtrl: ModalController) {}
 
   ngOnInit() {
-    this.followerList$ = this.store.pipe(select(getAccountUserFollowersList(this.userId)));
-    this.store.dispatch(accountUserFollowersDownloadAction({ payload: { userId: this.userId } }));
+    this.followerList$ = this.store.pipe(select(getFollowersUserList(this.userId)));
+    this.store.dispatch(accountUserFollowersShortDownloadAction({ payload: { userId: this.userId } }));
   }
 
   openFindDialog() {

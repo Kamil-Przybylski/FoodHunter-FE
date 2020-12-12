@@ -12,16 +12,16 @@ export interface Comments {
   userShort: UserShort;
 }
 export class CommentDtoModel implements Comments, DtoWrapper<Comments> {
-  @Expose() @IsNumber() id: number;
-  @Expose() @IsString() comment: string;
-  @Expose() @IsString() createDate: string;
-  @Expose() @IsNumber() foodId: number;
+  @Expose() @IsNumber() id!: number;
+  @Expose() @IsString() comment!: string;
+  @Expose() @IsString() createDate!: string;
+  @Expose() @IsNumber() foodId!: number;
 
   @Expose()
   @Type(() => UserShortDtoModel)
   @IsNotEmptyObject()
   @ValidateNested()
-  userShort: UserShort;
+  userShort!: UserShort;
 
   static getReqFoodDto(foodId: number, comment: string) {
     return { foodId, comment };
@@ -33,6 +33,6 @@ export interface ShortComment {
   isMyComment: boolean;
 }
 export class ShortCommentDtoModel implements ShortComment, DtoWrapper<ShortComment> {
-  @Expose() @IsNumber() totalItems: number;
-  @Expose() @IsBoolean() isMyComment: boolean;
+  @Expose() @IsNumber() totalItems!: number;
+  @Expose() @IsBoolean() isMyComment!: boolean;
 }

@@ -1,11 +1,5 @@
 import { EntityState } from '@ngrx/entity';
-import {
-  combineReducers,
-  ActionReducer,
-  Action,
-  createReducer,
-  on,
-} from '@ngrx/store';
+import { combineReducers, ActionReducer, Action, createReducer, on } from '@ngrx/store';
 import * as dataConditionActions from './data-condition.actions';
 import * as _ from 'lodash';
 import { EntitiesStateComponents, EntitiesEnum } from '../entities/entities.models';
@@ -19,20 +13,20 @@ export interface HttpState<T, P> {
   isRefreshSuccess: boolean;
   entityIds: number[];
   loadData: T;
-  loadErrors: HttpErrorResDto;
-  refreshErrors: HttpErrorResDto;
+  loadErrors: HttpErrorResDto | null;
+  refreshErrors: HttpErrorResDto | null;
 
   isSending: boolean;
   isSendSuccess: boolean;
   sendData: P;
-  sendErrors: HttpErrorResDto;
+  sendErrors: HttpErrorResDto | null;
 }
 
 export type DataConditionState = {
   [P in keyof EntitiesStateComponents]: { [id: number]: HttpState<any, any> };
 };
 
-export const initialState: HttpState<any, any> = {
+export const initialState: HttpState<unknown, unknown> = {
   isLoading: false,
   isLoadSuccess: false,
   isRefreshing: false,
@@ -49,85 +43,80 @@ export const initialState: HttpState<any, any> = {
 };
 
 const ReducerTypes = {
-  DOWNLOAD: (state: HttpState<any, any>): HttpState<any, any> =>
+  DOWNLOAD: (state: HttpState<unknown, unknown>): HttpState<unknown, unknown> =>
     _.assign({}, state, {
       isLoading: true,
       isLoadSuccess: false,
       loadErrors: null,
-    } as HttpState<any, any>),
+    } as HttpState<unknown, unknown>),
   DOWNLOAD_SUCCESS: (
-    state: HttpState<any, any>,
+    state: HttpState<unknown, unknown>,
     entityIds: number[],
-    loadData
-  ): HttpState<any, any> =>
+    loadData: unknown
+  ): HttpState<unknown, unknown> =>
     _.assign({}, state, {
       isLoading: false,
       isLoadSuccess: true,
       loadErrors: null,
       entityIds: entityIds,
       loadData: loadData,
-    } as HttpState<any, any>),
-  DOWNLOAD_FAIL: (state: HttpState<any, any>, error): HttpState<any, any> =>
+    } as HttpState<unknown, unknown>),
+  DOWNLOAD_FAIL: (state: HttpState<unknown, unknown>, error: HttpErrorResDto): HttpState<unknown, unknown> =>
     _.assign({}, state, {
       isLoading: false,
       isLoadSuccess: false,
       loadErrors: error,
-    } as HttpState<any, any>),
+    } as HttpState<unknown, unknown>),
 
-  REFRESH: (state: HttpState<any, any>): HttpState<any, any> =>
+  REFRESH: (state: HttpState<unknown, unknown>): HttpState<unknown, unknown> =>
     _.assign({}, state, {
       isRefreshing: true,
       isRefreshSuccess: false,
       refreshErrors: null,
-    } as HttpState<any, any>),
-  REFRESH_SUCCESS: (
-    state: HttpState<any, any>,
-    loadData
-  ): HttpState<any, any> =>
+    } as HttpState<unknown, unknown>),
+  REFRESH_SUCCESS: (state: HttpState<any, any>, loadData: unknown): HttpState<unknown, unknown> =>
     _.assign({}, state, {
       isRefreshing: false,
       isRefreshSuccess: true,
       refreshErrors: null,
       loadData: loadData,
-    } as HttpState<any, any>),
-  REFRESH_FAIL: (state: HttpState<any, any>, error): HttpState<any, any> =>
+    } as HttpState<unknown, unknown>),
+  REFRESH_FAIL: (state: HttpState<any, any>, error: HttpErrorResDto): HttpState<unknown, unknown> =>
     _.assign({}, state, {
       isRefreshing: false,
       isRefreshSuccess: false,
       refreshErrors: error,
-    } as HttpState<any, any>),
+    } as HttpState<unknown, unknown>),
 
-  SEND: (state: HttpState<any, any>): HttpState<any, any> =>
+  SEND: (state: HttpState<unknown, unknown>): HttpState<unknown, unknown> =>
     _.assign({}, state, {
       isSending: true,
       isSendSuccess: false,
       sendErrors: null,
-    } as HttpState<any, any>),
+    } as HttpState<unknown, unknown>),
   SEND_SUCCESS: (
-    state: HttpState<any, any>,
+    state: HttpState<unknown, unknown>,
     entityIds: number[],
-    sendData
-  ): HttpState<any, any> =>
+    sendData: unknown
+  ): HttpState<unknown, unknown> =>
     _.assign({}, state, {
       isSending: false,
       isSendSuccess: true,
       sendErrors: null,
-      entityIds: entityIds
-        ? _.union(state.entityIds, entityIds)
-        : state.entityIds,
+      entityIds: entityIds || state.entityIds,
       sendData: sendData,
-    } as HttpState<any, any>),
-  SEND_FAIL: (state: HttpState<any, any>, error): HttpState<any, any> =>
+    } as HttpState<unknown, unknown>),
+  SEND_FAIL: (state: HttpState<unknown, unknown>, error: HttpErrorResDto): HttpState<unknown, unknown> =>
     _.assign({}, state, {
       isSending: false,
       isSendSuccess: false,
       sendErrors: error,
-    } as HttpState<any, any>),
+    } as HttpState<unknown, unknown>),
 
   CLEAR: <T>(state: T): T => _.assign({}, state, initialState),
 };
 
-const getDataConditionState = (state: any, dataId: number, fn: (st) => any) => {
+const getDataConditionState = (state: any, dataId: number, fn: (st: any) => any) => {
   if (state[dataId]) {
     const newState = _.assign({}, state);
     newState[dataId] = fn(newState[dataId]);
@@ -141,43 +130,31 @@ const getDataConditionState = (state: any, dataId: number, fn: (st) => any) => {
   }
 };
 
-const createDataReducer = (
-  type: keyof EntitiesStateComponents
-): ActionReducer<EntityState<any>, Action> => {
+const createDataReducer = (type: keyof EntitiesStateComponents): ActionReducer<EntityState<any>, Action> => {
   return createReducer(
     {} as any,
-    on(
-      dataConditionActions.downloadAction(),
-      dataConditionActions.switchDownloadAction(),
-      (state, { key, dataId }) => {
-        if (key === type)
-          return getDataConditionState(state, dataId, (st) => {
-            return ReducerTypes.DOWNLOAD(st);
-          });
-        else return state;
-      }
-    ),
-    on(
-      dataConditionActions.downloadSuccessAction(),
-      (state, { key, dataId, entityIds, loadData }) => {
-        if (key === type)
-          return getDataConditionState(state, dataId, (st) => {
-            return ReducerTypes.DOWNLOAD_SUCCESS(st, entityIds, loadData);
-          });
-        else return state;
-      }
-    ),
-    on(
-      dataConditionActions.downloadFailAction(),
-      (state, { key, dataId, error }) => {
-        if (key === type)
-          return getDataConditionState(state, dataId, (st) => {
-            return ReducerTypes.DOWNLOAD_FAIL(st, error);
-          });
-        else return state;
-      }
-    ),
-    on(dataConditionActions.saveAction(), (state, { key, dataId }) => {
+    on(dataConditionActions.downloadAction(), dataConditionActions.switchDownloadAction(), (state, { key, dataId }) => {
+      if (key === type)
+        return getDataConditionState(state, dataId, (st) => {
+          return ReducerTypes.DOWNLOAD(st);
+        });
+      else return state;
+    }),
+    on(dataConditionActions.downloadSuccessAction(), (state, { key, dataId, entityIds, loadData }) => {
+      if (key === type)
+        return getDataConditionState(state, dataId, (st) => {
+          return ReducerTypes.DOWNLOAD_SUCCESS(st, entityIds, loadData);
+        });
+      else return state;
+    }),
+    on(dataConditionActions.downloadFailAction(), (state, { key, dataId, error }) => {
+      if (key === type)
+        return getDataConditionState(state, dataId, (st) => {
+          return ReducerTypes.DOWNLOAD_FAIL(st, error);
+        });
+      else return state;
+    }),
+    on(dataConditionActions.saveAction(), dataConditionActions.deleteAction(), (state, { key, dataId }) => {
       if (key === type)
         return getDataConditionState(state, dataId, (st) => {
           return ReducerTypes.SEND(st);
@@ -186,6 +163,7 @@ const createDataReducer = (
     }),
     on(
       dataConditionActions.saveSuccessAction(),
+      dataConditionActions.deleteSuccessAction(),
       (state, { key, dataId, entityIds, sendData }) => {
         if (key === type)
           return getDataConditionState(state, dataId, (st) => {
@@ -196,6 +174,7 @@ const createDataReducer = (
     ),
     on(
       dataConditionActions.saveFailAction(),
+      dataConditionActions.deleteFailAction(),
       (state, { key, dataId, error }) => {
         if (key === type)
           return getDataConditionState(state, dataId, (st) => {
@@ -215,10 +194,7 @@ const createDataReducer = (
   );
 };
 
-export const getDataConditionReducer = (): ActionReducer<
-  DataConditionState,
-  PayloadAction
-> => {
+export const getDataConditionReducer = (): ActionReducer<DataConditionState, PayloadAction> => {
   const reducerFactory = {} as any;
   _.forEach(EntitiesEnum, (key) => {
     reducerFactory[key] = createDataReducer(key);

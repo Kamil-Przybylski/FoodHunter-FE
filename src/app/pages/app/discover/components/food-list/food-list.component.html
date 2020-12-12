@@ -1,6 +1,6 @@
 <ion-content>
   <ion-list *ngFor="let food of foods$ | async">
-    <app-food-list-item [food]="food" (showComments)="showComments($event)" class="w-100"></app-food-list-item>
+    <app-food-list-item class="w-100" [food]="food" (showComments)="showComments($event)" (avatarClick)="openProfile($event)"></app-food-list-item>
   </ion-list>
 
   <ion-infinite-scroll #ionScroll threshold="100px" (ionInfinite)="loadNextData()">

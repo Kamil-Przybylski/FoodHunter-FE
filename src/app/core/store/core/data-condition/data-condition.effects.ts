@@ -164,7 +164,7 @@ export class DataConditionEffects {
                 dataCondtitionActions.saveSuccessAction()({
                   key,
                   dataId,
-                  entityIds: null,
+                  entityIds: [],
                   sendData: null,
                 }),
                 ...nextActions,
@@ -202,6 +202,88 @@ export class DataConditionEffects {
     () =>
       this.actions$.pipe(
         ofType(dataCondtitionActions.saveFailAction()),
+        tap(({ error }) => this.notifierService.snackBarError(error.message))
+      ),
+    { dispatch: false }
+  );
+
+  delete$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(dataCondtitionActions.deleteAction()),
+      mergeMap(({ key, dataId, requestObservable, nextActions = [] }) => {
+        return requestObservable.pipe(
+          mergeMap((res) => {
+            if (_.isArray(res)) {
+              const ids = this.getIds(res);
+
+              return [
+                entitiesActions.upsertManyAction()({ key, entities: res }),
+                dataCondtitionActions.deleteSuccessAction()({
+                  key,
+                  dataId,
+                  entityIds: ids,
+                  sendData: null,
+                }),
+                ...nextActions,
+              ];
+            } else if (_.isObject(res)) {
+              const ids = this.getIds(res.entities);
+              return [
+                entitiesActions.upsertManyAction()({
+                  key,
+                  entities: res.entities,
+                }),
+                dataCondtitionActions.deleteSuccessAction()({
+                  key,
+                  dataId,
+                  entityIds: ids,
+                  sendData: res.sendData,
+                }),
+                ...nextActions,
+              ];
+            } else {
+              return [
+                dataCondtitionActions.deleteSuccessAction()({
+                  key,
+                  dataId,
+                  entityIds: [],
+                  sendData: null,
+                }),
+                ...nextActions,
+              ];
+            }
+          }),
+          catchError((err: HttpErrorResDto) =>
+            of(
+              dataCondtitionActions.deleteFailAction()({
+                key,
+                dataId,
+                error: {
+                  error: err.error,
+                  message: err.message,
+                  statusCode: err.statusCode,
+                },
+              })
+            )
+          )
+        );
+      })
+    )
+  );
+
+  deleteSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(dataCondtitionActions.deleteSuccessAction()),
+        tap(() => this.notifierService.snackBarSuccess())
+      ),
+    { dispatch: false }
+  );
+
+  deleteFail$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(dataCondtitionActions.deleteFailAction()),
         tap(({ error }) => this.notifierService.snackBarError(error.message))
       ),
     { dispatch: false }

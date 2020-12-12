@@ -17,6 +17,8 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { CommentsModalComponent } from './components/comments-modal/comments-modal.component';
 import { DialogContainerComponent } from './components/dialog-container/dialog-container.component';
 import {MatDividerModule} from '@angular/material/divider';
+import { EmptyStateComponent } from './components/empty-state/empty-state.component';
+import { UserListComponent } from './components/user-list/user-list.component';
 
 const MATERIAL_MODULES = [
   MatFormFieldModule,
@@ -37,7 +39,9 @@ const MATERIAL_MODULES = [
     DisableControlDirective,
     AuthImagePipePipe,
     CommentsModalComponent,
-    DialogContainerComponent
+    DialogContainerComponent,
+    EmptyStateComponent,
+    UserListComponent
   ],
   imports: [CommonModule, ReactiveFormsModule, IonicModule, MATERIAL_MODULES],
   exports: [
@@ -51,6 +55,8 @@ const MATERIAL_MODULES = [
     AuthImagePipePipe,
     CommentsModalComponent,
     DialogContainerComponent,
+    EmptyStateComponent,
+    UserListComponent
   ],
   entryComponents: [CommentsModalComponent]
 })

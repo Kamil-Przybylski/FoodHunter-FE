@@ -1,24 +1,12 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  Output,
-  EventEmitter,
-} from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { NgForm, FormControl, Validators } from '@angular/forms';
-import {
-  FormGroupTypeSafe,
-  FormBuilderTypeSafe,
-} from '@core/utils/form-builder-type-safe';
+import { FormGroupTypeSafe, FormBuilderTypeSafe } from '@core/utils/form-builder-type-safe';
 import { Observable, Subject } from 'rxjs';
 import { HttpErrorResDto } from '@core/models/custom-http.models';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '@core/store';
 import { FormErrorUtil } from '@core/utils/form-error.util';
-import {
-  getAuthIsRegistration,
-  getRegisterErrors,
-} from '@core/store/core/auth/auth.selectors';
+import { getAuthIsRegistration, getRegisterErrors } from '@core/store/core/auth/auth.selectors';
 
 enum formFields {
   USERNAME = 'username',
@@ -39,19 +27,16 @@ export interface FormSingUpModel {
   styleUrls: ['./register-form.component.scss'],
 })
 export class RegisterFormComponent implements OnInit {
-  @ViewChild('formRef') formRef: NgForm;
+  @ViewChild('formRef') formRef!: NgForm;
   @Output() singUp = new EventEmitter<FormSingUpModel>();
 
-  form: FormGroupTypeSafe<FormSingUpModel>;
+  form!: FormGroupTypeSafe<FormSingUpModel>;
   formFields = formFields;
 
-  isRegistration$: Observable<boolean>;
-  retisterErrors$: Observable<HttpErrorResDto>;
+  isRegistration$!: Observable<boolean>;
+  retisterErrors$!: Observable<HttpErrorResDto | null>;
 
-  constructor(
-    private store: Store<AppState>,
-    private fb: FormBuilderTypeSafe
-  ) {}
+  constructor(private store: Store<AppState>, private fb: FormBuilderTypeSafe) {}
 
   ngOnInit() {
     this.isRegistration$ = this.store.pipe(select(getAuthIsRegistration));
@@ -74,7 +59,7 @@ export class RegisterFormComponent implements OnInit {
     const repeatPassControl = this.form.getSafe((x) => x.repeatPass);
     const isEqual = passControl.value === repeatPassControl.value;
 
-    if (!isEqual) repeatPassControl.setErrors({repeat: true});
+    if (!isEqual) repeatPassControl.setErrors({ repeat: true });
     return isEqual;
   }
 

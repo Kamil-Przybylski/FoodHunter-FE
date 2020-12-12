@@ -29,6 +29,11 @@ export const getEntitiesByDataConditionIds = <T extends keyof EntitiesStateCompo
   type: T,
   dataConditionId: number
 ) =>
-  createSelector(getEntitiesSelectEntities(type), getDataCondition(type, dataConditionId), (entities, dataCondition) =>
-    _.map(dataCondition.entityIds || [], (id) => entities[id])
+  createSelector(
+    getEntitiesSelectEntities(type),
+    getDataCondition(type, dataConditionId),
+    (entities, dataCondition) => {
+      const ids = _.filter(dataCondition?.entityIds || [], id => !!entities[id]);
+      return _.map(ids || [], (id) => entities[id] as EntitiesStateComponents[T]);
+    }
   );

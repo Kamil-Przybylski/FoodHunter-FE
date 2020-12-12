@@ -6,7 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./loading-button.component.scss'],
 })
 export class LoadingButtonComponent implements OnInit {
-  @Input() isLoading: boolean;
+  @Input() isLoading!: boolean | null;
   diamer = 20;
 
   constructor() { }

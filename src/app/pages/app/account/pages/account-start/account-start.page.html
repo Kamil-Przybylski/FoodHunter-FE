@@ -1,0 +1,24 @@
+<ion-header>
+  <app-toolbar title="Użytkownicy">
+    <ion-buttons slot="secondary">
+      <ion-button (click)="logout()">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </app-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid *ngIf="(authUser$ | async) as authUser">
+    <ion-row>
+      <ion-col size="12">
+        <app-user-log [user]="authUser" (avatarClick)="openProfile($event)"></app-user-log>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <app-friends-list [userId]="authUser.id"></app-friends-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

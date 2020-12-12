@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { Plugins, Capacitor } from '@capacitor/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AppState } from '@core/store';
+import { layoutRouterSetPreviousPageAction } from '@core/store/core/layout/layout.actions';
 
 @Component({
   selector: 'app-root',
@@ -8,10 +12,7 @@ import { Plugins, Capacitor } from '@capacitor/core';
   styles: [],
 })
 export class AppComponent {
-  constructor(
-    private platform: Platform,
-
-  ) {
+  constructor(private store: Store<AppState>, private platform: Platform, private router: Router) {
     this.initializeApp();
   }
 
@@ -21,6 +22,11 @@ export class AppComponent {
         Plugins.SplashScreen.hide();
       }
     });
-  }
 
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.store.dispatch(layoutRouterSetPreviousPageAction({ payload: { url: event.url } }));
+      }
+    });
+  }
 }

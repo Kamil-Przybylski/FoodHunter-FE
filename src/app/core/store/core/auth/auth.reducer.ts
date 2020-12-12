@@ -7,12 +7,12 @@ import { AuthUser } from '@core/models/auth.models';
 export interface AuthState {
   isLogging: boolean;
   isLoginSuccess: boolean;
-  loginErrors: HttpErrorRes;
+  loginErrors: HttpErrorRes | null;
 
   isRegistration: boolean;
-  registerErrors: HttpErrorRes;
+  registerErrors: HttpErrorRes | null;
 
-  userData: AuthUser;
+  userData: AuthUser | null;
 }
 
 const initialState: AuthState = {

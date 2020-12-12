@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResDto } from '@core/models/custom-http.models';
-import { UserService } from '@core/services/user.service';
+import { AuthService } from '@core/services/auth.service';
 import { authUpdateUser } from '@core/store/core/auth/auth.actions';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { NotifierService } from '@shared/services/notifier.service';
@@ -21,7 +21,7 @@ export class AccountUserEffects {
       ofType(accountUserSaveInfoAction),
       map((action) => action.payload),
       switchMap(({ data }) =>
-        this.userService.updateProfileInfo(data).pipe(
+        this.authService.updateProfileInfo(data).pipe(
           map((res) => accountUserSaveSuccessAction({ payload: { data: res } })),
           catchError((err: HttpErrorResDto) =>
             of(
@@ -46,7 +46,7 @@ export class AccountUserEffects {
       ofType(accountUserSavePhotoAction),
       map((action) => action.payload),
       switchMap(({ photo, user }) =>
-        this.userService.updateProfilePhoto(photo, user).pipe(
+        this.authService.updateProfilePhoto(photo, user).pipe(
           map((res) => accountUserSaveSuccessAction({ payload: { data: res } })),
           catchError((err: HttpErrorResDto) =>
             of(
@@ -85,5 +85,5 @@ export class AccountUserEffects {
     { dispatch: false }
   );
 
-  constructor(private actions$: Actions, private notifierService: NotifierService, private userService: UserService) {}
+  constructor(private actions$: Actions, private notifierService: NotifierService, private authService: AuthService) {}
 }

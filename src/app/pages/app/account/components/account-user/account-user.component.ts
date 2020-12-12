@@ -8,7 +8,7 @@ import { User } from '@core/models/user.models';
   styleUrls: ['./account-user.component.scss'],
 })
 export class AccountUserComponent implements OnInit {
-  @Input() user: User | AuthUser;
+  @Input() user!: User | AuthUser;
 
   @Output() avatarClick = new EventEmitter();
 

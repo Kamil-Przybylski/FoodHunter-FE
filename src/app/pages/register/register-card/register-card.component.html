@@ -8,19 +8,10 @@
 
     <div class="d-flex ion-justify-content-end">
       <a [routerLink]="['../', AppRoutesEnum.LOGIN]">
-        <button mat-button>
-          Zaloguj się
-        </button>
+        <button mat-button>Zaloguj się</button>
       </a>
-      <button
-        mat-flat-button 
-        color="primary"
-        [disabled]="isLogging$ | async"
-        (click)="form.submitForm()"
-        >
-        <app-loading-button [isLoading]="isLogging$ | async"
-          >Zarejestruj</app-loading-button
-        >
+      <button mat-flat-button color="primary" [disabled]="isRegistration$ | async" (click)="form.submitForm()">
+        <app-loading-button [isLoading]="isRegistration$ | async">Zarejestruj</app-loading-button>
       </button>
     </div>
   </ion-card-content>

@@ -2,10 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { UserShort } from '@core/models/user.models';
 import { AppState } from '@core/store';
 import {
-  accountFollowersDownloadAllAction,
+  accountFollowersShortDownloadAllAction,
   accountUserFollowersAddFollowerAction,
 } from '@core/store/account/account-followers/account-followers.actions';
-import { getAccountAllFollowersList } from '@core/store/account/account-followers/account-followers.actions.selectors';
+import { getFollowersAllList } from '@core/store/account/account-followers/account-followers.selectors';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
@@ -15,19 +15,18 @@ import { Observable } from 'rxjs';
   styleUrls: ['./account-follower-find-dialog.component.scss'],
 })
 export class AccountFollowerFindDialogComponent implements OnInit {
-  @Input() userId: number;
+  @Input() userId!: number;
 
-  followerList$: Observable<UserShort[]>;
+  followerList$!: Observable<UserShort[]>;
 
   constructor(private store: Store<AppState>) {}
 
   ngOnInit() {
-    this.followerList$ = this.store.pipe(select(getAccountAllFollowersList));
-
-    this.store.dispatch(accountFollowersDownloadAllAction());
+    this.followerList$ = this.store.pipe(select(getFollowersAllList));
+    this.store.dispatch(accountFollowersShortDownloadAllAction());
   }
 
   addUser(userShort: UserShort) {
-    this.store.dispatch(accountUserFollowersAddFollowerAction({ payload: { userId: userShort.id } }));
+    this.store.dispatch(accountUserFollowersAddFollowerAction({ payload: { authUserId: null, userId: userShort.id } }));
   }
 }

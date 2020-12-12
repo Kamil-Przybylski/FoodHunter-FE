@@ -71,7 +71,7 @@ export class AuthEffects {
         tap(([action, loginUrl]) => {
           if (loginUrl === `/${AppRoutesEnum.LOGIN}` || loginUrl === `/${AppRoutesEnum.REGISTER}`)
             this.router.navigate([AppRoutesEnum.APP]);
-          else this.router.navigateByUrl(loginUrl);
+          else this.router.navigateByUrl(loginUrl || '');
         })
       ),
     { dispatch: false }

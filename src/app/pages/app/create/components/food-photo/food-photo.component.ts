@@ -7,7 +7,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class FoodPhotoComponent implements OnInit {
   @Output() selectPhoto = new EventEmitter<string>();
-  photoData: string;
+  photoData!: string;
 
   constructor() {}
 

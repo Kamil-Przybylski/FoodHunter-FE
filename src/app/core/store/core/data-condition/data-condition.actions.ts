@@ -77,7 +77,7 @@ export const saveFailAction = <T extends keyof EntitiesStateComponents>() =>
   createAction(
     '[Data Condition] Save Fail',
     props<{
-      key: T;
+      key: T; 
       dataId: number;
       error: HttpErrorResDto;
     }>()
@@ -89,7 +89,7 @@ export const deleteAction = <T extends keyof EntitiesStateComponents, P>() =>
     props<{
       key: T;
       dataId: number;
-      serviceMethod: () => Observable<EntitiesStateComponents[T][] | DataConditionSendData<T, P>>;
+      requestObservable: Observable<EntitiesStateComponents[T][] | DataConditionSendData<T, P>>;
       nextActions?: Action[];
     }>()
   );
@@ -99,8 +99,7 @@ export const deleteSuccessAction = <T extends keyof EntitiesStateComponents, P>(
     props<{
       key: T;
       dataId: number;
-      deleteId_TODO: number;
-      entities: EntitiesStateComponents[T][];
+      entityIds: number[];
       sendData: P;
     }>()
   );

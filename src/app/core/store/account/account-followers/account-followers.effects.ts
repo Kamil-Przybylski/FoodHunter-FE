@@ -1,27 +1,27 @@
 import { Injectable } from '@angular/core';
 import { UserService } from '@core/services/user.service';
-import { downloadAction, saveAction } from '@core/store/core/data-condition/data-condition.actions';
+import { deleteAction, downloadAction, saveAction } from '@core/store/core/data-condition/data-condition.actions';
 import { EntitiesEnum } from '@core/store/core/entities/entities.models';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map } from 'rxjs/operators';
 import {
-  accountFollowersDownloadAllAction,
+  accountFollowersShortDownloadAllAction,
+  accountUserDownloadUserAction,
   accountUserFollowersAddFollowerAction,
-  accountUserFollowersDownloadAction,
+  accountUserFollowersShortDownloadAction,
   accountUserFollowersRemoveFollowerAction,
-} from './account-followers.actions';
+} from '@core/store/account/account-followers/account-followers.actions';
 
 @Injectable()
 export class AccountFollowersEffects {
   downloadAllFolowers$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(accountFollowersDownloadAllAction),
-      // map((action) => action.payload),
+      ofType(accountFollowersShortDownloadAllAction),
       map(() =>
         downloadAction()({
           key: EntitiesEnum.USER_SHORT,
           dataId: 0,
-          requestObservable: this.userService.downloadAllFollowers(),
+          requestObservable: this.userService.downloadAllFollowersShort(),
         })
       )
     )
@@ -29,13 +29,27 @@ export class AccountFollowersEffects {
 
   downloadUserFolowers$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(accountUserFollowersDownloadAction),
+      ofType(accountUserFollowersShortDownloadAction),
       map((action) => action.payload),
       map(({ userId }) =>
         downloadAction()({
           key: EntitiesEnum.USER_SHORT,
-          dataId: userId,
-          requestObservable: this.userService.downloadUserFollowers(userId),
+          dataId: 1,
+          requestObservable: this.userService.downloadUserFollowersShort(userId),
+        })
+      )
+    )
+  );
+
+  downloadUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(accountUserDownloadUserAction),
+      map((action) => action.payload),
+      map(({ userId }) =>
+        downloadAction()({
+          key: EntitiesEnum.USER,
+          dataId: 1,
+          requestObservable: this.userService.downloadUser(userId),
         })
       )
     )
@@ -45,11 +59,11 @@ export class AccountFollowersEffects {
     this.actions$.pipe(
       ofType(accountUserFollowersAddFollowerAction),
       map((action) => action.payload),
-      map(({ userId }) =>
+      map(({ authUserId, userId }) =>
         saveAction()({
           key: EntitiesEnum.USER_SHORT,
-          dataId: userId,
-          requestObservable: this.userService.addUserFollower(userId),
+          dataId: 0,
+          requestObservable: this.userService.addUserFollower(authUserId, userId),
         })
       )
     )
@@ -59,11 +73,11 @@ export class AccountFollowersEffects {
     this.actions$.pipe(
       ofType(accountUserFollowersRemoveFollowerAction),
       map((action) => action.payload),
-      map(({ userId }) =>
-        saveAction()({
+      map(({ authUserId, userId }) =>
+        deleteAction()({
           key: EntitiesEnum.USER_SHORT,
-          dataId: userId,
-          requestObservable: this.userService.removeUserFollower(userId),
+          dataId: 1,
+          requestObservable: this.userService.removeUserFollower(authUserId, userId),
         })
       )
     )

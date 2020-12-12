@@ -4,7 +4,10 @@ import { AppState } from '@core/store';
 import { from, Observable, Subject } from 'rxjs';
 import { Food } from '@core/models/food.models';
 import { IonInfiniteScroll, ModalController } from '@ionic/angular';
-import { discoverListDownloadFoodAction, discoverListSetPaginatorAction } from '@core/store/discover/discover-list/discover-list.actions';
+import {
+  discoverListDownloadFoodAction,
+  discoverListSetPaginatorAction,
+} from '@core/store/discover/discover-list/discover-list.actions';
 import {
   getDiscoverListAllFoods,
   getDiscoverListDataConditionLoadData,
@@ -13,6 +16,8 @@ import {
 import { HttpPaginatorMeta } from '@core/models/custom-http.models';
 import { filter, take, takeUntil, tap } from 'rxjs/operators';
 import { CommentsModalComponent } from '@shared/components/comments-modal/comments-modal.component';
+import { AppRoutesEnum } from 'src/app/app.routes';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-food-list',
@@ -20,15 +25,15 @@ import { CommentsModalComponent } from '@shared/components/comments-modal/commen
   styleUrls: ['./food-list.component.scss'],
 })
 export class FoodListComponent implements OnInit, OnDestroy {
-  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
+  @ViewChild(IonInfiniteScroll, { static: true }) infiniteScroll!: IonInfiniteScroll;
 
-  foods$: Observable<Food[]>;
-  paginator$: Observable<HttpPaginatorMeta>;
-  dataConditionPaginator$: Observable<HttpPaginatorMeta>;
+  foods$!: Observable<Food[]>;
+  paginator$!: Observable<HttpPaginatorMeta>;
+  dataConditionPaginator$!: Observable<HttpPaginatorMeta>;
 
   destroyed$: Subject<boolean> = new Subject<boolean>();
 
-  constructor(private store: Store<AppState>, private modalCtrl: ModalController) {}
+  constructor(private store: Store<AppState>, public router: Router, private modalCtrl: ModalController) {}
 
   ngOnInit() {
     this.foods$ = this.store.pipe(select(getDiscoverListAllFoods));
@@ -45,8 +50,6 @@ export class FoodListComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe();
-
-    this.store.dispatch(discoverListDownloadFoodAction({ payload: { pageNo: 1 } }));
   }
 
   ngOnDestroy() {
@@ -78,5 +81,16 @@ export class FoodListComponent implements OnInit, OnDestroy {
         tap((modal) => modal.present())
       )
       .subscribe();
+  }
+
+  openProfile(userId: number) {
+    this.router.navigate([
+      '/',
+      AppRoutesEnum.APP,
+      AppRoutesEnum.TABS,
+      AppRoutesEnum.ACCOUNT,
+      AppRoutesEnum.INFO,
+      userId,
+    ]);
   }
 }

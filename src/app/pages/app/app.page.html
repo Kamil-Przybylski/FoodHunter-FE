@@ -1,18 +1,18 @@
-<ion-tabs>
+<ion-tabs #tabs>
   <ion-tab-bar slot="bottom">
-    <ion-tab-button [tab]="AppRoutesEnum.DISCOVER">
+    <ion-tab-button [tab]="AppRoutesEnum.DISCOVER" (click)="openTab(AppRoutesEnum.DISCOVER, $event)">
       <ion-label>Odkryj</ion-label>
       <ion-icon name="search"></ion-icon>
     </ion-tab-button>
-    <ion-tab-button [tab]="AppRoutesEnum.DISCOVER">
+    <ion-tab-button [tab]="AppRoutesEnum.DISCOVER" (click)="openTab(AppRoutesEnum.DISCOVER, $event)">
       <ion-label>Biblioteka</ion-label>
       <ion-icon name="book-outline"></ion-icon>
     </ion-tab-button>
-    <ion-tab-button [tab]="AppRoutesEnum.CREATE">
+    <ion-tab-button [tab]="AppRoutesEnum.CREATE" (click)="openTab(AppRoutesEnum.CREATE, $event)">
       <ion-label>Stwórz</ion-label>
       <ion-icon name="pizza-outline"></ion-icon>
     </ion-tab-button>
-    <ion-tab-button [tab]="AppRoutesEnum.ACCOUNT">
+    <ion-tab-button [tab]="AppRoutesEnum.ACCOUNT" (click)="openTab(AppRoutesEnum.ACCOUNT, $event)">
       <ion-label>Użytkownik</ion-label>
       <ion-icon name="people-outline"></ion-icon>
     </ion-tab-button>

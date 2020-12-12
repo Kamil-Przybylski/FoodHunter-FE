@@ -23,35 +23,35 @@ export interface Food {
   shortComment: ShortComment;
 }
 export class FoodDtoModel implements Food, DtoWrapper<Food> {
-  @Expose() @IsNumber() id: number;
-  @Expose() @IsString() name: string;
+  @Expose() @IsNumber() id!: number;
+  @Expose() @IsString() name!: string;
 
-  @Expose() @IsString() description: string;
-  @Expose() @IsNumber() rate: number;
-  @Expose() @IsBoolean() isFavorite: boolean;
-  @Expose() @IsBoolean() isPrivate: boolean;
-  @Expose() @IsBoolean() isPlanned: boolean;
-  @Expose() @IsString() @Transform((value) => HttpUtil.getImgUrl(value), { toClassOnly: true }) photoPath: string;
-  @Expose() @IsNumber() foodTypeId: number;
-  @Expose() @IsString() createDate: string;
+  @Expose() @IsString() description!: string;
+  @Expose() @IsNumber() rate!: number;
+  @Expose() @IsBoolean() isFavorite!: boolean;
+  @Expose() @IsBoolean() isPrivate!: boolean;
+  @Expose() @IsBoolean() isPlanned!: boolean;
+  @Expose() @IsString() @Transform((value) => HttpUtil.getImgUrl(value), { toClassOnly: true }) photoPath!: string;
+  @Expose() @IsNumber() foodTypeId!: number;
+  @Expose() @IsString() createDate!: string;
 
   @Expose()
   @Type(() => UserShortDtoModel)
   @IsNotEmptyObject()
   @ValidateNested()
-  userShort: UserShort;
+  userShort!: UserShort;
 
   @Expose()
   @Type(() => RestaurantDtoModel)
   @IsNotEmptyObject()
   @ValidateNested()
-  restaurant: Restaurant;
+  restaurant!: Restaurant;
 
   @Expose()
   @Type(() => ShortCommentDtoModel)
   @IsNotEmptyObject()
   @ValidateNested()
-  shortComment: ShortComment;
+  shortComment!: ShortComment;
 
   static createTypesString(types: string[]): string {
     return types.join('$$$');
@@ -78,7 +78,7 @@ export class FoodDtoModel implements Food, DtoWrapper<Food> {
       restaurantRating: restaurant.rating,
       restaurantUrl: restaurant.url,
       restaurantWebsite: restaurant.website,
-      restaurantTypes: this.createTypesString(restaurant.types),
+      restaurantTypes: this.createTypesString(restaurant.types || []),
     };
   }
 }

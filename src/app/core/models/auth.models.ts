@@ -15,13 +15,13 @@ export interface AuthUser {
   followersCount: number;
 }
 export class AuthUserDtoModel implements AuthUser, DtoWrapper<AuthUser> {
-  @Expose() @IsNumber() id: number;
-  @Expose() @IsString() username: string;
-  @Expose() @IsString() email: string;
-  @Expose() @IsStringOrNull() @Transform((value) => HttpUtil.getImgUrl(value), { toClassOnly: true }) photoPath: string;
-  @Expose() @IsStringOrNull() about: string;
-  @Expose() @IsNumber() foodsCount: number;
-  @Expose() @IsNumber() followersCount: number;
+  @Expose() @IsNumber() id!: number;
+  @Expose() @IsString() username!: string;
+  @Expose() @IsString() email!: string;
+  @Expose() @IsStringOrNull() @Transform((value) => HttpUtil.getImgUrl(value), { toClassOnly: true }) photoPath!: string;
+  @Expose() @IsStringOrNull() about!: string;
+  @Expose() @IsNumber() foodsCount!: number;
+  @Expose() @IsNumber() followersCount!: number;
 
   static getReqAuthUserUpdateInfoDto(authUser: AuthFormUserModel) {
     return { id: authUser.id, about: authUser.about };
@@ -37,13 +37,13 @@ export interface AuthData {
   user: AuthUser;
 }
 export class AuthDataDtoModel implements AuthData, DtoWrapper<AuthData> {
-  @Expose() @IsString() accessToken: string;
+  @Expose() @IsString() accessToken!: string;
 
   @Expose() 
   @Type(() => AuthUserDtoModel) 
   @IsNotEmptyObject() 
   @ValidateNested() 
-  user: AuthUser;
+  user!: AuthUser;
 
   static getReqSignInDto(email: string, password: string) {
     return { email, password };

@@ -11,19 +11,19 @@ import {
 import * as _ from 'lodash';
 
 export interface MapDraftState {
-  form: RestaurantFormModel;
+  form: RestaurantFormModel | null;
   isValid: boolean;
 }
 export interface CameraDraftState {
-  form: string;
+  form: string | null;
   isValid: boolean;
 }
 export interface FoodDraftState {
-  form: FoodFormCreateModel;
+  form: FoodFormCreateModel | null;
   isValid: boolean;
 }
 
-const draftInitialState = {
+const draftInitialState: MapDraftState | CameraDraftState | FoodDraftState = {
   form: null,
   isValid: false,
 };
@@ -35,9 +35,9 @@ export interface FoodCreateState {
   isSubmitted: boolean;
 }
 const foodCreateInitialState: FoodCreateState = {
-  mapDraft: draftInitialState,
-  cameraDraft: draftInitialState,
-  foodDraft: draftInitialState,
+  mapDraft: draftInitialState as MapDraftState,
+  cameraDraft: draftInitialState as CameraDraftState,
+  foodDraft: draftInitialState as FoodDraftState,
   isSubmitted: false,
 };
 

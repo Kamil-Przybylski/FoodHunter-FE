@@ -7,9 +7,9 @@ import { UserShort } from '@core/models/user.models';
   styleUrls: ['./account-follower-list.component.scss'],
 })
 export class AccountFollowerListComponent implements OnInit {
-  @Input() userShortList: UserShort[];
-  @Input() isForAdd: boolean;
-  @Input() isForRemove: boolean;
+  @Input() userShortList!: UserShort[] | null;
+  @Input() isForAdd!: boolean;
+  @Input() isForRemove!: boolean;
 
   @Output() addUser = new EventEmitter<UserShort>();
   @Output() removeUser = new EventEmitter<UserShort>();

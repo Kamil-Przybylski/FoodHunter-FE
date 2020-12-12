@@ -1,9 +1,9 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 
 export class HttpErrorResDto {
-  error: string;
-  message: string;
-  statusCode: number;
+  error!: string;
+  message!: string;
+  statusCode!: number;
 }
 
 export interface HttpErrorRes {

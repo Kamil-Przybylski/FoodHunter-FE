@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AuthFormUserModel, AuthUser, AuthUserDtoModel } from '@core/models/auth.models';
-import { User, UserShortDtoModel } from '@core/models/user.models';
+import { User, UserDtoModel, UserShort, UserShortDtoModel } from '@core/models/user.models';
 import { HttpDtoService } from '@core/utils/http-dto-service';
 import { HttpUtil } from '@core/utils/http.util';
 import { PhotoHelper } from '@core/utils/photo.helper';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -13,60 +13,45 @@ import { map } from 'rxjs/operators';
 export class UserService {
   private postfixes = {
     USER: 'user',
-    PHOTO: 'photo',
-    INFO: 'info',
     ADD: 'add',
     REMOVE: 'remove',
+    FOLLOWERS: 'followers',
+    INFO: 'info',
   };
 
   constructor(private httpDtoService: HttpDtoService) {}
 
-  downloadAllFollowers(): Observable<User[]> {
-    return this.httpDtoService.get<User[], UserShortDtoModel>(UserShortDtoModel, `${this.postfixes.USER}`);
-  }
-  downloadUserFollowers(userId: number): Observable<User[]> {
-    return this.httpDtoService.get<User[], UserShortDtoModel>(UserShortDtoModel, `${this.postfixes.USER}/${userId}`);
-  }
-
-  addUserFollower(userId: number): Observable<User[]> {
+  downloadUser(userId: number): Observable<User[]> {
     return this.httpDtoService
-      .patch<User[], UserShortDtoModel>(
-        UserShortDtoModel,
-        `${this.postfixes.USER}/${this.postfixes.ADD}/${userId}`,
-        null
-      )
-      .pipe(map((r) => []));
+      .get<User, UserDtoModel>(UserDtoModel, `${this.postfixes.USER}/${this.postfixes.INFO}/${userId}`)
+      .pipe(map((r) => [r]));
   }
 
-  removeUserFollower(userId: number): Observable<User[]> {
-    return this.httpDtoService
-      .patch<User[], UserShortDtoModel>(
-        UserShortDtoModel,
-        `${this.postfixes.USER}/${this.postfixes.REMOVE}/${userId}`,
-        null
-      )
-      .pipe(map((r) => []));
+  downloadAllFollowersShort(): Observable<UserShort[]> {
+    return this.httpDtoService.get<UserShort[], UserShortDtoModel>(
+      UserShortDtoModel,
+      `${this.postfixes.USER}/${this.postfixes.FOLLOWERS}`
+    );
   }
-
-  updateProfileInfo(payload: AuthFormUserModel): Observable<AuthUser> {
-    const req = AuthUserDtoModel.getReqAuthUserUpdateInfoDto(payload);
-    return this.httpDtoService.patch<AuthUser, AuthUserDtoModel>(
-      AuthUserDtoModel,
-      `${this.postfixes.USER}/${this.postfixes.INFO}`,
-      req
+  downloadUserFollowersShort(userId: number): Observable<UserShort[]> {
+    return this.httpDtoService.get<UserShort[], UserShortDtoModel>(
+      UserShortDtoModel,
+      `${this.postfixes.USER}/${this.postfixes.FOLLOWERS}/${userId}`
     );
   }
 
-  updateProfilePhoto(photo: string, user: AuthUser): Observable<AuthUser> {
-    const file = PhotoHelper.dataURItoBlob(photo, user.username);
+  addUserFollower(authUserId: number, userId: number): Observable<User[]> {
+    return this.httpDtoService.patch<User[], UserShortDtoModel>(
+      UserShortDtoModel,
+      `${this.postfixes.USER}/${this.postfixes.FOLLOWERS}/${authUserId}/${this.postfixes.ADD}/${userId}`,
+      null
+    );
+  }
 
-    const data = AuthUserDtoModel.getReqAuthUserUpdatePhotoDto(user, file);
-    const req = HttpUtil.toFormData(data);
-
-    return this.httpDtoService.patch<AuthUser, AuthUserDtoModel>(
-      AuthUserDtoModel,
-      `${this.postfixes.USER}/${this.postfixes.PHOTO}`,
-      req
+  removeUserFollower(authUserId: number, userId: number): Observable<User[]> {
+    return this.httpDtoService.delete<User[], UserShortDtoModel>(
+      UserShortDtoModel,
+      `${this.postfixes.USER}/${this.postfixes.FOLLOWERS}/${authUserId}/${this.postfixes.REMOVE}/${userId}`
     );
   }
 }

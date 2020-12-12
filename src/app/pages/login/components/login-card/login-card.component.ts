@@ -15,7 +15,7 @@ import { getAuthIsLogging } from '@core/store/core/auth/auth.selectors';
 export class LoginCardComponent implements OnInit {
   AppRoutesEnum = AppRoutesEnum;
 
-  isLogging$: Observable<boolean>;
+  isLogging$!: Observable<boolean>;
 
   constructor(private store: Store<AppState>) {}
 

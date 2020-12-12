@@ -13,7 +13,7 @@ import { MessageEnum } from 'src/config';
   styleUrls: ['./account-user-form-dialog.component.scss'],
 })
 export class AccountUserFormDialogComponent implements OnInit {
-  @Input() user: AuthUser;
+  @Input() user!: AuthUser;
 
   constructor(private store: Store<AppState>, private notifierService: NotifierService) {}
 

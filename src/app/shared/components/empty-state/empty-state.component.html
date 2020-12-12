@@ -1,0 +1,11 @@
+<div class="w-100 h-100 d-flex justify-content-center align-items-center">
+  <div [ngSwitch]="loading">
+    <div *ngSwitchCase="true" class="h-100 w-100 overflow-hidden">
+      <!-- <mat-spinner color="accent" [diameter]="size"></mat-spinner> -->
+    </div>
+    <div *ngSwitchDefault class="text-center my-2">
+      <h4>{{ message }}</h4>
+      <p>{{ subMessage }}</p>
+    </div>
+  </div>
+</div>

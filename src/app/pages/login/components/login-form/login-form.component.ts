@@ -15,19 +15,16 @@ import { AuthFormSingInFields, AuthFormSingInModel } from '@core/models/auth.mod
   styleUrls: ['./login-form.component.scss'],
 })
 export class LoginFormComponent implements OnInit {
-  @ViewChild('formRef') formRef: NgForm;
+  @ViewChild('formRef') formRef!: NgForm;
   @Output() singIn = new EventEmitter<AuthFormSingInModel>();
 
-  form: FormGroupTypeSafe<AuthFormSingInModel>;
+  form!: FormGroupTypeSafe<AuthFormSingInModel>;
   formFields = AuthFormSingInFields;
 
-  isLogging$: Observable<boolean>;
-  loginErrors$: Observable<HttpErrorResDto>;
+  isLogging$!: Observable<boolean>;
+  loginErrors$!: Observable<HttpErrorResDto | null>;
 
-  constructor(
-    private store: Store<AppState>,
-    private fb: FormBuilderTypeSafe,
-  ) { }
+  constructor(private store: Store<AppState>, private fb: FormBuilderTypeSafe) {}
 
   ngOnInit() {
     this.isLogging$ = this.store.pipe(select(getAuthIsLogging));
@@ -54,5 +51,4 @@ export class LoginFormComponent implements OnInit {
       FormErrorUtil.setAllTouched(this.form);
     }
   }
-
 }

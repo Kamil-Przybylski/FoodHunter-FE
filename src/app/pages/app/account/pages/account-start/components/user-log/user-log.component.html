@@ -1,0 +1,14 @@
+<div class="w-100 d-flex">
+  <div class="app-avatar app-avatar-sm ion-padding-end">
+    <ion-avatar (click)="avatarClickEmmit()">
+      <img *ngIf="user.photoPath" [src]="user.photoPath" />
+    </ion-avatar>
+  </div>
+  <div class="ion-padding-start d-flex ion-align-items-center" style="flex: 1">
+    <div class="w-100">
+      <h6 class="m-0">{{ user.username }}</h6>
+      <small>Mój profil</small>
+    </div>
+  </div>
+</div>
+<ion-item-divider></ion-item-divider>

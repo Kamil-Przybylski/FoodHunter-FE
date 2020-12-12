@@ -7,9 +7,9 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./form-errors.component.scss'],
 })
 export class FormErrorsComponent implements OnInit {
-  @Input() error: HttpErrorResDto;
-  @Input() isFormSubmitted: boolean;
-  @Input() isFormValid: boolean;
+  @Input() error!: HttpErrorResDto | null;
+  @Input() isFormSubmitted!: boolean;
+  @Input() isFormValid!: boolean;
 
   constructor() { }
 

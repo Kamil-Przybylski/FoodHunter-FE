@@ -7,10 +7,10 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./dialog-container.component.scss'],
 })
 export class DialogContainerComponent implements OnInit {
-  @Input() tittle: string;
-  @Input() description: string;
-  @Input() userName: string;
-  @Input() avatarPath: string;
+  @Input() tittle!: string;
+  @Input() description!: string;
+  @Input() userName!: string;
+  @Input() avatarPath!: string;
   
   constructor(private modalCtrl: ModalController) { }
 

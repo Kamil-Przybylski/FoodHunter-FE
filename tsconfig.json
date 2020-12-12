@@ -8,6 +8,8 @@
       "@shared/*": ["src/app/shared/*"],
     },
     "baseUrl": "./",
+    "strict": true,
+    "strictNullChecks": false,
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -27,6 +29,7 @@
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true
+    "strictInjectionParameters": true,
+    "strictTemplates": true
   }
 }
