@@ -28,6 +28,7 @@ import { DiscoverListEffects } from '@core/store/discover/discover-list/discover
 import { CommentEffects } from '@core/store/comment/comment.effects';
 import { AccountUserEffects } from '@core/store/account/account-user/account-user.effects';
 import { AccountFollowersEffects } from '@core/store/account/account-followers/account-followers.effects';
+import { FoodListEffects } from '@core/store/food/food-list/food-list.effects';
 
 const REDUCER_TOKEN = new InjectionToken<ActionReducerMap<AppState>>('root reducer');
 
@@ -52,13 +53,14 @@ const REDUCER_TOKEN = new InjectionToken<ActionReducerMap<AppState>>('root reduc
     }),
     EffectsModule.forRoot([
       DataConditionEffects,
-      
       AuthEffects,
+      
       FoodEffects,
+      FoodListEffects,
       DiscoverListEffects,
       CommentEffects,
       AccountUserEffects,
-      AccountFollowersEffects
+      AccountFollowersEffects,
     ]),
     // StoreRouterConnectingModule.forRoot({
     //   routerState: RouterState.Minimal

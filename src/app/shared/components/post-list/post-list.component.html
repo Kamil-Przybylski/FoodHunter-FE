@@ -1,0 +1,11 @@
+<div style="margin: 0 -1px;">
+  <div class="app-pure-row">
+    <ion-col size="4" style="padding: 1px" *ngFor="let food of foods">
+      <div class="app-img" [style.background-image]="'url(' + food.photoPath + ')'"></div>
+    </ion-col>
+
+    <ion-infinite-scroll #ionScroll threshold="100px" (ionInfinite)="loadNextData()">
+      <ion-infinite-scroll-content loadingSpinner="bubbles"> </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </div>
+</div>

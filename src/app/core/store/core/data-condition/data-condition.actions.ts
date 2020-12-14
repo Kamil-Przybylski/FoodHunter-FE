@@ -17,7 +17,7 @@ export const downloadAction = <T extends keyof EntitiesStateComponents, P>() =>
     '[Data Condition] Download',
     props<{
       key: T;
-      dataId: number;
+      dataId: number | string;
       requestObservable: Observable<EntitiesStateComponents[T][] | DataConditionLoadData<T, P>>;
       nextActions?: Action[];
     }>()
@@ -28,7 +28,7 @@ export const switchDownloadAction = <T extends keyof EntitiesStateComponents, P>
     '[Data Condition] Switch Download',
     props<{
       key: T;
-      dataId: number;
+      dataId: number | string;
       requestObservable: Observable<EntitiesStateComponents[T][] | DataConditionLoadData<T, P>>;
       nextActions?: Action[];
     }>()
@@ -38,7 +38,7 @@ export const downloadSuccessAction = <T extends keyof EntitiesStateComponents, P
     '[Data Condition] Download Success',
     props<{
       key: T;
-      dataId: number;
+      dataId: number | string;
       entityIds: number[];
       loadData: P;
     }>()
@@ -48,7 +48,7 @@ export const downloadFailAction = <T extends keyof EntitiesStateComponents>() =>
     '[Data Condition] Download Fail',
     props<{
       key: T;
-      dataId: number;
+      dataId: number | string;
       error: HttpErrorResDto;
     }>()
   );
@@ -58,7 +58,7 @@ export const saveAction = <T extends keyof EntitiesStateComponents, P>() =>
     '[Data Condition] Save',
     props<{
       key: T;
-      dataId: number;
+      dataId: number | string;
       requestObservable: Observable<EntitiesStateComponents[T][] | DataConditionSendData<T, P>>;
       nextActions?: Action[];
     }>()
@@ -68,7 +68,7 @@ export const saveSuccessAction = <T extends keyof EntitiesStateComponents, P>() 
     '[Data Condition] Save Success',
     props<{
       key: T;
-      dataId: number;
+      dataId: number | string;
       entityIds: number[];
       sendData: P;
     }>()
@@ -78,7 +78,7 @@ export const saveFailAction = <T extends keyof EntitiesStateComponents>() =>
     '[Data Condition] Save Fail',
     props<{
       key: T; 
-      dataId: number;
+      dataId: number | string;
       error: HttpErrorResDto;
     }>()
   );
@@ -88,7 +88,7 @@ export const deleteAction = <T extends keyof EntitiesStateComponents, P>() =>
     '[Data Condition] Delete',
     props<{
       key: T;
-      dataId: number;
+      dataId: number | string;
       requestObservable: Observable<EntitiesStateComponents[T][] | DataConditionSendData<T, P>>;
       nextActions?: Action[];
     }>()
@@ -98,7 +98,7 @@ export const deleteSuccessAction = <T extends keyof EntitiesStateComponents, P>(
     '[Data Condition] Delete Success',
     props<{
       key: T;
-      dataId: number;
+      dataId: number | string;
       entityIds: number[];
       sendData: P;
     }>()
@@ -108,7 +108,7 @@ export const deleteFailAction = <T extends keyof EntitiesStateComponents>() =>
     '[Data Condition] Delete Fail',
     props<{
       key: T;
-      dataId: number;
+      dataId: number | string;
       error: HttpErrorResDto;
     }>()
   );
@@ -118,6 +118,6 @@ export const clearAction = <T extends keyof EntitiesStateComponents>() =>
     '[Data Condition] Clear',
     props<{
       key: T;
-      dataId: number;
+      dataId: number | string;
     }>()
   );

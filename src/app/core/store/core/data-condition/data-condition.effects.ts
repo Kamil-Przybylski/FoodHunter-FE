@@ -289,14 +289,6 @@ export class DataConditionEffects {
     { dispatch: false }
   );
 
-  // delete$ = createEffect(() => this.actions$.pipe());
-
-  // deleteSuccess$ = createEffect(() => this.actions$.pipe(), {
-  //   dispatch: false,
-  // });
-
-  // deleteFail$ = createEffect(() => this.actions$.pipe(), { dispatch: false });
-
   private getIds(entities: EntitiesStateComponents[EntitiesEnum][]): number[] {
     if (!_.isArray(entities)) return [];
     const ids = _.map(entities, (entity) => entity.id);

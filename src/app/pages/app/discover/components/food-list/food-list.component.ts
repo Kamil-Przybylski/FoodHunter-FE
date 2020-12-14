@@ -40,6 +40,14 @@ export class FoodListComponent implements OnInit, OnDestroy {
     this.paginator$ = this.store.pipe(select(getDiscoverListPaginator));
     this.dataConditionPaginator$ = this.store.pipe(select(getDiscoverListDataConditionLoadData));
 
+    this.donwloadData();
+  }
+
+  ngOnDestroy() {
+    this.destroyed$.next(true);
+  }
+
+  private donwloadData() {
     this.dataConditionPaginator$
       .pipe(
         takeUntil(this.destroyed$),
@@ -50,10 +58,6 @@ export class FoodListComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe();
-  }
-
-  ngOnDestroy() {
-    this.destroyed$.next(true);
   }
 
   loadNextData() {

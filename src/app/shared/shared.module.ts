@@ -19,6 +19,7 @@ import { DialogContainerComponent } from './components/dialog-container/dialog-c
 import {MatDividerModule} from '@angular/material/divider';
 import { EmptyStateComponent } from './components/empty-state/empty-state.component';
 import { UserListComponent } from './components/user-list/user-list.component';
+import { PostListComponent } from './components/post-list/post-list.component';
 
 const MATERIAL_MODULES = [
   MatFormFieldModule,
@@ -41,12 +42,13 @@ const MATERIAL_MODULES = [
     CommentsModalComponent,
     DialogContainerComponent,
     EmptyStateComponent,
-    UserListComponent
+    UserListComponent,
+    PostListComponent
   ],
   imports: [CommonModule, ReactiveFormsModule, IonicModule, MATERIAL_MODULES],
   exports: [
-    ReactiveFormsModule,
     MATERIAL_MODULES,
+    ReactiveFormsModule,
     FormErrorsComponent,
     LoadingButtonComponent,
     ImagePickerComponent,
@@ -56,7 +58,8 @@ const MATERIAL_MODULES = [
     CommentsModalComponent,
     DialogContainerComponent,
     EmptyStateComponent,
-    UserListComponent
+    UserListComponent,
+    PostListComponent
   ],
   entryComponents: [CommentsModalComponent]
 })

@@ -29,6 +29,12 @@
 @import './layout.scss';
 @import './materials.scss';
 
+.app-pure-row {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .app-spin-button {
   position: absolute !important;
   top: calc(50% - 14px) !important;
@@ -73,4 +79,13 @@
 .app-avatar-lg {
   height: 110px !important;
   width: 110px !important;
+}
+
+.app-img {
+  padding-top: 100%;
+  width: 100%;
+
+  background-position: center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
 }

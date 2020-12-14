@@ -1,11 +1,19 @@
 <div class="picker">
-  <img
+  <div 
+    class="app-img"
+    [style.background-image]="'url(' + selectedImage + ')'"
+    *ngIf="!!selectedImage && !!showPreview"
+    (click)="onPickImage()"
+    alt="my photo"
+  ></div>
+
+  <!-- <img
     class="w-100"
     [src]="selectedImage"
     (click)="onPickImage()"
     *ngIf="!!selectedImage && !!showPreview"
     alt="my photo"
-  />
+  /> -->
   <button
     mat-flat-button
     color="primary"

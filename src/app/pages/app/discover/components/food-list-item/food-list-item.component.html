@@ -15,7 +15,8 @@
     </ion-col>
 
     <ion-col size="12" class="p-0">
-      <img class="w-100" [src]="food.photoPath" alt="Food" />
+      <!-- <img class="w-100" [src]="food.photoPath" alt="Food" /> -->
+      <div class="app-img" [style.background-image]="'url(' + food.photoPath + ')'"></div>
     </ion-col>
 
     <ion-col size="12" class="d-flex p-0 m-0">

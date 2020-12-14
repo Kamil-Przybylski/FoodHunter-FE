@@ -23,7 +23,10 @@ export interface HttpState<T, P> {
 }
 
 export type DataConditionState = {
-  [P in keyof EntitiesStateComponents]: { [id: number]: HttpState<any, any> };
+  [P in keyof EntitiesStateComponents]: {
+    [id: number]: HttpState<any, any>;
+    [id: string]: HttpState<any, any>;
+  };
 };
 
 export const initialState: HttpState<unknown, unknown> = {
@@ -116,7 +119,7 @@ const ReducerTypes = {
   CLEAR: <T>(state: T): T => _.assign({}, state, initialState),
 };
 
-const getDataConditionState = (state: any, dataId: number, fn: (st: any) => any) => {
+const getDataConditionState = (state: any, dataId: number | string, fn: (st: any) => any) => {
   if (state[dataId]) {
     const newState = _.assign({}, state);
     newState[dataId] = fn(newState[dataId]);

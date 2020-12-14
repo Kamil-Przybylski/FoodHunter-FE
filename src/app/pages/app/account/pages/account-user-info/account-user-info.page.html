@@ -25,6 +25,12 @@
         ></app-user-details>
       </ion-col>
     </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <h6>Posty:</h6>
+        <app-post-list #postListComponent [foods]="userFoods$ | async"></app-post-list>
+      </ion-col>
+    </ion-row>
   </ion-grid>
 </ion-content>
 

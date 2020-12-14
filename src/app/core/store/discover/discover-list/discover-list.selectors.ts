@@ -6,14 +6,20 @@ import { EntitiesEnum } from '@core/store/core/entities/entities.models';
 import { getEntitiesSelectAll } from '@core/store/core/entities/entities.selectors';
 import { getDiscoverModuleState } from '../discover.reducer';
 
-export const getDiscoverListState = createSelector(getDiscoverModuleState, (discoverState) => discoverState.discoverList);
+export const getDiscoverListState = createSelector(
+  getDiscoverModuleState,
+  (discoverState) => discoverState.discoverList
+);
 
 export const getDiscoverListDataConditionLoadData = createSelector(
   getDataCondition(EntitiesEnum.FOOD, 0),
-  (state) => (state?.loadData as HttpPaginatorMeta)
+  (state) => state?.loadData as HttpPaginatorMeta
 );
 
-export const getDiscoverListPaginator = createSelector(getDiscoverListState, (discoverState) => discoverState.paginator);
+export const getDiscoverListPaginator = createSelector(
+  getDiscoverListState,
+  (discoverState) => discoverState.paginator
+);
 
 export const getDiscoverListAllFoods = createSelector(getEntitiesSelectAll(EntitiesEnum.FOOD), (all) =>
   _.sortBy(all, (item) => item.createDate).reverse()

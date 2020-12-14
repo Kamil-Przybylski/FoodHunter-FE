@@ -12,5 +12,6 @@ export enum AppRoutesEnum {
   LIST = 'lista',
   INFO = 'info',
 
-  USER_ID = 'userId'
+  USER_ID = 'userId',
+  FOOD_ID = 'foodId'
 }
