@@ -10,8 +10,3 @@ export const getLayoutLoginUrl = createSelector(
   getLayoutState,
   layoutState => layoutState.routerLoginUrl
 );
-
-export const getLayoutPreviousUrl = createSelector(
-  getLayoutState,
-  layoutState => layoutState.routerPreviousPage
-);

@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button (click)="navigateBack()">
+      <ion-button (click)="location.back()">
         <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -28,7 +28,12 @@
     <ion-row>
       <ion-col size="12">
         <h6>Posty:</h6>
-        <app-post-list #postListComponent [foods]="userFoods$ | async"></app-post-list>
+        <app-post-list
+          #postListComponent
+          [foods]="userFoods$ | async"
+          (showFoodDetails)="showFoodDetails($event)"
+          (loadNextData)="loadNextData()"
+        ></app-post-list>
       </ion-col>
     </ion-row>
   </ion-grid>

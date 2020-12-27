@@ -9,12 +9,7 @@ import { AppPageRoutingModule } from './app-routing.module';
 import { AppPage } from './app.page';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    AppPageRoutingModule
-  ],
-  declarations: [AppPage]
+  imports: [CommonModule, FormsModule, IonicModule, AppPageRoutingModule],
+  declarations: [AppPage],
 })
 export class AppPageModule {}

@@ -1,11 +1,16 @@
-import { HttpPaginatorMeta } from '@core/models/custom-http.models';
 import { createAction, props } from '@ngrx/store';
 
-export const foodListDownloadFoodAction = createAction(
+export const foodListDownloadFoodListFoodAction = createAction(
+  '[Discover List] Download Food List Action',
+  props<{ payload: { pageNo: number } }>()
+);
+
+export const foodListDownloadSingleFoodAction = createAction(
+  '[Food List] Download Food Data Action',
+  props<{ payload: { foodId: number } }>()
+);
+
+export const foodListDownloadUserFoodAction = createAction(
   '[Food List] Download User Food Data Action',
   props<{ payload: { userId: number; pageNo: number } }>()
-);
-export const foodListSetPaginatorAction = createAction(
-  '[Food List] Set Paginator Action',
-  props<{ payload: { paginator: HttpPaginatorMeta } }>()
 );

@@ -14,12 +14,12 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { ImagePickerComponent } from './components/image-picker/image-picker.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
-import { CommentsModalComponent } from './components/comments-modal/comments-modal.component';
 import { DialogContainerComponent } from './components/dialog-container/dialog-container.component';
-import {MatDividerModule} from '@angular/material/divider';
+import { MatDividerModule } from '@angular/material/divider';
 import { EmptyStateComponent } from './components/empty-state/empty-state.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { PostListComponent } from './components/post-list/post-list.component';
+import { CommentListComponent } from './components/comment-list/comment-list.component';
 
 const MATERIAL_MODULES = [
   MatFormFieldModule,
@@ -28,7 +28,7 @@ const MATERIAL_MODULES = [
   MatButtonModule,
   MatTabsModule,
   MatCheckboxModule,
-  MatDividerModule
+  MatDividerModule,
 ];
 
 @NgModule({
@@ -39,11 +39,11 @@ const MATERIAL_MODULES = [
     ToolbarComponent,
     DisableControlDirective,
     AuthImagePipePipe,
-    CommentsModalComponent,
     DialogContainerComponent,
     EmptyStateComponent,
     UserListComponent,
-    PostListComponent
+    PostListComponent,
+    CommentListComponent,
   ],
   imports: [CommonModule, ReactiveFormsModule, IonicModule, MATERIAL_MODULES],
   exports: [
@@ -55,12 +55,12 @@ const MATERIAL_MODULES = [
     ToolbarComponent,
     DisableControlDirective,
     AuthImagePipePipe,
-    CommentsModalComponent,
     DialogContainerComponent,
     EmptyStateComponent,
     UserListComponent,
-    PostListComponent
+    PostListComponent,
+    CommentListComponent,
   ],
-  entryComponents: [CommentsModalComponent]
+  entryComponents: [],
 })
 export class SharedModule {}

@@ -1,7 +1,6 @@
 import { ActivatedRoute } from '@angular/router';
 import { AppRoutesEnum } from 'src/app/app.routes';
 import * as _ from 'lodash';
-import { IonBackButton } from '@ionic/angular';
 
 export class CommonUtil {
   static getUrlProp(route: ActivatedRoute, idCode: AppRoutesEnum): number {

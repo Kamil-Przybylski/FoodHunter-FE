@@ -14,8 +14,7 @@
       </div>
     </ion-col>
 
-    <ion-col size="12" class="p-0">
-      <!-- <img class="w-100" [src]="food.photoPath" alt="Food" /> -->
+    <ion-col size="12" class="p-0" (click)="foodClickEmmit()">
       <div class="app-img" [style.background-image]="'url(' + food.photoPath + ')'"></div>
     </ion-col>
 
@@ -25,7 +24,7 @@
         <ion-label>X</ion-label>
       </ion-chip>
 
-      <ion-chip outline (click)="showCommentsEmmit()">
+      <ion-chip outline (click)="foodClickEmmit()">
         <ion-icon *ngIf="food?.shortComment?.isMyComment" name="chatbubbles"></ion-icon>
         <ion-icon *ngIf="!food?.shortComment?.isMyComment" name="chatbubbles-outline"></ion-icon>
         <ion-label>{{ food?.shortComment?.totalItems || 0 }}</ion-label>

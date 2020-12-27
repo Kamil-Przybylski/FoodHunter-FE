@@ -3,21 +3,20 @@ import { Store, select } from '@ngrx/store';
 import { AppState } from '@core/store';
 import { from, Observable, Subject } from 'rxjs';
 import { Food } from '@core/models/food.models';
-import { IonInfiniteScroll, ModalController } from '@ionic/angular';
+import { IonContent, IonInfiniteScroll, ModalController } from '@ionic/angular';
 import {
-  discoverListDownloadFoodAction,
   discoverListSetPaginatorAction,
 } from '@core/store/discover/discover-list/discover-list.actions';
 import {
-  getDiscoverListAllFoods,
   getDiscoverListDataConditionLoadData,
   getDiscoverListPaginator,
 } from '@core/store/discover/discover-list/discover-list.selectors';
 import { HttpPaginatorMeta } from '@core/models/custom-http.models';
 import { filter, take, takeUntil, tap } from 'rxjs/operators';
-import { CommentsModalComponent } from '@shared/components/comments-modal/comments-modal.component';
 import { AppRoutesEnum } from 'src/app/app.routes';
 import { Router } from '@angular/router';
+import { foodListDownloadFoodListFoodAction } from '@core/store/food/food-list/food-list.actions';
+import { getFoodListDashboardFoods } from '@core/store/food/food-list/food-list.selectors';
 
 @Component({
   selector: 'app-food-list',
@@ -25,7 +24,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./food-list.component.scss'],
 })
 export class FoodListComponent implements OnInit, OnDestroy {
-  @ViewChild(IonInfiniteScroll, { static: true }) infiniteScroll!: IonInfiniteScroll;
+  @ViewChild(IonInfiniteScroll) infiniteScroll!: IonInfiniteScroll;
+  @ViewChild(IonContent) ionContent!: IonContent;
 
   foods$!: Observable<Food[]>;
   paginator$!: Observable<HttpPaginatorMeta>;
@@ -33,10 +33,10 @@ export class FoodListComponent implements OnInit, OnDestroy {
 
   destroyed$: Subject<boolean> = new Subject<boolean>();
 
-  constructor(private store: Store<AppState>, public router: Router, private modalCtrl: ModalController) {}
+  constructor(private store: Store<AppState>, public router: Router) {}
 
   ngOnInit() {
-    this.foods$ = this.store.pipe(select(getDiscoverListAllFoods));
+    this.foods$ = this.store.pipe(select(getFoodListDashboardFoods));
     this.paginator$ = this.store.pipe(select(getDiscoverListPaginator));
     this.dataConditionPaginator$ = this.store.pipe(select(getDiscoverListDataConditionLoadData));
 
@@ -66,25 +66,27 @@ export class FoodListComponent implements OnInit, OnDestroy {
         take(1),
         tap((paginator) => {
           const nextPage = paginator.currentPage + 1;
-          if (paginator.currentPage === paginator.totalPages) this.infiniteScroll.disabled = true;
-          this.store.dispatch(discoverListDownloadFoodAction({ payload: { pageNo: nextPage } }));
+          
+          if (paginator.isLastForInfiniteScroll) {
+            this.infiniteScroll.disabled = true;
+          } else {
+            this.infiniteScroll.disabled = false;
+            this.store.dispatch(foodListDownloadFoodListFoodAction({ payload: { pageNo: nextPage } }));
+          }
         })
       )
       .subscribe();
   }
 
-  showComments(food: Food) {
-    const modal$ = this.modalCtrl.create({
-      component: CommentsModalComponent,
-      componentProps: { food },
-      swipeToClose: true,
-    });
-    from(modal$)
-      .pipe(
-        take(1),
-        tap((modal) => modal.present())
-      )
-      .subscribe();
+  showDetails(foodId: number) {
+    this.router.navigate([
+      '/',
+      AppRoutesEnum.APP,
+      AppRoutesEnum.TABS,
+      AppRoutesEnum.DISCOVER,
+      AppRoutesEnum.FOOD,
+      foodId,
+    ]);
   }
 
   openProfile(userId: number) {
@@ -96,5 +98,11 @@ export class FoodListComponent implements OnInit, OnDestroy {
       AppRoutesEnum.INFO,
       userId,
     ]);
+  }
+
+  refreshData() {
+    if (this.infiniteScroll) this.infiniteScroll.disabled = false;
+    console.log(666, this.ionContent);
+    this.ionContent.scrollToTop();
   }
 }

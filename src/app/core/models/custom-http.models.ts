@@ -34,6 +34,8 @@ export interface HttpPaginatorMeta {
   itemsPerPage: number;
   totalPages: number;
   currentPage: number;
+  isLastPage: boolean;
+  isLastForInfiniteScroll: boolean;
 }
 export interface HttpPaginator<T> {
   items: T;

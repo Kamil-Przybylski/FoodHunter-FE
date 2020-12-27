@@ -1,20 +1,7 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { HttpPaginatorMeta } from '@core/models/custom-http.models';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Food } from '@core/models/food.models';
-import { AppState } from '@core/store';
-import {
-  discoverListDownloadFoodAction,
-  discoverListSetPaginatorAction,
-} from '@core/store/discover/discover-list/discover-list.actions';
-import {
-  getDiscoverListAllFoods,
-  getDiscoverListDataConditionLoadData,
-  getDiscoverListPaginator,
-} from '@core/store/discover/discover-list/discover-list.selectors';
 import { IonInfiniteScroll } from '@ionic/angular';
-import { select, Store } from '@ngrx/store';
-import { Observable, Subject } from 'rxjs';
-import { filter, take, takeUntil, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-post-list',
@@ -22,8 +9,11 @@ import { filter, take, takeUntil, tap } from 'rxjs/operators';
   styleUrls: ['./post-list.component.scss'],
 })
 export class PostListComponent implements OnInit {
-  @ViewChild(IonInfiniteScroll, { static: true })
+  @ViewChild(IonInfiniteScroll)
   public infiniteScroll!: IonInfiniteScroll;
+
+  @Output() showFoodDetails = new EventEmitter<number>();
+  @Output() loadNextData = new EventEmitter<number>();
 
   @Input() foods!: Food[];
 
@@ -33,7 +23,11 @@ export class PostListComponent implements OnInit {
 
   ngOnInit() {}
 
-  loadNextData() {
-    
+  loadNextDataEmit() {
+    this.loadNextData.emit();
+  }
+
+  foodClickEmmit(foodId: number) {
+    this.showFoodDetails.emit(foodId);
   }
 }

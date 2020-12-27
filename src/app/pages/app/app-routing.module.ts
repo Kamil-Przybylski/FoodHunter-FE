@@ -18,6 +18,10 @@ const routes: Routes = [
         loadChildren: () => import('./discover/discover.module').then(m => m.DiscoverPageModule)
       },
       {
+        path: AppRoutesEnum.CATALOGS,
+        loadChildren: () => import('./catalogs/catalogs.module').then(m => m.CatalogsPageModule)
+      },
+      {
         path: AppRoutesEnum.CREATE,
         loadChildren: () => import('./create/create.module').then( m => m.CreatePageModule)
       },
@@ -30,11 +34,7 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: AppRoutesEnum.TABS
-  },
-  {
-    path: 'account',
-    loadChildren: () => import('./account/account.module').then( m => m.AccountPageModule)
-  },
+  }
 ];
 
 @NgModule({

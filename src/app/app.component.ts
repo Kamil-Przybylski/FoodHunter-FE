@@ -4,7 +4,6 @@ import { Plugins, Capacitor } from '@capacitor/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '@core/store';
-import { layoutRouterSetPreviousPageAction } from '@core/store/core/layout/layout.actions';
 
 @Component({
   selector: 'app-root',
@@ -20,12 +19,6 @@ export class AppComponent {
     this.platform.ready().then(() => {
       if (Capacitor.isPluginAvailable('SplashScreen')) {
         Plugins.SplashScreen.hide();
-      }
-    });
-
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.store.dispatch(layoutRouterSetPreviousPageAction({ payload: { url: event.url } }));
       }
     });
   }

@@ -1,0 +1,23 @@
+<ion-list class="ion-no-padding">
+  <ion-item class="" lines="none">
+    <mat-form-field class="w-100">
+      <mat-label>Komentarz</mat-label>
+      <input matInput [formControl]="commentFormControl" type="text" placeholder="Napisz komentarz..." />
+      <mat-error *ngIf="commentFormControl?.hasError('required')"> Należy wpisać treść. </mat-error>
+    </mat-form-field>
+
+    <button mat-icon-button class="app-matbut-icon" color="primary" (click)="sendCommentEmit()">
+      <ion-icon slot="icon-only" name="paper-plane-outline"></ion-icon>
+    </button>
+  </ion-item>
+  <ion-item class="ion-no-padding" *ngFor="let comment of comments">
+    <ion-avatar slot="start" (click)="openProfile(comment.userShort.id)">
+      <img [src]="comment.userShort.photoPath" />
+    </ion-avatar>
+    <ion-label>
+      <h2>{{ comment.userShort.username }}</h2>
+      <p>{{ comment.createDate }}</p>
+      <h3>{{ comment.comment }}</h3>
+    </ion-label>
+  </ion-item>
+</ion-list>

@@ -1,0 +1,13 @@
+<ion-header>
+  <app-toolbar title="Odkryj">
+    <ion-buttons slot="primary">
+      <ion-button (click)="downloadData()">
+        <ion-icon slot="icon-only" name="refresh-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </app-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-food-list #foodList></app-food-list>
+</ion-content>

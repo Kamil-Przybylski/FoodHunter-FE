@@ -1,0 +1,46 @@
+<ion-grid class="p-0" *ngIf="food">
+  <ion-row>
+    <ion-col size="12" class="d-flex">
+      <div class="ion-padding-end">
+        <ion-avatar class="ion-small-avatar">
+          <img [src]="food.userShort.photoPath" />
+        </ion-avatar>
+      </div>
+      <div style="flex: 1" class="d-flex flex-y-center">
+        <h3 class="m-0">
+          {{ food.userShort.username }}
+        </h3>
+      </div>
+      <div class="d-flex flex-y-center">
+        <ion-chip outline class="m-0">
+          <ion-icon name="heart-outline"></ion-icon>
+          <ion-label>X</ion-label>
+        </ion-chip>
+      </div>
+    </ion-col>
+
+    <ion-col size="12">
+      <ion-text color="dark">
+        <small>
+          <b>{{ food.restaurant.name }}</b>
+        </small>
+        <br />
+        <small>
+          {{ food.restaurant.formattedAddress }}
+        </small>
+      </ion-text>
+    </ion-col>
+
+    <ion-col size="12" class="px-0">
+      <div class="app-img" [style.background-image]="'url(' + food.photoPath + ')'"></div>
+    </ion-col>
+
+    <ion-col size="12">
+      <ion-text color="dark">
+        <p class="mp-0">
+          {{ food.description }}
+        </p>
+      </ion-text>
+    </ion-col>
+  </ion-row>
+</ion-grid>

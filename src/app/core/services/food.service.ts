@@ -25,6 +25,12 @@ export class FoodService {
     });
   }
 
+  downloadFood(foodId: number): Observable<Food[]> {
+    return this.httpDtoService
+      .get<Food, FoodDtoModel>(FoodDtoModel, `${POSTFIXES.FOOD}/${foodId}`)
+      .pipe(map((res) => [res]));
+  }
+
   downloadUserFoods(userId: number, page: number, mapFn: (r: HttpPaginator<Food[]>) => Food[]): Observable<Food[]> {
     return this.httpDtoService.getMap<Food[], FoodDtoModel>(
       FoodDtoModel,

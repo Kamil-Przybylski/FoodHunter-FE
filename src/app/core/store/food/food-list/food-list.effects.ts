@@ -6,13 +6,38 @@ import { downloadAction } from '@core/store/core/data-condition/data-condition.a
 import { EntitiesEnum } from '@core/store/core/entities/entities.models';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map } from 'rxjs/operators';
-import { foodListDownloadFoodAction } from './food-list.actions';
+import {
+  foodListDownloadFoodListFoodAction,
+  foodListDownloadSingleFoodAction,
+  foodListDownloadUserFoodAction,
+} from './food-list.actions';
 
 @Injectable()
 export class FoodListEffects {
+  downloadFoodList$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(foodListDownloadFoodListFoodAction),
+      map((action) => action.payload),
+      map(({ pageNo }) => {
+        let metaData: HttpPaginatorMeta;
+
+        return downloadAction<EntitiesEnum.FOOD, HttpPaginatorMeta>()({
+          key: EntitiesEnum.FOOD,
+          dataId: 0,
+          requestObservable: this.foodService
+            .downloadFoods(pageNo, (r: HttpPaginator<Food[]>) => {
+              metaData = r.meta;
+              return r.items;
+            })
+            .pipe(map((r) => ({ entities: r, loadData: metaData }))),
+        });
+      })
+    )
+  );
+
   downloadUserFood$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(foodListDownloadFoodAction),
+      ofType(foodListDownloadUserFoodAction),
       map((action) => action.payload),
       map(({ userId, pageNo }) => {
         let metaData: HttpPaginatorMeta;
@@ -26,6 +51,20 @@ export class FoodListEffects {
               return r.items;
             })
             .pipe(map((r) => ({ entities: r, loadData: metaData }))),
+        });
+      })
+    )
+  );
+
+  downloadFood$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(foodListDownloadSingleFoodAction),
+      map((action) => action.payload),
+      map(({ foodId }) => {
+        return downloadAction<EntitiesEnum.FOOD, null>()({
+          key: EntitiesEnum.FOOD,
+          dataId: `food-${foodId}`,
+          requestObservable: this.foodService.downloadFood(foodId),
         });
       })
     )

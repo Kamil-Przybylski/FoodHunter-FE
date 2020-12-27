@@ -2,7 +2,7 @@
   <mat-tab-group class="h-100 app-mat-tab-col-3">
     <mat-tab class="h-100">
       <ng-template mat-tab-label>
-        <div class="d-flex flex-column flex-x-center">
+        <div class="d-flex flex-column flex-y-center">
           <ion-icon
             *ngIf="isMapCorrect$ | async"
             class="app_mat-stepper-icon ion-no-margin"
@@ -36,7 +36,7 @@
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <div class="d-flex flex-column flex-x-center">
+        <div class="d-flex flex-column flex-y-center">
           <ion-icon
             *ngIf="isCameraCorrect$ | async"
             class="app_mat-stepper-icon ion-no-margin"
@@ -65,7 +65,7 @@
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <div class="d-flex flex-column flex-x-center">
+        <div class="d-flex flex-column flex-y-center">
           <ion-icon
             *ngIf="isFormCorrect$ | async"
             class="app_mat-stepper-icon ion-no-margin"

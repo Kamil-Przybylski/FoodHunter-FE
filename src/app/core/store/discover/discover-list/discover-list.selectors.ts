@@ -3,7 +3,7 @@ import { createSelector } from '@ngrx/store';
 import * as _ from 'lodash';
 import { getDataCondition } from '@core/store/core/data-condition/data-condition.selectors';
 import { EntitiesEnum } from '@core/store/core/entities/entities.models';
-import { getEntitiesSelectAll } from '@core/store/core/entities/entities.selectors';
+import { getEntitiesSelectAll, getEntitiesSelectEntities } from '@core/store/core/entities/entities.selectors';
 import { getDiscoverModuleState } from '../discover.reducer';
 
 export const getDiscoverListState = createSelector(
@@ -21,6 +21,8 @@ export const getDiscoverListPaginator = createSelector(
   (discoverState) => discoverState.paginator
 );
 
-export const getDiscoverListAllFoods = createSelector(getEntitiesSelectAll(EntitiesEnum.FOOD), (all) =>
-  _.sortBy(all, (item) => item.createDate).reverse()
+export const getDiscoverListDataConditionEntityIds = createSelector(
+  getDataCondition(EntitiesEnum.FOOD, 0),
+  (state) => state?.entityIds
 );
+

@@ -1,3 +1,4 @@
+import { HttpPaginatorMeta } from '@core/models/custom-http.models';
 import * as _ from 'lodash';
 import { environment } from 'src/environments/environment';
 
@@ -15,5 +16,16 @@ export class HttpUtil {
 
   static getImgUrl(path: string): string {
     return `${environment.apiUrl}/${path}`;
+  }
+
+  static setPaginator(paginator: HttpPaginatorMeta): HttpPaginatorMeta {
+    const newPaginator = _.cloneDeep(paginator);
+
+    if (paginator.totalPages === paginator.currentPage) newPaginator.isLastPage = true;
+    else newPaginator.isLastPage = false;
+    if (paginator.totalItems === paginator.itemCount) newPaginator.isLastForInfiniteScroll = true;
+    else newPaginator.isLastForInfiniteScroll = false;
+
+    return newPaginator;
   }
 }

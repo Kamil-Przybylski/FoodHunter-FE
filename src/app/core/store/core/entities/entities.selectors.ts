@@ -27,7 +27,7 @@ export const getEntitiesSelectTotal = <T extends keyof EntitiesStateComponents>(
 
 export const getEntitiesByDataConditionIds = <T extends keyof EntitiesStateComponents>(
   type: T,
-  dataConditionId: number
+  dataConditionId: number | string
 ) =>
   createSelector(
     getEntitiesSelectEntities(type),
