@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpPaginator, HttpPaginatorMeta } from '@core/models/custom-http.models';
 import { Food } from '@core/models/food.models';
 import { FoodService } from '@core/services/food.service';
-import { downloadAction } from '@core/store/core/data-condition/data-condition.actions';
+import { downloadAction, saveAction } from '@core/store/core/data-condition/data-condition.actions';
 import { EntitiesEnum } from '@core/store/core/entities/entities.models';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map } from 'rxjs/operators';
@@ -10,6 +10,7 @@ import {
   foodListDownloadFoodListFoodAction,
   foodListDownloadSingleFoodAction,
   foodListDownloadUserFoodAction,
+  foodListSetLikeForFoodAction,
 } from './food-list.actions';
 
 @Injectable()
@@ -69,6 +70,20 @@ export class FoodListEffects {
       })
     )
   );
+
+  setLikeFood$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(foodListSetLikeForFoodAction),
+    map((action) => action.payload),
+    map(({ foodId }) => {
+      return saveAction<EntitiesEnum.FOOD, null>()({
+        key: EntitiesEnum.FOOD,
+        dataId: `like-${foodId}`,
+        requestObservable: this.foodService.setLikeFood(foodId),
+      });
+    })
+  )
+);
 
   constructor(private actions$: Actions, private foodService: FoodService) {}
 }

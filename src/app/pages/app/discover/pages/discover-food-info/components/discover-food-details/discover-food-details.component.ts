@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Food } from '@core/models/food.models';
 
 @Component({
@@ -8,9 +8,13 @@ import { Food } from '@core/models/food.models';
 })
 export class DiscoverFoodDetailsComponent implements OnInit {
   @Input() food!: Food;
+  @Output() setLike = new EventEmitter<number>();
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {}
 
+  setLikeEmit() {
+    this.setLike.emit(this.food.id);
+  }
 }

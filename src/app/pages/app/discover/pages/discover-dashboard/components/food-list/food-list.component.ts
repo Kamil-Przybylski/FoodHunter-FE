@@ -4,9 +4,7 @@ import { AppState } from '@core/store';
 import { from, Observable, Subject } from 'rxjs';
 import { Food } from '@core/models/food.models';
 import { IonContent, IonInfiniteScroll, ModalController } from '@ionic/angular';
-import {
-  discoverListSetPaginatorAction,
-} from '@core/store/discover/discover-list/discover-list.actions';
+import { discoverListSetPaginatorAction } from '@core/store/discover/discover-list/discover-list.actions';
 import {
   getDiscoverListDataConditionLoadData,
   getDiscoverListPaginator,
@@ -15,7 +13,10 @@ import { HttpPaginatorMeta } from '@core/models/custom-http.models';
 import { filter, take, takeUntil, tap } from 'rxjs/operators';
 import { AppRoutesEnum } from 'src/app/app.routes';
 import { Router } from '@angular/router';
-import { foodListDownloadFoodListFoodAction } from '@core/store/food/food-list/food-list.actions';
+import {
+  foodListDownloadFoodListFoodAction,
+  foodListSetLikeForFoodAction,
+} from '@core/store/food/food-list/food-list.actions';
 import { getFoodListDashboardFoods } from '@core/store/food/food-list/food-list.selectors';
 
 @Component({
@@ -66,7 +67,7 @@ export class FoodListComponent implements OnInit, OnDestroy {
         take(1),
         tap((paginator) => {
           const nextPage = paginator.currentPage + 1;
-          
+
           if (paginator.isLastForInfiniteScroll) {
             this.infiniteScroll.disabled = true;
           } else {
@@ -87,6 +88,10 @@ export class FoodListComponent implements OnInit, OnDestroy {
       AppRoutesEnum.FOOD,
       foodId,
     ]);
+  }
+
+  setLike(foodId: number) {
+    this.store.dispatch(foodListSetLikeForFoodAction({ payload: { foodId } }));
   }
 
   openProfile(userId: number) {

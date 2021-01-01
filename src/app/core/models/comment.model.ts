@@ -28,11 +28,20 @@ export class CommentDtoModel implements Comments, DtoWrapper<Comments> {
   }
 }
 
-export interface ShortComment {
+export interface CommentInfo {
   totalItems: number;
   isMyComment: boolean;
 }
-export class ShortCommentDtoModel implements ShortComment, DtoWrapper<ShortComment> {
+export class CommentInfoDtoModel implements CommentInfo, DtoWrapper<CommentInfo> {
   @Expose() @IsNumber() totalItems!: number;
   @Expose() @IsBoolean() isMyComment!: boolean;
+}
+
+export interface LikesInfoDto {
+  totalItems: number;
+  isMyLike: boolean;
+}
+export class LikesInfoDtoModel implements LikesInfoDto, DtoWrapper<LikesInfoDto> {
+  @Expose() @IsNumber() totalItems!: number;
+  @Expose() @IsBoolean() isMyLike!: boolean;
 }

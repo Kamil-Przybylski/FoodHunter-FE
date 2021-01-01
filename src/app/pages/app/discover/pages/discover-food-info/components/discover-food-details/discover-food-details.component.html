@@ -12,9 +12,10 @@
         </h3>
       </div>
       <div class="d-flex flex-y-center">
-        <ion-chip outline class="m-0">
-          <ion-icon name="heart-outline"></ion-icon>
-          <ion-label>X</ion-label>
+        <ion-chip outline (click)="setLikeEmit()" class="m-0">
+          <ion-icon *ngIf="food?.likesInfo?.isMyLike" name="heart"></ion-icon>
+          <ion-icon *ngIf="!food?.likesInfo?.isMyLike" name="heart-outline"></ion-icon>
+          <ion-label>{{ food?.likesInfo?.totalItems  || 0 }}</ion-label>
         </ion-chip>
       </div>
     </ion-col>

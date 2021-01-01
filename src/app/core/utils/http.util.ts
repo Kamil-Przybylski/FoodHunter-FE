@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 import { environment } from 'src/environments/environment';
 
 export class HttpUtil {
-  static toFormData(formValue: {[key: string]: unknown}) {
+  static toFormData(formValue: {[key: string]: any}) {
     const formData = new FormData();
 
     for (const key of Object.keys(formValue)) {

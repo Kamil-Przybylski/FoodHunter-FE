@@ -10,7 +10,7 @@ import { CommonUtil } from '@core/utils/common.util';
 import { ActivatedRoute } from '@angular/router';
 import { AppRoutesEnum } from 'src/app/app.routes';
 import { Food } from '@core/models/food.models';
-import { foodListDownloadSingleFoodAction } from '@core/store/food/food-list/food-list.actions';
+import { foodListDownloadSingleFoodAction, foodListSetLikeForFoodAction } from '@core/store/food/food-list/food-list.actions';
 import { getFoodListSingleFood } from '@core/store/food/food-list/food-list.selectors';
 
 @Component({
@@ -42,5 +42,9 @@ export class DiscoverFoodInfoPage implements OnInit {
 
   sendComment(comment: string) {
     this.store.dispatch(commentSaveFoodCommentAction({ payload: { foodId: this.foodId, comment } }));
+  }
+
+  setLike(foodId: number) {
+    this.store.dispatch(foodListSetLikeForFoodAction({ payload: { foodId } }));
   }
 }

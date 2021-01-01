@@ -14,3 +14,8 @@ export const foodListDownloadUserFoodAction = createAction(
   '[Food List] Download User Food Data Action',
   props<{ payload: { userId: number; pageNo: number } }>()
 );
+
+export const foodListSetLikeForFoodAction = createAction(
+  '[Food List] Set Like For Food Action',
+  props<{ payload: { foodId: number } }>()
+);

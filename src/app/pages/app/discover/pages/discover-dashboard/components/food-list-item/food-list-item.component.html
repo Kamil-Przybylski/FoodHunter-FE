@@ -14,20 +14,21 @@
       </div>
     </ion-col>
 
-    <ion-col size="12" class="p-0" (click)="foodClickEmmit()">
+    <ion-col size="12" class="p-0" (click)="foodClickEmit()">
       <div class="app-img" [style.background-image]="'url(' + food.photoPath + ')'"></div>
     </ion-col>
 
     <ion-col size="12" class="d-flex p-0 m-0">
-      <ion-chip outline>
-        <ion-icon name="heart-outline"></ion-icon>
-        <ion-label>X</ion-label>
+      <ion-chip outline (click)="setLikeEmit()">
+        <ion-icon *ngIf="food?.likesInfo?.isMyLike" name="heart"></ion-icon>
+        <ion-icon *ngIf="!food?.likesInfo?.isMyLike" name="heart-outline"></ion-icon>
+        <ion-label>{{ food?.likesInfo?.totalItems  || 0 }}</ion-label>
       </ion-chip>
 
-      <ion-chip outline (click)="foodClickEmmit()">
-        <ion-icon *ngIf="food?.shortComment?.isMyComment" name="chatbubbles"></ion-icon>
-        <ion-icon *ngIf="!food?.shortComment?.isMyComment" name="chatbubbles-outline"></ion-icon>
-        <ion-label>{{ food?.shortComment?.totalItems || 0 }}</ion-label>
+      <ion-chip outline (click)="foodClickEmit()">
+        <ion-icon *ngIf="food?.commentInfo?.isMyComment" name="chatbubbles"></ion-icon>
+        <ion-icon *ngIf="!food?.commentInfo?.isMyComment" name="chatbubbles-outline"></ion-icon>
+        <ion-label>{{ food?.commentInfo?.totalItems || 0 }}</ion-label>
       </ion-chip>
     </ion-col>
 

@@ -12,16 +12,21 @@ export class FoodListItemComponent implements OnInit {
 
   @Output() showDetails = new EventEmitter<number>();
   @Output() avatarClick = new EventEmitter<number>();
+  @Output() setLike = new EventEmitter<number>();
 
   constructor() {}
 
   ngOnInit() {}
 
-  foodClickEmmit() {
+  foodClickEmit() {
     this.showDetails.emit(this.food.id);
   }
 
   avatarClickEmit(user: UserShort) {
     this.avatarClick.emit(user.id);
+  }
+
+  setLikeEmit() {
+    this.setLike.emit(this.food.id);
   }
 }

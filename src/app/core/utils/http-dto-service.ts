@@ -102,6 +102,28 @@ export class HttpDtoService {
     return this.mapper<R, C>(http$, model);
   }
 
+  put<R, C extends DtoWrapper<R>>(
+    model: ClassType<C>,
+    url: string,
+    payload: unknown,
+    options?: HttpOptions
+  ): Observable<R> {
+    const http$ = this.httpClient.put<unknown>(`${this.baseAuthApiUrl}/${url}`, payload, options || {});
+    return this.mapper<R, C>(http$, model);
+  }
+  putMap<R, C extends DtoWrapper<R>>(
+    model: ClassType<C>,
+    url: string,
+    payload: unknown,
+    mapFn: (r: any) => any,
+    options?: HttpOptions
+  ): Observable<R> {
+    const http$ = this.httpClient
+      .put<unknown>(`${this.baseAuthApiUrl}/${url}`, payload, options || {})
+      .pipe(map((r) => mapFn(r)));
+    return this.mapper<R, C>(http$, model);
+  }
+
   patch<R, C extends DtoWrapper<R>>(
     model: ClassType<C>,
     url: string,

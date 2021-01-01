@@ -1,10 +1,30 @@
 import { HttpUtil } from '@core/utils/http.util';
 import { Expose, Transform, Type } from 'class-transformer';
 import { IsBoolean, IsNotEmptyObject, IsNumber, IsString, ValidateNested } from 'class-validator';
-import { ShortComment, ShortCommentDtoModel } from './comment.model';
+import { CommentInfo, CommentInfoDtoModel, LikesInfoDto, LikesInfoDtoModel } from './comment.model';
 import { DtoWrapper } from './custom-http.models';
 import { Restaurant, RestaurantDtoModel, RestaurantFormModel } from './restaurant.models';
 import { UserShort, UserShortDtoModel } from './user.models';
+
+export interface CreateFoodDto {
+  name: string;
+  description: string;
+  rate: number;
+  isFavorite: boolean;
+  isPrivate: boolean;
+  isPlanned: boolean;
+  foodTypeId: number;
+
+  photo: File;
+
+  restaurantId: string;
+  restaurantName: string;
+  restaurantFormattedAddress: string;
+  restaurantRating: number;
+  restaurantUrl: string;
+  restaurantWebsite: string;
+  restaurantTypes: string;
+}
 
 export interface Food {
   id: number;
@@ -20,7 +40,8 @@ export interface Food {
 
   userShort: UserShort;
   restaurant: Restaurant;
-  shortComment: ShortComment;
+  commentInfo: CommentInfo;
+  likesInfo: LikesInfoDto;
 }
 export class FoodDtoModel implements Food, DtoWrapper<Food> {
   @Expose() @IsNumber() id!: number;
@@ -48,16 +69,22 @@ export class FoodDtoModel implements Food, DtoWrapper<Food> {
   restaurant!: Restaurant;
 
   @Expose()
-  @Type(() => ShortCommentDtoModel)
+  @Type(() => CommentInfoDtoModel)
   @IsNotEmptyObject()
   @ValidateNested()
-  shortComment!: ShortComment;
+  commentInfo!: CommentInfo;
+
+  @Expose()
+  @Type(() => LikesInfoDtoModel)
+  @IsNotEmptyObject()
+  @ValidateNested()
+  likesInfo!: LikesInfoDto;
 
   static createTypesString(types: string[]): string {
     return types.join('$$$');
   }
 
-  static getReqFoodDto(foodForm: FoodPhotoRestaurantModel, file: File) {
+  static getReqFoodDto(foodForm: FoodPhotoRestaurantModel, file: File): CreateFoodDto {
     const food = foodForm.food;
     const restaurant = foodForm.restaurant;
 
@@ -81,6 +108,10 @@ export class FoodDtoModel implements Food, DtoWrapper<Food> {
       restaurantTypes: this.createTypesString(restaurant.types || []),
     };
   }
+}
+
+export interface SetLikeForFoodDto {
+  foodId: number;
 }
 
 // FORM
