@@ -12,7 +12,7 @@ export const getEntitiesState = createSelector(
 const getEntityState = (type: EntitiesEnum) =>
   createSelector(getEntitiesState, (state) => state[type]);
 
-const getSelectors = <T extends keyof EntitiesStateComponents>(
+export const getSelectors = <T extends keyof EntitiesStateComponents>(
   type: EntitiesEnum
 ) =>
   adapters[type].getSelectors() as EntitySelectors<

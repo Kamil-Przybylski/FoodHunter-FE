@@ -92,43 +92,6 @@ export const saveFailAction = <T extends keyof EntitiesStateComponents>() =>
     }>()
   );
 
-export const deleteAction = <T extends keyof EntitiesStateComponents, P>() =>
-  createAction(
-    '[Data Condition] Delete',
-    props<{
-      key: T;
-      dataId: number;
-      serviceMethod: () => Observable<
-        | EntitiesStateComponents[T][]
-        | { entities: EntitiesStateComponents[T][]; sendData: P }
-      >;
-      nextActions?: Action[];
-    }>()
-  );
-export const deleteSuccessAction = <
-  T extends keyof EntitiesStateComponents,
-  P
->() =>
-  createAction(
-    '[Data Condition] Delete Success',
-    props<{
-      key: T;
-      dataId: number;
-      deleteId_TODO: number;
-      entities: EntitiesStateComponents[T][];
-      sendData: P;
-    }>()
-  );
-export const deleteFailAction = <T extends keyof EntitiesStateComponents>() =>
-  createAction(
-    '[Data Condition] Delete Fail',
-    props<{
-      key: T;
-      dataId: number;
-      error: HttpErrorResDto;
-    }>()
-  );
-
 export const clearAction = <T extends keyof EntitiesStateComponents>() =>
   createAction(
     '[Data Condition] Clear',

@@ -3,11 +3,8 @@ import * as _ from 'lodash';
 import { combineReducers, createReducer, on, ActionReducer } from '@ngrx/store';
 import { EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { PayloadAction } from '../..';
-import { EntitiesStateComponents, EntitiesEnum } from './entities.models';
+import { EntitiesEnum, EntitiesState } from './entities.models';
 
-export type EntitiesState = {
-  [P in keyof EntitiesStateComponents]: EntitiesStateComponents[P];
-};
 interface AdaptersType {
   [type: string]: EntityAdapter<any>;
 }
@@ -73,8 +70,8 @@ export const getEntitesReducer = (): ActionReducer<
   PayloadAction
 > => {
   const reducerFactory = {} as any;
-  _.forEach(EntitiesEnum, (key) => {
-    reducerFactory[key] = creaateEntitiesReducer(key);
+  _.forEach(EntitiesEnum, (type) => {
+    reducerFactory[type] = creaateEntitiesReducer(type);
   });
   return combineReducers(reducerFactory);
 };
