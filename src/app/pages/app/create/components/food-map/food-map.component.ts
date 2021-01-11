@@ -18,7 +18,7 @@ import { RestaurantFormModel, RestaurantFormFields } from '@core/models/restaura
 @Component({
   selector: 'app-food-map',
   templateUrl: './food-map.component.html',
-  styleUrls: ['./food-map.component.scss'],
+  styles: [],
 })
 export class FoodMapComponent implements OnInit {
   

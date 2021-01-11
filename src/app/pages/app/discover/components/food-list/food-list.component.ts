@@ -10,7 +10,7 @@ import { IonInfiniteScroll } from '@ionic/angular';
 @Component({
   selector: 'app-food-list',
   templateUrl: './food-list.component.html',
-  styleUrls: ['./food-list.component.scss'],
+  styles: [],
 })
 export class FoodListComponent implements OnInit {
   @ViewChild(IonInfiniteScroll, {static: true}) infiniteScroll: IonInfiniteScroll;

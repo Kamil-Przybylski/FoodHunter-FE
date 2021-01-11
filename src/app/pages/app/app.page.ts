@@ -4,7 +4,7 @@ import { AppRoutesEnum } from 'src/app/app.routes';
 @Component({
   selector: 'app-app',
   templateUrl: './app.page.html',
-  styleUrls: ['./app.page.scss'],
+  styles: [],
 })
 export class AppPage implements OnInit {
   AppRoutesEnum = AppRoutesEnum;

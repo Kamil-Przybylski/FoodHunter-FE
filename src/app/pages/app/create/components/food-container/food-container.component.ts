@@ -34,7 +34,7 @@ import { FoodTag } from '@core/models/food-tags.models';
 @Component({
   selector: 'app-food-container',
   templateUrl: './food-container.component.html',
-  styleUrls: ['./food-container.component.scss'],
+  styles: [],
 })
 export class FoodContainerComponent implements OnInit {
   @ViewChild(MatTabGroup, { static: false }) matTabGroup: MatTabGroup;

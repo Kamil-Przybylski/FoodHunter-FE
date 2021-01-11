@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+  styles: [],
 })
 export class LoginPage implements OnInit {
 

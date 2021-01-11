@@ -37,7 +37,7 @@ export interface FormSingUpModel {
 @Component({
   selector: 'app-register-form',
   templateUrl: './register-form.component.html',
-  styleUrls: ['./register-form.component.scss'],
+  styles: [],
 })
 export class RegisterFormComponent implements OnInit, OnDestroy {
   @ViewChild('formRef', { static: true }) formRef: NgForm;

@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-create',
   templateUrl: './create.page.html',
-  styleUrls: ['./create.page.scss'],
+  styles: [],
 })
 export class CreatePage implements OnInit {
 
