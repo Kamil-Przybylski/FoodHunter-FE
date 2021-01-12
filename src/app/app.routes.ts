@@ -6,6 +6,7 @@ export enum AppRoutesEnum {
   LOGIN = 'login',
   REGISTER = 'register',
   DISCOVER = 'odkryj',
+  CATALOG = 'katalog',
   CATALOGS = 'katalogi',
   CREATE = 'dodaj',
   ACCOUNT = 'uzytkownik',
@@ -16,5 +17,6 @@ export enum AppRoutesEnum {
   INFO = 'info',
 
   USER_ID = 'userId',
-  FOOD_ID = 'foodId'
+  FOOD_ID = 'foodId',
+  CATALOG_ID = 'catalogId',
 }
