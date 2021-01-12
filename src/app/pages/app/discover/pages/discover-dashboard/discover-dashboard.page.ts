@@ -7,7 +7,7 @@ import { FoodListComponent } from './components/food-list/food-list.component';
 @Component({
   selector: 'app-discover-dashboard',
   templateUrl: './discover-dashboard.page.html',
-  styleUrls: ['./discover-dashboard.page.scss'],
+  styles: [],
 })
 export class DiscoverDashboardPage implements OnInit {
   @ViewChild(FoodListComponent) foodListComponent: FoodListComponent;

@@ -16,7 +16,7 @@ import { AccountUserPhotoComponent } from '../account-user-photo/account-user-ph
 @Component({
   selector: 'app-account-container',
   templateUrl: './account-container.component.html',
-  styleUrls: ['./account-container.component.scss'],
+  styles: [],
 })
 export class AccountContainerComponent implements OnInit {
   user$!: Observable<AuthUser>;

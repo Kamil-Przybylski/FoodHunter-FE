@@ -4,7 +4,7 @@ import { ModalController } from '@ionic/angular';
 @Component({
   selector: 'app-dialog-container',
   templateUrl: './dialog-container.component.html',
-  styleUrls: ['./dialog-container.component.scss'],
+  styles: [],
 })
 export class DialogContainerComponent implements OnInit {
   @Input() tittle!: string;

@@ -3,7 +3,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 @Component({
   selector: 'app-food-photo',
   templateUrl: './food-photo.component.html',
-  styleUrls: ['./food-photo.component.scss'],
+  styles: [],
 })
 export class FoodPhotoComponent implements OnInit {
   @Output() selectPhoto = new EventEmitter<string>();

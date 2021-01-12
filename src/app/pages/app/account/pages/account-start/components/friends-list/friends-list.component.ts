@@ -14,7 +14,7 @@ import { AppRoutesEnum } from 'src/app/app.routes';
 @Component({
   selector: 'app-friends-list',
   templateUrl: './friends-list.component.html',
-  styleUrls: ['./friends-list.component.scss'],
+  styles: [],
 })
 export class FriendsListComponent implements OnInit {
   @Input() userId!: number;

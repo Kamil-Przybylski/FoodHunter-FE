@@ -10,7 +10,7 @@ import { MessageEnum } from 'src/config';
 @Component({
   selector: 'app-user-edit-form-dialog',
   templateUrl: './user-edit-form-dialog.component.html',
-  styleUrls: ['./user-edit-form-dialog.component.scss'],
+  styles: [],
 })
 export class UserEditFormDialogComponent implements OnInit {
   @Input() user!: User;

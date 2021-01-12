@@ -15,7 +15,7 @@ import { AccountFollowerFindDialogComponent } from '../account-follower-find-dia
 @Component({
   selector: 'app-account-followers',
   templateUrl: './account-followers.component.html',
-  styleUrls: ['./account-followers.component.scss'],
+  styles: [],
 })
 export class AccountFollowersComponent implements OnInit {
   @Input() userId!: number;

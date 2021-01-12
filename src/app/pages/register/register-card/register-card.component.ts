@@ -10,7 +10,7 @@ import { getAuthIsLogging, getAuthIsRegistration } from '@core/store/core/auth/a
 @Component({
   selector: 'app-register-card',
   templateUrl: './register-card.component.html',
-  styleUrls: ['./register-card.component.scss'],
+  styles: [],
 })
 export class RegisterCardComponent implements OnInit {
   AppRoutesEnum = AppRoutesEnum;

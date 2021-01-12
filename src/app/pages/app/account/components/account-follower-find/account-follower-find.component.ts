@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-account-follower-find',
   templateUrl: './account-follower-find.component.html',
-  styleUrls: ['./account-follower-find.component.scss'],
+  styles: [],
 })
 export class AccountFollowerFindComponent implements OnInit {
   @Input() userId!: number;

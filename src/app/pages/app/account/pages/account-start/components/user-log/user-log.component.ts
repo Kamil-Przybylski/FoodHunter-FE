@@ -5,7 +5,7 @@ import { User } from '@core/models/user.models';
 @Component({
   selector: 'app-user-log',
   templateUrl: './user-log.component.html',
-  styleUrls: ['./user-log.component.scss'],
+  styles: [],
 })
 export class UserLogComponent implements OnInit {
   @Input() user!: User | AuthUser;

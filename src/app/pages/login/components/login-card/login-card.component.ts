@@ -10,7 +10,7 @@ import { getAuthIsLogging } from '@core/store/core/auth/auth.selectors';
 @Component({
   selector: 'app-login-card',
   templateUrl: './login-card.component.html',
-  styleUrls: ['./login-card.component.scss'],
+  styles: [],
 })
 export class LoginCardComponent implements OnInit {
   AppRoutesEnum = AppRoutesEnum;

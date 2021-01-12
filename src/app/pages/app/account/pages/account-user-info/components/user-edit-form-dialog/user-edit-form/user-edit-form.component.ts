@@ -14,7 +14,7 @@ import { take, tap } from 'rxjs/operators';
 @Component({
   selector: 'app-user-edit-form',
   templateUrl: './user-edit-form.component.html',
-  styleUrls: ['./user-edit-form.component.scss'],
+  styles: [],
 })
 export class UserEditFormComponent implements OnInit, OnDestroy {
   @ViewChild('formRef') formRef!: NgForm;

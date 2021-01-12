@@ -20,7 +20,7 @@ import { has, hasIn, propertyOf } from 'lodash';
 @Component({
   selector: 'app-food-map',
   templateUrl: './food-map.component.html',
-  styleUrls: ['./food-map.component.scss'],
+  styles: [],
 })
 export class FoodMapComponent implements OnInit, OnDestroy {
   @Input() latitude!: number;

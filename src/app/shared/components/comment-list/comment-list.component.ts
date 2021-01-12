@@ -7,7 +7,7 @@ import { AppRoutesEnum } from 'src/app/app.routes';
 @Component({
   selector: 'app-comment-list',
   templateUrl: './comment-list.component.html',
-  styleUrls: ['./comment-list.component.scss'],
+  styles: [],
 })
 export class CommentListComponent implements OnInit {
   @Input() comments!: Comments[];

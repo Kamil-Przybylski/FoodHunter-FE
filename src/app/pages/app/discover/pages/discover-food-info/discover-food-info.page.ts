@@ -16,7 +16,7 @@ import { getFoodListSingleFood } from '@core/store/food/food-list/food-list.sele
 @Component({
   selector: 'app-discover-food-info',
   templateUrl: './discover-food-info.page.html',
-  styleUrls: ['./discover-food-info.page.scss'],
+  styles: [],
 })
 export class DiscoverFoodInfoPage implements OnInit {
   foodId!: number;

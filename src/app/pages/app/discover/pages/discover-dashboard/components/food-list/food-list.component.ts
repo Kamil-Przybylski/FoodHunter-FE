@@ -22,7 +22,7 @@ import { getFoodListDashboardFoods } from '@core/store/food/food-list/food-list.
 @Component({
   selector: 'app-food-list',
   templateUrl: './food-list.component.html',
-  styleUrls: ['./food-list.component.scss'],
+  styles: [],
 })
 export class FoodListComponent implements OnInit, OnDestroy {
   @ViewChild(IonInfiniteScroll) infiniteScroll!: IonInfiniteScroll;

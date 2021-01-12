@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-account-follower-find-dialog',
   templateUrl: './account-follower-find-dialog.component.html',
-  styleUrls: ['./account-follower-find-dialog.component.scss'],
+  styles: [],
 })
 export class AccountFollowerFindDialogComponent implements OnInit {
   @Input() userId!: number;

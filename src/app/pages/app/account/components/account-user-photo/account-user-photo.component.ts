@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 @Component({
   selector: 'app-account-user-photo',
   templateUrl: './account-user-photo.component.html',
-  styleUrls: ['./account-user-photo.component.scss'],
+  styles: [],
 })
 export class AccountUserPhotoComponent implements OnInit {
   @Input() user!: AuthUser;

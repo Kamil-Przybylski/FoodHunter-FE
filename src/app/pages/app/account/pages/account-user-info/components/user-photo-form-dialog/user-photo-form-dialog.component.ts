@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 @Component({
   selector: 'app-user-photo-form-dialog',
   templateUrl: './user-photo-form-dialog.component.html',
-  styleUrls: ['./user-photo-form-dialog.component.scss'],
+  styles: [],
 })
 export class UserPhotoFormDialogComponent implements OnInit {
   @Input() user!: AuthUser;

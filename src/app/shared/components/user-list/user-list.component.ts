@@ -4,7 +4,7 @@ import { UserShort } from '@core/models/user.models';
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.scss'],
+  styles: [],
 })
 export class UserListComponent implements OnInit {
   @Input() userShortList!: UserShort[];

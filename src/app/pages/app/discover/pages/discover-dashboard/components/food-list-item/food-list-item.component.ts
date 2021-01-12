@@ -5,7 +5,7 @@ import { UserShort } from '@core/models/user.models';
 @Component({
   selector: 'app-food-list-item',
   templateUrl: './food-list-item.component.html',
-  styleUrls: ['./food-list-item.component.scss'],
+  styles: [],
 })
 export class FoodListItemComponent implements OnInit {
   @Input() food!: Food;

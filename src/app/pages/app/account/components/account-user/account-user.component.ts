@@ -5,7 +5,7 @@ import { User } from '@core/models/user.models';
 @Component({
   selector: 'app-account-user',
   templateUrl: './account-user.component.html',
-  styleUrls: ['./account-user.component.scss'],
+  styles: [],
 })
 export class AccountUserComponent implements OnInit {
   @Input() user!: User | AuthUser;

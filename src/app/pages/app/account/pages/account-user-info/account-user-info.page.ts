@@ -36,7 +36,7 @@ import { accountFoodSetPaginatorAction } from '@core/store/account/account-food/
 @Component({
   selector: 'app-account-user-info',
   templateUrl: './account-user-info.page.html',
-  styleUrls: ['./account-user-info.page.scss'],
+  styles: [],
 })
 export class AccountUserInfoPage implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('postListComponent') postListComponent: PostListComponent;

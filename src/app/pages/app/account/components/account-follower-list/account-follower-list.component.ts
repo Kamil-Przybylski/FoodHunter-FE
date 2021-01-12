@@ -4,7 +4,7 @@ import { UserShort } from '@core/models/user.models';
 @Component({
   selector: 'app-account-follower-list',
   templateUrl: './account-follower-list.component.html',
-  styleUrls: ['./account-follower-list.component.scss'],
+  styles: [],
 })
 export class AccountFollowerListComponent implements OnInit {
   @Input() userShortList!: UserShort[] | null;

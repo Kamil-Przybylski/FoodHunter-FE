@@ -17,7 +17,7 @@ import { take, tap } from 'rxjs/operators';
 @Component({
   selector: 'app-account-user-form',
   templateUrl: './account-user-form.component.html',
-  styleUrls: ['./account-user-form.component.scss'],
+  styles: [],
 })
 export class AccountUserFormComponent implements OnInit, OnDestroy {
   @ViewChild('formRef') formRef!: NgForm;

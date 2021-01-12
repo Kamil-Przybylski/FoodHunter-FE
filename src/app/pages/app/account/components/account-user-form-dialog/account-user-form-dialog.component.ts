@@ -10,7 +10,7 @@ import { MessageEnum } from 'src/config';
 @Component({
   selector: 'app-account-user-form-dialog',
   templateUrl: './account-user-form-dialog.component.html',
-  styleUrls: ['./account-user-form-dialog.component.scss'],
+  styles: [],
 })
 export class AccountUserFormDialogComponent implements OnInit {
   @Input() user!: AuthUser;

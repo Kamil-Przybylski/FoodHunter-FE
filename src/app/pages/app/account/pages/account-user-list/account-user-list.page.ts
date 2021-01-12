@@ -17,7 +17,7 @@ import { AppRoutesEnum } from 'src/app/app.routes';
 @Component({
   selector: 'app-account-user-list',
   templateUrl: './account-user-list.page.html',
-  styleUrls: ['./account-user-list.page.scss'],
+  styles: [],
 })
 export class AccountUserListPage implements OnInit {
   AppRoutesEnum = AppRoutesEnum;

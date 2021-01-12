@@ -12,7 +12,7 @@ import { AuthFormSingInFields, AuthFormSingInModel } from '@core/models/auth.mod
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
-  styleUrls: ['./login-form.component.scss'],
+  styles: [],
 })
 export class LoginFormComponent implements OnInit {
   @ViewChild('formRef') formRef!: NgForm;

@@ -17,7 +17,7 @@ import { FoodType } from '@core/models/food-types.models';
 @Component({
   selector: 'app-food-form',
   templateUrl: './food-form.component.html',
-  styleUrls: ['./food-form.component.scss'],
+  styles: [],
 })
 export class FoodFormComponent implements OnInit {
   @Input() foodTypes$!: Observable<FoodType[]>;
