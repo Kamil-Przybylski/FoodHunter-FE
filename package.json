@@ -7,7 +7,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "test": "ng test",
+    "test": "ng test --source-map=false",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "angular:dev": "node ./node_modules/@angular/cli/bin/ng serve --port 2999 --host 0.0.0.0 --proxy-config proxy-config-dev.conf.json",

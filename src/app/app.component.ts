@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { Plugins, Capacitor } from '@capacitor/core';
-import { NavigationEnd, Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { AppState } from '@core/store';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +8,7 @@ import { AppState } from '@core/store';
   styles: [],
 })
 export class AppComponent {
-  constructor(private store: Store<AppState>, private platform: Platform, private router: Router) {
+  constructor(private platform: Platform) {
     this.initializeApp();
   }
 

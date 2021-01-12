@@ -1,5 +1,5 @@
 import { EntitiesEnum } from '@core/store/core/entities/entities.models';
-import { getEntitiesByDataConditionIds, getEntitiesSelectEntities } from '@core/store/core/entities/entities.selectors';
+import { getAllEntitiesByDataConditionIds, getEntitiesSelectEntities } from '@core/store/core/entities/entities.selectors';
 import { createSelector } from '@ngrx/store';
 import { getAccountModuleState } from '@core/store/account/account.reducer';
 import { getAuthUser } from '@core/store/core/auth/auth.selectors';
@@ -8,12 +8,12 @@ import { UserDtoModel, UserShortDtoModel } from '@core/models/user.models';
 export const getFollowersState = createSelector(getAccountModuleState, (state) => state.accountFollowers);
 
 export const getFollowersAllList = createSelector(
-  getEntitiesByDataConditionIds(EntitiesEnum.USER_SHORT, 0),
+  getAllEntitiesByDataConditionIds(EntitiesEnum.USER_SHORT, 0),
   (users) => users || []
 );
 
 export const getFollowersUserList = createSelector(
-  getEntitiesByDataConditionIds(EntitiesEnum.USER_SHORT, 1),
+  getAllEntitiesByDataConditionIds(EntitiesEnum.USER_SHORT, 1),
   (users) => users || []
 );
 

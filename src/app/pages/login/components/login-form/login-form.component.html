@@ -1,43 +1,36 @@
 <app-form-errors
+  *ngIf="formRef"
   [error]="loginErrors$ | async"
   [isFormSubmitted]="formRef.submitted"
   [isFormValid]="!formRef.invalid"
 ></app-form-errors>
 
-<form
-  [formGroup]="form"
-  (ngSubmit)="onSingIn()"
-  #formRef="ngForm"
-  class="h-100 w-100"
-  autocomplete="on"
->
+<form [formGroup]="form" (ngSubmit)="onSingIn()" #formRef="ngForm" class="h-100 w-100" autocomplete="on">
   <mat-form-field class="my-3 w-100">
     <mat-label>E-mail</mat-label>
     <input
       matInput
+      name="email"
       [formControlName]="formFields.EMAIL"
       [appDisableControl]="isLogging$ | async"
       type="text"
       placeholder="Podaj swój e-mail..."
       required
     />
-    <mat-error *ngIf="form?.get(formFields.EMAIL)?.hasError('required')">
-      Wymagany e-mail
-    </mat-error>
+    <mat-error *ngIf="form?.get(formFields.EMAIL)?.hasError('required')"> Wymagany e-mail </mat-error>
   </mat-form-field>
   <mat-form-field class="my-3 w-100">
     <mat-label>Hasło</mat-label>
     <input
       matInput
+      name="password"
       [formControlName]="formFields.PASSWORD"
       [appDisableControl]="isLogging$ | async"
       type="password"
       laceholder="Podaj swoje hasło..."
       required
     />
-    <mat-error *ngIf="form?.get(formFields.PASSWORD)?.hasError('required')">
-      Wymagane hasło
-    </mat-error>
+    <mat-error *ngIf="form?.get(formFields.PASSWORD)?.hasError('required')"> Wymagane hasło </mat-error>
   </mat-form-field>
   <button class="d-none"></button>
 </form>

@@ -10,8 +10,10 @@ export const getEntitiesState = createSelector(getCoreModuleState, (state) => st
 
 const getEntityState = (type: EntitiesEnum) => createSelector(getEntitiesState, (state) => state[type]);
 
-const getSelectors = <T extends keyof EntitiesStateComponents>(type: EntitiesEnum) =>
+export const getSelectors = <T extends keyof EntitiesStateComponents>(type: EntitiesEnum) =>
   adapters[type].getSelectors() as EntitySelectors<EntitiesStateComponents[T], any>;
+
+// entities selectors
 
 export const getEntitiesSelectIds = <T extends keyof EntitiesStateComponents>(type: T) =>
   createSelector(getEntityState(type), getSelectors<T>(type).selectIds);
@@ -25,7 +27,7 @@ export const getEntitiesSelectAll = <T extends keyof EntitiesStateComponents>(ty
 export const getEntitiesSelectTotal = <T extends keyof EntitiesStateComponents>(type: T) =>
   createSelector(getEntityState(type), getSelectors<T>(type).selectTotal);
 
-export const getEntitiesByDataConditionIds = <T extends keyof EntitiesStateComponents>(
+export const getAllEntitiesByDataConditionIds = <T extends keyof EntitiesStateComponents>(
   type: T,
   dataConditionId: number | string
 ) =>

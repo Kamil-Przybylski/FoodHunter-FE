@@ -197,7 +197,7 @@ const createDataReducer = (type: keyof EntitiesStateComponents): ActionReducer<E
   );
 };
 
-export const getDataConditionReducer = (): ActionReducer<DataConditionState, PayloadAction> => {
+export const getDataConditionReducer = (): ActionReducer<DataConditionState, Action> => {
   const reducerFactory = {} as any;
   _.forEach(EntitiesEnum, (key) => {
     reducerFactory[key] = createDataReducer(key);
