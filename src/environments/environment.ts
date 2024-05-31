@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   apiUrl: 'fh',
 
-  googleKey: 'AIzaSyBlFsjRrmUFoZ54WwR9JvIpxR842EF2qy4'
+  googleKey: ''
 };
 
 /*
